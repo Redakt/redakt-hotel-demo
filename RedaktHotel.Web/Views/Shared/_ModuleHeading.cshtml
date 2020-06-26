@@ -1,0 +1,6 @@
+﻿@model RedaktHotel.Web.Models.Embedded.ModuleWithIntroBase
+<div class="widget-title">
+    <h5 rx-content="@Model.HeadingCaption" rx-if-empty="RemoveTag"></h5>
+    <h2 rx-content="@Model.Heading" rx-if-empty="RemoveTag"></h2>
+    <p rx-content="@Model.IntroText" rx-if-empty="RemoveTag"></p>
+</div>

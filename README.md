@@ -15,9 +15,9 @@ After that, you will be redirected to the short setup wizard where you can enter
 
 ## Projects
 
-The Redakt Resort & Hotel application consists of the following projects:
+The Redakt Resort & Hotel showcase application consists of the following projects:
 
- - `RedaktHotel`  
+ - `RedaktHotel.Web`  
    This is the main runnable web project and includes the application's views and models.
 
  - `RedaktHotel.BackOfficeExtensions`  
