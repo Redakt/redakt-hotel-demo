@@ -1,0 +1,21 @@
+﻿@{
+    var module = ViewData["module"] as TwoColumnText;
+}
+<div class="section">
+    <div class="widget-about-grid">
+        <div class="wrapper-inner">
+            <div class="widget-inner">
+                <div class="widget-item">
+                    <h5 rx-content="@module.LeftHeadingCaption" rx-if-empty="RemoveTag"></h5>
+                    <h2 rx-content="@module.LeftHeading" rx-if-empty="RemoveTag"></h2>
+                    @Html.Raw(module.LeftBodyText)
+                </div>
+                <div class="widget-item">
+                    <h5 rx-content="@module.RightHeadingCaption" rx-if-empty="RemoveTag"></h5>
+                    <h2 rx-content="@module.RightHeading" rx-if-empty="RemoveTag"></h2>
+                    @Html.Raw(module.RightBodyText)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

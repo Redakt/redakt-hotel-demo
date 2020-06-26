@@ -1,0 +1,23 @@
+﻿@{
+    var module = ViewData["module"] as Timeline;
+}
+<div class="section">
+    <div class="widget-history-timeline">
+        <div class="wrapper-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-inner">
+                <ul>
+                    @foreach (var item in module.Items)
+                    {
+                        <li>
+                            <h5>@item.Year</h5>
+                            <h3>@item.Title</h3>
+                            <p>@item.Description</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

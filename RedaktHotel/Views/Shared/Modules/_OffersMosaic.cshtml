@@ -1,0 +1,27 @@
+﻿@model INodeViewModel
+@{
+    var module = ViewData["module"] as OffersMosaic;
+}
+<div class="section">
+    <div class="widget-offers-grid" data-background="assets/img/photo-offers.jpg">
+        <div class="wrapper-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-inner">
+                @foreach (var item in module.Offers)
+                {
+                    <div class="offers-item">
+                        <div class="item-inner">
+                            <div class="item-photo" data-background="@item.Image.File.AbsoluteUrl()"></div>
+                            <div class="item-desc">
+                                <h3 rx-content="@item.Title"></h3>
+                                <p rx-content="@item.Text"></p>
+                                <a rx-href="@item.ReadMore" rx-href-if-empty="RemoveTag" rx-dictionary-key="ReadMore" class="btn-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

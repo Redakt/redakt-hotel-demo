@@ -1,0 +1,33 @@
+﻿@{
+    var module = ViewData["module"] as StaffList;
+}
+<div class="section">
+    <div class="widget-team-carousel">
+        <div class="wrapper-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-carousel owl-carousel owl-theme">
+                @foreach (var member in module.Members)
+                {
+                    <div class="team-item">
+                        <div class="item-inner">
+                            <div class="item-photo">
+                                <a href="#" data-background="@member.Picture.AbsoluteUrl()"></a>
+                            </div>
+                            <div class="item-desc">
+                                <h3>@member.Name</h3>
+                                <h4>@member.Role</h4>
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

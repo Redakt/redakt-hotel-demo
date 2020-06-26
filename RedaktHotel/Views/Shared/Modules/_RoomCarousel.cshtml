@@ -1,0 +1,32 @@
+﻿@inject IRedaktContext redaktContext
+@model INodeViewModel
+@{
+    var module = ViewData["module"] as RoomCarousel;
+    var rooms = await redaktContext.ModelAsync<RoomDetail>(module.Rooms.Select(x => x.PageId)).ConfigureAwait(false);
+}
+<div class="section">
+    <div class="widget-rooms-carousel @(Model.ContentTypeKey == "Homepage" ? "top-over" : string.Empty)">
+        <div class="wrapper-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-carousel owl-carousel owl-theme">
+                @foreach (var room in rooms)
+                {
+                    <div class="rooms-item">
+                        <div class="item-inner">
+                            <div class="item-photo">
+                                <a rx-href="@room" data-background="@room.Content.MainImage.File.AbsoluteUrl()"></a>
+                            </div>
+                            <div class="item-desc">
+                                <h2><a rx-href="@room" rx-content="@room.Content.NavigationTitle" rx-default="@room.Name"></a></h2>
+                                <h3>&euro; @room.Content.NightlyRate</h3>
+                                <p rx-content="@room.Content.ListDescription" rx-if-empty="RemoveTag"></p>
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

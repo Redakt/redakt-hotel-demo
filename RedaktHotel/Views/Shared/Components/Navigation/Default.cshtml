@@ -1,0 +1,53 @@
+﻿@model IRedaktContext
+@{
+    var home = await Model.RootAsync<Homepage>();
+    var mainPages = (await home.ChildrenAsync<PageBase>()).Where(x => !x.Content.HideInNavigation).ToList();
+    var leftPages = mainPages.Take(mainPages.Count / 2).ToList();
+    var rightPages = mainPages.Skip(leftPages.Count).ToList();
+}
+<div class="header-top">
+    <div class="wrapper">
+        <div class="header-contact">
+            <ul>
+                <li>+1-800-123-45-67</li>
+                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+        </div>
+        <div class="header-lang">
+            <ul>
+                <li class="@(Context.Request.Path.StartsWithSegments("/en") ? "active" : null)"><a href="@(await Model.Url.ForCultureAsync("en") ?? "/en")">EN</a></li>
+                <li class="@(Context.Request.Path.StartsWithSegments("/nl") ? "active" : null)"><a href="@(await Model.Url.ForCultureAsync("nl") ?? "/nl")">NL</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="header-bottom">
+    <div class="wrapper">
+        <div class="header-logo">
+            <a rx-href="@home"><img src="/assets/img/logo.png" alt="@((await Model.ApplicationContext.Services.DictionaryService().GetItemByKeyAsync("TheRedaktHotelAndResort")).GetValue(System.Globalization.CultureInfo.CurrentUICulture) + " Logo")"></a>
+        </div>
+        <div class="header-nav">
+            <ul class="nav-left">
+                <li><a rx-href="@home" rx-content="@home.Content.NavigationTitle" rx-default="@home.Name"></a></li>
+                @foreach (var leftPage in leftPages)
+                {
+                    <li><a rx-href="@leftPage" rx-content="@leftPage.Content.NavigationTitle" rx-default="@leftPage.Name"></a></li>
+                }
+            </ul>
+            <ul class="nav-right">
+                @foreach (var rightPage in rightPages)
+                {
+                    <li><a rx-href="@rightPage" rx-content="@rightPage.Content.NavigationTitle" rx-default="@rightPage.Name"></a></li>
+                }
+            </ul>
+        </div>
+
+        <div class="header-toggle">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</div>

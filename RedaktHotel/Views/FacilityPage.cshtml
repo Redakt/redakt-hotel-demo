@@ -1,0 +1,23 @@
+﻿@inherits RedaktPage<FacilityPage>
+@attribute [DisplayName("Facility Page")]
+@await Html.PartialAsync("_PageHeading")
+<div class="section">
+    <div class="widget-gallery-carousel">
+        <div class="wrapper-full-inner">
+            <div class="widget-carousel owl-carousel owl-theme">
+                @foreach (var image in Model.Content.Images)
+                {
+                    <div class="gallery-item">
+                        <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl(1200, 1200)" title="@image.AlternateText" class="popup-gallery">
+                            <span class="item-text">@image.AlternateText</span>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var module in Model.Content.Modules)
+{
+    @await Html.PartialAsync("~/Views/Shared/Modules/_" + module.GetType().Name + ".cshtml", new ViewDataDictionary(ViewData) { { "Module", module } })
+}

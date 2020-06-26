@@ -1,0 +1,53 @@
+﻿@inherits RedaktPage<SimplePage>
+@attribute [DisplayName("Room Overview")]
+@await Html.PartialAsync("_PageHeading")
+
+<div class="section">
+    <div class="wrapper-inner">
+        <div class="widget-rooms-list">
+            @foreach (var room in await Model.ChildrenAsync<RoomDetail>())
+            {
+                <div class="rooms-item">
+                    <div class="item-photo">
+                        <a href="@room.Url()" data-background="@room.Content.MainImage?.File?.AbsoluteUrl()"></a>
+                    </div>
+                    <div class="item-desc">
+                        <h2><a rx-href="@room">@room.Content.PageTitle</a></h2>
+                        <p rx-content="@room.Content.ListDescription" rx-if-empty="RemoveTag"></p>
+                        <div class="desc-features">
+                            <ul>
+                                <li><i class="fa fa-check"></i> BREAKFAST</li>
+                                <li><i class="fa fa-check"></i> WI-FI</li>
+                                <li><i class="fa fa-check"></i> HAIR DRYER</li>
+                                <li><i class="fa fa-check"></i> LCD TV</li>
+                                <li><i class="fa fa-check"></i> SHOWER AND TAB</li>
+                                <li><i class="fa fa-check"></i> SECURITY SYSTEM</li>
+                                <li><i class="fa fa-check"></i> AIR CONDITIONING</li>
+                                <li><i class="fa fa-check"></i> MINI BAR</li>
+                                <li><i class="fa fa-check"></i> TEA AND COFFEE SET</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        <div class="price-inner">
+                            <i class="fa fa-star"></i>
+                            <h3>&euro; @room.Content.NightlyRate</h3>
+                            <h4>&euro; @room.Content.DiscountedFrom</h4>
+                            <h5 rx-dictionary-key="PerNight">PER NIGHT</h5>
+                            <a rx-href="@room" class="btn" rx-dictionary-key="RoomDetail">ROOM DETAIL</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="widget-pager">
+            <ul>
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

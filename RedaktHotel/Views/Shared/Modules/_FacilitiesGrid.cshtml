@@ -1,0 +1,29 @@
+﻿@inject IRedaktContext redaktContext
+@model INodeViewModel
+@{
+    var module = ViewData["module"] as FacilitiesGrid;
+    var facilities = await redaktContext.ModelAsync<FacilityPage>(module.Facilities.Select(x => x.PageId)).ConfigureAwait(false);
+}
+<div class="section">
+    <div class="widget-features-grid">
+        <div class="wrapper-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-inner">
+                <div class="row">
+                    @foreach (var facility in facilities)
+                    {
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="features-item" data-background="@facility.Content.Images.FirstOrDefault()?.File.AbsoluteUrl(680, 680)">
+                                <a rx-href="@facility">
+                                    <h3 rx-content="@facility.Content.PageTitle"></h3>
+                                    <p rx-content="@facility.Content.ListDescription" rx-if-empty="RemoveTag"></p>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

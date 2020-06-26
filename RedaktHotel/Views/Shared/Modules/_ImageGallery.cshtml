@@ -1,0 +1,22 @@
+﻿@model INodeViewModel
+@{
+    var module = ViewData["module"] as ImageGallery;
+}
+<div class="section">
+    <div class="widget-gallery-carousel">
+        <div class="wrapper-full-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-carousel owl-carousel owl-theme">
+                @foreach (var image in module.Images)
+                {
+                    <div class="gallery-item">
+                        <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl(1200, 1200)" title="@image.AlternateText" class="popup-gallery">
+                            <span class="item-text">@image.AlternateText</span>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

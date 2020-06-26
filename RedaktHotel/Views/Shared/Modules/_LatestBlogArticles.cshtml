@@ -1,0 +1,35 @@
+﻿@inject IRedaktContext redaktContext
+@model INodeViewModel
+@{
+    var module = ViewData["module"] as LatestBlogArticles;
+    var blog = await redaktContext.ModelAsync<SimplePage>(module.Parent.PageId);
+    var articles = await blog.ChildrenAsync<BlogArticle>();
+    var latestArticles = articles.OrderByDescending(x => x.Content.PublicationDate).Take(6);
+}
+<div class="section">
+    <div class="widget-blog-carousel">
+        <div class="wrapper-full-inner">
+            @await Html.PartialAsync("~/Views/Shared/_ModuleHeading.cshtml", module)
+
+            <div class="widget-carousel owl-carousel owl-theme">
+                @foreach (var article in latestArticles)
+                {
+                    <div class="blog-item">
+                        <div class="item-media">
+                            <div class="item-date"><b>@article.Content.PublicationDate.Day</b>@article.Content.PublicationDate.ToString("MMM")</div>
+                            <div class="media-photo">
+                                <a rx-href="@article" data-background="@article.Content.Image.File.AbsoluteUrl()"></a>
+                            </div>
+                        </div>
+                        <div class="item-desc">
+                            <h3><a rx-href="@article" rx-content="@article.Content.PageTitle"></a></h3>
+                            <h5><rx-dictionary key="BlogCategory_@article.Content.Categories[0]"></rx-dictionary></h5>
+                            <p rx-content="@article.Content.ListDescription"></p>
+                            <a rx-href="@article" rx-dictionary-key="ReadMore" class="btn-link"></a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

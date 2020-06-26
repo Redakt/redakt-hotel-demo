@@ -1,0 +1,19 @@
+﻿@{
+    var module = ViewData["module"] as TextWithImage;
+}
+<div class="section">
+    <div class="widget-about-promo" data-background="@module.Image?.File.AbsoluteUrl(400)">
+        <div class="wrapper-inner">
+            <div class="widget-inner">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 rx-content="@module.HeadingCaption" rx-if-empty="RemoveTag"></h5>
+                        <h2 rx-content="@module.Heading" rx-if-empty="RemoveTag"></h2>
+                        @Html.Raw(module.BodyText)
+                        <a rx-link="@module.ButtonLink" rx-if-empty="RemoveTag" class="btn">@module.ButtonText</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

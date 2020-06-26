@@ -1,0 +1,105 @@
+﻿@inherits RedaktPage<RoomDetail>
+@attribute [DisplayName("Room Detail Page")]
+@await Html.PartialAsync("_PageHeading")
+<div class="section">
+    <div class="wrapper-inner">
+        <div class="widget-rooms-detail">
+            <div class="widget-inner">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="room-slider">
+                            <div class="room-price">&euro; @Model.Content.NightlyRate <small>PER NIGHT</small></div>
+                            <div class="owl-carousel owl-theme owl-type1">
+                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl()" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                @foreach (var image in Model.Content.AdditionalImages)
+                                {
+                                    <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl()" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="room-thumbnails">
+                            <div class="owl-carousel">
+                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl()" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                @foreach (var image in Model.Content.AdditionalImages)
+                                {
+                                    <a href="#" data-background="@image.File.AbsoluteUrl()" title="@Model.Content.PageTitle"></a>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="room-desc">
+                            <h5>ROOM DESCRIPTION</h5>
+                            @Html.Raw(Model.Content.LongDescription)
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="room-booking">
+                            <h5 rx-dictionary-key="Booking"></h5>
+                            <h2 rx-dictionary-key="BookThisRoom"></h2>
+                            <div class="data-form">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <i class="fa fa-calendar-plus-o"></i>
+                                            <input type="text" name="checkin" placeholder="@Redakt.DictionaryString("CheckInDate")" class="datepicker" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <i class="fa fa-calendar-plus-o"></i>
+                                            <input type="text" name="checkout" placeholder="@Redakt.DictionaryString("CheckOutDate")" class="datepicker" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <i class="fa fa-caret-down"></i>
+                                            <select name="adults" required>
+                                                <option value="" rx-dictionary-key="Adults"></option>
+                                                <option value="1">1 <rx-dictionary key="Adult" /></option>
+                                                <option value="2">2 <rx-dictionary key="Adults" /></option>
+                                                <option value="3">3 <rx-dictionary key="Adults" /></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <i class="fa fa-caret-down"></i>
+                                            <select name="children" required>
+                                                <option value="" rx-dictionary-key="Children"></option>
+                                                <option value="1">1 <rx-dictionary key="Child" /></option>
+                                                <option value="2">2 <rx-dictionary key="Children" /></option>
+                                                <option value="3">3 <rx-dictionary key="Children" /></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn" rx-dictionary-key="BookNow"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="room-features">
+                            <h5>FEATURES</h5>
+                            <h2>Room Features</h2>
+                            <ul>
+                                <li><i class="fa fa-check"></i> BREAKFAST</li>
+                                <li><i class="fa fa-check"></i> WI-FI</li>
+                                <li><i class="fa fa-check"></i> HAIR DRYER</li>
+                                <li><i class="fa fa-check"></i> LCD TV</li>
+                                <li><i class="fa fa-check"></i> SHOWER AND TAB</li>
+                                <li><i class="fa fa-check"></i> SECURITY SYSTEM</li>
+                                <li><i class="fa fa-check"></i> AIR CONDITIONING</li>
+                                <li><i class="fa fa-check"></i> MINI BAR</li>
+                                <li><i class="fa fa-check"></i> TEA AND COFFEE SET</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

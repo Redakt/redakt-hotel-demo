@@ -1,0 +1,8 @@
+﻿@inherits Redakt.BackOffice.Onboarding.OnboardingStepBase
+<Redakt.BackOffice.Components.Heading>Welcome to The Redakt</Redakt.BackOffice.Components.Heading>
+<p style="margin-bottom: 8px;">Welcome to The Redakt Hotel website.</p>
+<p style="margin-bottom: 8px;">The Redakt Hotel is a demo website application for Redakt DXP, and contains many of the features that make Redakt such a powerful Content Management System. For the demo, the application uses a LiteDB embedded database and file storage. For production sites, you should use a robust document database such as MongoDB or CosmosDB and cloud file storage.</p>
+<p style="margin-bottom: 8px;">The back office application is located at <a href="/redakt" target="_blank">/redakt</a>, and after the onboarding wizard is finished you will be redirected there automatically where you can start managing the demo website in Redakt DXP.</p>
+<p style="margin-bottom: 8px;">The website itself is hosted at the root of this hostname. You can <a href="/" target="_blank">go there now</a> to take a look at the current website.</p>
+<p style="margin-bottom: 24px;">This demo has been generated automatically. You can reset the website and start over at any time by deleting the contents of the App_Data folder and restarting the application.</p>
+<Redakt.BackOffice.Components.Button Style="@Redakt.BackOffice.Components.ElementStyle.Primary" Clicked="@NextStep">@Onboarding.Localize["Next"]</Redakt.BackOffice.Components.Button>

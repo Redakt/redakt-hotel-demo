@@ -1,0 +1,126 @@
+﻿@inherits RedaktPage<ContactPage>
+@attribute [DisplayName("Contact Page")]
+@await Html.PartialAsync("_PageHeading")
+<div class="section">
+    <div class="wrapper-inner">
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Contact Info -->
+                <div class="widget-contact-info">
+                    <ul>
+                        <li>
+                            <h5>THE GRANDIUM HOTEL</h5>
+                            <ul>
+                                <li>The Grandium Hotel 41-49 Longridge Road, Earls Court, London</li>
+                                <li>Phone: +1-800-123-45-67  Fax: +1-800-123-45-67</li>
+                                <li><a href="mailto:info@thegrandiumhotel.com">info@thegrandiumhotel.com</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h5>RESERVATION</h5>
+                            <ul>
+                                <li>Mr. Michael Feldstein - Director of Reservation</li>
+                                <li>Phone: +1-800-123-45-67  Fax: +1-800-123-45-67</li>
+                                <li><a href="mailto:reservation@thegrandiumhotel.com">reservation@thegrandiumhotel.com</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h5>PUBLIC RELATIONS</h5>
+                            <ul>
+                                <li>Ms. Marilyn Suttle - Public Relations Manager</li>
+                                <li>Phone: +1-800-123-45-67  Fax: +1-800-123-45-67</li>
+                                <li><a href="mailto:public.relations@thegrandiumhotel.com">public.relations@thegrandiumhotel.com</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Contact Info End -->
+            </div>
+            <div class="col-lg-6">
+                <!-- Contact Form -->
+                <div class="widget-contact-form">
+                    <h5>CONTACT FORM</h5>
+                    <p>We are eager to hear from you; please fill in your contact information and one of our staff members will contact you shortly.</p>
+                    <div class="data-form">
+                        <form action="contact.php" id="contact-form" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" id="form-name" name="form-name" placeholder="YOUR NAME">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="form-surname" name="form-surname" placeholder="YOUR SURNAME">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="form-email" name="form-email" placeholder="YOUR EMAIL ADDRESS">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" id="form-phone" name="form-phone" placeholder="YOUR PHONE">
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea cols="6" rows="8" id="form-message" name="form-message" placeholder="YOUR MESSAGE"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="note">* Please fill in all of the required fields</p>
+                                </div>
+                                <div class="col-md-6 align-right">
+                                    <input type="submit" value="SEND FORM" class="btn">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Contact Form End -->
+            </div>
+            <div class="col-lg-12">
+                <!-- Contact Review -->
+                <div class="widget-contact-review">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="review-item">
+                                <div class="item-inner">
+                                    <i class="fa fa-commenting-o"></i> READ OR WRITE REVIEWS
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="review-item">
+                                <div class="item-inner">
+                                    <a href="#" target="_blank"><i class="fa fa-google-plus"></i> GOOGLE PLUS +</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="review-item">
+                                <div class="item-inner">
+                                    <a href="#" target="_blank"><i class="fa fa-yelp"></i> YELP</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="review-item">
+                                <div class="item-inner">
+                                    <a href="#" target="_blank"><i class="fa fa-tripadvisor"></i> TRIPADVISOR</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Review End -->
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Content.Location != null)
+{
+    <div class="section">
+        <div class="wrapper-full">
+            <div class="widget-google-map">
+                <div class="map-title">
+                    <i class="fa fa-map-marker"></i>
+                    <h5>MAP</h5>
+                </div>
+                <div class="map-google"></div>
+            </div>
+        </div>
+    </div>
+}

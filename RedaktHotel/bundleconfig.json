@@ -1,0 +1,44 @@
+[
+  {
+    "outputFileName": "wwwroot/assets/redakthotel.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/bootstrap.min.css",
+      "wwwroot/assets/css/font.awesome.min.css",
+      "wwwroot/assets/css/magnific.popup.css",
+      "wwwroot/assets/css/owl.carousel.css",
+      "wwwroot/assets/css/owl.theme.default.css",
+      "wwwroot/assets/css/jquery-ui.css",
+      "wwwroot/assets/css/style.css",
+      "wwwroot/assets/css/custom.css",
+      "wwwroot/assets/css/responsive.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "includeInProject": true
+  },
+  {
+    "outputFileName": "wwwroot/assets/redakthotel.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/jquery.min.js",
+      "wwwroot/assets/js/jquery-ui.min.js",
+      "wwwroot/assets/js/jquery.fitvids.js",
+      "wwwroot/assets/js/bootstrap.min.js",
+      "wwwroot/assets/js/magnific.popup.min.js",
+      "wwwroot/assets/js/imagesloaded.pkgd.js",
+      "wwwroot/assets/js/isotope.pkgd.min.js",
+      "wwwroot/assets/js/owl.carousel.min.js",
+      "wwwroot/assets/js/booking.form.js",
+      "wwwroot/assets/js/contact.form.js",
+      "wwwroot/assets/js/gmap3.min.js",
+      "wwwroot/assets/js/custom.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "includeInProject": true,
+    "sourceMap": false
+  }
+]

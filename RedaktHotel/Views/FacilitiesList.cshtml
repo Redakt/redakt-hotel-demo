@@ -1,0 +1,26 @@
+﻿@inherits RedaktPage<SimplePage>
+@attribute [DisplayName("Facilities Overview")]
+@await Html.PartialAsync("_PageHeading")
+<div class="section">
+    <div class="wrapper-inner">
+        <div class="widget-services-list">
+            @foreach (var facility in await Model.ChildrenAsync<FacilityPage>())
+            {
+                var bigImage = facility.Content.Images?.FirstOrDefault();
+                var smallImage = facility.Content.Images?.ElementAtOrDefault(1);
+                <div class="services-item">
+                    <div class="item-photo">
+                        <div class="photo-big" data-background="@bigImage?.File.AbsoluteUrl(900, 900)"></div>
+                        <div class="photo-small" data-background="@smallImage?.File.AbsoluteUrl(450, 450)"></div>
+                        <a rx-href="@facility" rx-dictionary-key="LearnMore" class="btn btn-default"></a>
+                    </div>
+                    <div class="item-desc">
+                        <h5 rx-content="@facility.Content.HeadingCaption"></h5>
+                        <h2 rx-content="@facility.Content.PageTitle"></h2>
+                        @Html.Raw(facility.Content.HeadingIntro)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

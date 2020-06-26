@@ -1,0 +1,27 @@
+﻿@model INodeViewModel<SimplePage>
+@{
+    var ancestors = await Model.AncestorsAsync();
+}
+<div class="section">
+    <div class="widget-page-title">
+        @if (Model.Content.HeadingBackgroundImage != null)
+        {
+            <div class="widget-background" data-background="@Model.Content.HeadingBackgroundImage.File.AbsoluteUrl()"></div>
+        }
+        <div class="wrapper-inner">
+            <h5 rx-content="@Model.Content.HeadingCaption" rx-if-empty="RemoveTag"></h5>
+            <h1 rx-content="@Model.Content.PageTitle" rx-if-empty="RemoveTag"></h1>
+            <p rx-content="@Model.Content.HeadingIntro" rx-if-empty="RemoveTag"></p>
+
+            <div class="widget-breadcrumb">
+                <ul>
+                    @foreach (var ancestor in ancestors)
+                    {
+                        <li><a rx-href="@ancestor" rx-content="@ancestor.Content.NavigationTitle" rx-default="@ancestor.Name"></a></li>
+                    }
+                    <li rx-content="@Model.Content.NavigationTitle" rx-default="@Model.Name"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

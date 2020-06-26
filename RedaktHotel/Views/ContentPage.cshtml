@@ -1,0 +1,7 @@
+﻿@inherits RedaktPage<ContentPage>
+@attribute [DisplayName("Generic Content Page")]
+@await Html.PartialAsync("_PageHeading")
+@foreach (var module in Model.Content.Modules)
+{
+    @await Html.PartialAsync("~/Views/Shared/Modules/_" + module.GetType().Name + ".cshtml", new ViewDataDictionary(ViewData) { { "Module", module } })
+}

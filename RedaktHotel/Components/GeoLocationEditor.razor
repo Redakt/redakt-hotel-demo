@@ -1,0 +1,14 @@
+﻿@using Redakt.BackOffice.Components
+@using Redakt.BackOffice.Icons
+@using Redakt.BackOffice.ContentManagement.Content.Editors
+@using Redakt.BackOffice.ContentManagement.Content.Components
+@inherits EditorComponentBase<RedaktHotel.Data.GeoLocation>
+<ContentFormField Definition="@Definition">
+    <div class="rx-input rx-input--text @(IsDisabled ? "rx--disabled" : null)">
+        <label class="rx-input__prefix">Lat, Lng</label>
+        <div style="width: 100%; height: 100%;">
+            <input type="text" style="cursor: pointer;" value="@Label" disabled />
+        </div>
+        <Button Icon="@ContentIcons.MapsSearch" Clicked="@OpenPicker" IsDisabled="@IsDisabled"></Button>
+    </div>
+</ContentFormField>

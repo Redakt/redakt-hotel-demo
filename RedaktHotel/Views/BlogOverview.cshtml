@@ -1,0 +1,124 @@
+﻿@inherits RedaktPage<SimplePage>
+@attribute [DisplayName("Blog Overview")]
+@{
+    var allArticles = await Model.ChildrenAsync<BlogArticle>();
+}
+@await Html.PartialAsync("_PageHeading")
+<div class="section">
+    <div class="wrapper-inner">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="widget-blog-list">
+                    @foreach (var article in allArticles.OrderByDescending(x => x.Content.PublicationDate))
+                    {
+                        <div class="blog-item">
+                            <div class="item-media">
+                                <div class="media-photo">
+                                    <a rx-href="@article" data-background="@article.Content.Image.File.AbsoluteUrl()"></a>
+                                </div>
+                            </div>
+                            <div class="item-desc">
+                                <h2><a rx-href="@article">@article.Content.PageTitle</a></h2>
+                                <h5>BY <a href="#">@article.Content.Author</a> <i class="fa fa-clock-o"></i> @article.Content.PublicationDate.ToShortDateString() <i class="fa fa-bars"></i> 
+                                    @foreach (var category in article.Content.Categories)
+                                    {
+                                        <a href="#" rx-dictionary-key="@category">@category</a> 
+                                    }
+                                </h5>
+                                <p rx-content="@article.Content.ListDescription"></p>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="widget-pager">
+                    <ul>
+                        <li><a href="#">1</a></li>
+                        <li class="active"><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <!-- Blog Sidebar -->
+                <div class="widget-blog-sidebar">
+                    <!-- Sidebar Search -->
+                    <div class="widget sidebar-search">
+                        <h5>SEARCH</h5>
+                        <form>
+                            <input type="text" placeholder="ENTER KEYWORDS" required>
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                    <!-- Sidebar Search End -->
+                    <!-- Sidebar Categories -->
+                    <div class="widget sidebar-categories">
+                        <h5>CATEGORIES</h5>
+                        <nav>
+                            <ul>
+                                <li><a href="#">ACCOMONDATION</a></li>
+                                <li><a href="#">TRAVEL</a></li>
+                                <li><a href="#">SERVICES</a></li>
+                                <li><a href="#">EVENTS</a></li>
+                                <li><a href="#">ROOMS &amp; SUITES</a></li>
+                                <li><a href="#">SPA &amp; GYM</a></li>
+                                <li><a href="#">POOL &amp; SWIM</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Sidebar Categories End -->
+                    <!-- Sidebar Events -->
+                    <div class="widget sidebar-events">
+                        <h5>UPCOMING EVENTS</h5>
+                        <ul>
+                            <li><a href="#"><span><b>APRIL</b>25</span>Mothers Day Lunch at The Grandium</a></li>
+                            <li><a href="#"><span><b>MARCH</b>17</span>New Year's Brunch at The Grandium</a></li>
+                            <li><a href="#"><span><b>JANUARY</b>12</span>Family Christmas Lunch at The Grandium</a></li>
+                        </ul>
+                    </div>
+                    <!-- Sidebar Events End -->
+                    <!-- Sidebar Recent -->
+                    <div class="widget sidebar-recent">
+                        <h5>RECENT POSTS</h5>
+                        <ul>
+                            <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue pharetra diam, eget vestibulum.<span><i class="fa fa-calendar"></i>25 APR 2016 - 18:30</span></a></li>
+                            <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue pharetra diam, eget vestibulum.<span><i class="fa fa-calendar"></i>17 APR 2016 - 18:30</span></a></li>
+                            <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue pharetra diam, eget vestibulum.<span><i class="fa fa-calendar"></i>12 APR 2016 - 18:30</span></a></li>
+                        </ul>
+                    </div>
+                    <!-- Sidebar Recent End -->
+                    <!-- Sidebar Tags -->
+                    <div class="widget sidebar-tags">
+                        <h5>TAGS</h5>
+                        <ul>
+                            <li><a href="#">#TRAVEL</a></li>
+                            <li><a href="#">#SERVICES</a></li>
+                            <li><a href="#">#EVENTS</a></li>
+                            <li><a href="#">#ROOMS</a></li>
+                            <li><a href="#">#POOL</a></li>
+                            <li><a href="#">#SPA</a></li>
+                            <li><a href="#">#ACCOMONDATION</a></li>
+                        </ul>
+                    </div>
+                    <!-- Sidebar Tags End -->
+                    <!-- Sidebar Archive -->
+                    <div class="widget sidebar-archive">
+                        <h5>BLOG ARCHIVE</h5>
+                        <ul>
+                            <li><a href="#">MARCH 2016</a></li>
+                            <li><a href="#">FEBRUARY 2016</a></li>
+                            <li><a href="#">JANUARY 2016</a></li>
+                            <li><a href="#">DECEMBER 2015</a></li>
+                            <li><a href="#">NOVEMBER 2015</a></li>
+                            <li><a href="#">OCTOBER 2015</a></li>
+                        </ul>
+                    </div>
+                    <!-- Sidebar Archive End -->
+                </div>
+                <!-- Blog Sidebar End -->
+            </div>
+        </div>
+    </div>
+</div>

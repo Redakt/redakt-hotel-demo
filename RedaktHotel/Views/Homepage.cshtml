@@ -1,0 +1,64 @@
+﻿@inherits RedaktPage<Homepage>
+<div class="section">
+    <div class="widget-slider">
+        <div class="wrapper-full">
+            <div class="widget-carousel owl-carousel owl-theme">
+                @foreach (var item in Model.Content.SliderItems)
+                {
+                    <div class="slider-item" data-background="@(item.BackgroundImage?.File?.AbsoluteUrl(2560, 1440))">
+                        <div class="wrapper">
+                            <div class="item-inner">
+                                <h5 rx-content="@item.Caption" rx-if-empty="RemoveTag"></h5>
+                                <h1 rx-content="@item.Title" rx-if-empty="RemoveTag"></h1>
+                                <h2 rx-content="@item.Subtitle" rx-if-empty="RemoveTag"></h2>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="slider-booking">
+                <div class="wrapper">
+                    <h5 rx-dictionary-key="BookYourStay"></h5>
+                    <form>
+                        <ul>
+                            <li>
+                                <i class="fa fa-calendar-plus-o"></i>
+                                <input type="text" name="checkin" placeholder="@Redakt.DictionaryString("CheckInDate")" class="datepicker" required>
+                            </li>
+                            <li>
+                                <i class="fa fa-calendar-plus-o"></i>
+                                <input type="text" name="checkout" placeholder="@Redakt.DictionaryString("CheckOutDate")" class="datepicker" required>
+                            </li>
+                            <li>
+                                <i class="fa fa-caret-down"></i>
+                                <select name="adults" required>
+                                    <option value="" rx-dictionary-key="Adults"></option>
+                                    <option value="1">1 <rx-dictionary key="Adult" /></option>
+                                    <option value="2">2 <rx-dictionary key="Adults" /></option>
+                                    <option value="3">3 <rx-dictionary key="Adults" /></option>
+                                </select>
+                            </li>
+                            <li>
+                                <i class="fa fa-caret-down"></i>
+                                <select name="children" required>
+                                    <option value="" rx-dictionary-key="Children"></option>
+                                    <option value="1">1 <rx-dictionary key="Child" /></option>
+                                    <option value="2">2 <rx-dictionary key="Children" /></option>
+                                    <option value="3">3 <rx-dictionary key="Children" /></option>
+                                </select>
+                            </li>
+                            <li>
+                                <button type="submit" class="btn" rx-dictionary-key="BookNow"></button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var module in Model.Content.Modules)
+{
+    @await Html.PartialAsync("~/Views/Shared/Modules/_" + module.GetType().Name + ".cshtml", new ViewDataDictionary(ViewData) { { "Module", module } })
+}
