@@ -11,16 +11,17 @@ No special steps are required to setup this application. Simply clone the reposi
 
 The Redakt Hotel & Resort application uses an embedded LiteDB database by default. When running the application for the first time, startup will take a little bit longer as the database will be seeded with automatically generated content.
 
-After that, you will be redirected to the short setup wizard where you can enter the administrator account details.
+After that, you will be redirected to the short setup wizard where you can enter the administrator account details. From there you can start using the application.
 
 ## Projects
 
 The Redakt Resort & Hotel application consists of the following projects:
 
- - RedaktHotel
-This is the main runnable web project and includes the application's views and models.
- - RedaktHotel.BackOfficeExtensions
-This projects contains example custom extensions to the back office application, including a custom property editor and a booking module built with Redakt back office components.
+ - `RedaktHotel`  
+   This is the main runnable web project and includes the application's views and models.
+
+ - `RedaktHotel.BackOfficeExtensions`  
+   This projects contains example custom extensions to the back office application, including a custom property editor and a booking module built with Redakt back office components.
 
 ## Using Redakt for your project
 
