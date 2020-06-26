@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Redakt.BackOffice.Onboarding;
+using RedaktHotel.BackOfficeExtensions.Components;
 
-namespace RedaktHotel.Components
+namespace RedaktHotel.BackOfficeExtensions
 {
     public class CustomOnboardingStep: IBackOfficeOnboardingStep
     {

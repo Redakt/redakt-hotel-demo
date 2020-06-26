@@ -7,6 +7,7 @@ var RedaktHotel = (function () {
         let location = [4.899432, 52.379752];
         if (latitude && longitude) location = [longitude, latitude];
 
+        // Initialize Mapbox map with OpenStreetMap data.
         const map = new mapboxgl.Map({
             container: containerId,
             style: {

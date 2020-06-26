@@ -1,8 +1,4 @@
-﻿@using Redakt.BackOffice.Components
-@using Redakt.BackOffice.Icons
-@using Redakt.BackOffice.ContentManagement.Content.Editors
-@using Redakt.BackOffice.ContentManagement.Content.Components
-@inherits EditorComponentBase<RedaktHotel.Data.GeoLocation>
+﻿@inherits EditorComponentBase<RedaktHotel.BackOfficeExtensions.Models.GeoLocation>
 <ContentFormField Definition="@Definition">
     <div class="rx-input rx-input--text @(IsDisabled ? "rx--disabled" : null)">
         <label class="rx-input__prefix">Lat, Lng</label>

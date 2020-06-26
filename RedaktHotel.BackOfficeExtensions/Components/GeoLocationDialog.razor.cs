@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using RedaktHotel.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using RedaktHotel.BackOfficeExtensions.Models;
 
-namespace RedaktHotel.Components
+namespace RedaktHotel.BackOfficeExtensions.Components
 {
     public partial class GeoLocationDialog
     {

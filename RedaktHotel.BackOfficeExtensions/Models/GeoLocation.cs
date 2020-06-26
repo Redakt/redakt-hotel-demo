@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Redakt.Serialization;
 
-namespace RedaktHotel.Data
+namespace RedaktHotel.BackOfficeExtensions.Models
 {
+    [KnownType("GeoLocation")]
     public class GeoLocation
     {
         public double Latitude { get; set; }

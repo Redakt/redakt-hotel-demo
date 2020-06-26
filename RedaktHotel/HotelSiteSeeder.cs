@@ -448,7 +448,7 @@ namespace RedaktHotel
             context.Rooms.Add(roomPage);
         }
 
-        private async Task<string> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, string parentId, ILocalizedContent content, string englishName, string dutchName, string? viewName = null)
+        private async Task<string> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, string parentId, ILocalizedContent content, string englishName, string dutchName, string viewName = null)
         {
             var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
             var contentType = content.ContentType();
@@ -519,7 +519,7 @@ namespace RedaktHotel
             return content;
         }
 
-        private LocalizedContent CreateTextWithImageModule(CultureInfo culture, string? imageId = null, string? heading = null, string? headingCaption = null)
+        private LocalizedContent CreateTextWithImageModule(CultureInfo culture, string imageId = null, string heading = null, string headingCaption = null)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<TextWithImage>());
 
@@ -531,7 +531,7 @@ namespace RedaktHotel
             return content;
         }
 
-        private LocalizedContent CreateImageGalleryModule(IEnumerable<string> imageIds, CultureInfo culture, string? heading = null, string? headingCaption = null)
+        private LocalizedContent CreateImageGalleryModule(IEnumerable<string> imageIds, CultureInfo culture, string heading = null, string headingCaption = null)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<ImageGallery>());
 

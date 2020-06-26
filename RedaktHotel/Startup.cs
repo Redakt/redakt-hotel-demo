@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Redakt.BackOffice.Onboarding;
-using RedaktHotel.Components;
+using RedaktHotel.BackOfficeExtensions;
 
 namespace RedaktHotel
 {

@@ -6,10 +6,8 @@ using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
 using Redakt.Domain.Commands;
-using Redakt.Extensions;
-using Redakt.Languages;
 
-namespace RedaktHotel.Components
+namespace RedaktHotel.BackOfficeExtensions.Components
 {
     public partial class WelcomeOnboard
     {

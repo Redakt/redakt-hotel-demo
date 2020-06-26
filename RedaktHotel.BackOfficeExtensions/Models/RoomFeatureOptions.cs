@@ -1,11 +1,9 @@
 ﻿using Redakt.BackOffice.Form;
 using Redakt.ContentManagement.Editors;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace RedaktHotel.Data
+namespace RedaktHotel.BackOfficeExtensions.Models
 {
     public class RoomFeatureOptions : ISelectOptionsProvider
     {

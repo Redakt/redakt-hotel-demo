@@ -1,9 +1,9 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using RedaktHotel.Data;
 using RedaktHotel.Models.Assets;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using RedaktHotel.BackOfficeExtensions.Models;
 
 namespace RedaktHotel.Models.Pages
 {

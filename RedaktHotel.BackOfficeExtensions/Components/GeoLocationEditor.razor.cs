@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Redakt.BackOffice;
 using Redakt.BackOffice.Components.Dialog;
-using RedaktHotel.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using RedaktHotel.BackOfficeExtensions.Models;
 
-namespace RedaktHotel.Components
+namespace RedaktHotel.BackOfficeExtensions.Components
 {
     public partial class GeoLocationEditor
     {
