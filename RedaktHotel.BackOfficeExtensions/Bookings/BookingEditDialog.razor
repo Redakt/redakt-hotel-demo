@@ -1,0 +1,65 @@
+﻿@inherits ModalBase
+<Dialog IsDraggable="true" IsResizable="true" Width="560">
+    <DialogHeader>@(Model.IsNew ? "Create New Booking" : "Edit Booking")</DialogHeader>
+    <DialogContent>
+        @if (Model != null)
+        {
+        <EditForm Model="@Model" OnValidSubmit="@OnSubmit" class="rx-form">
+            <DataAnnotationsValidator />
+
+            <FormField Label="Status" ValidateFor="@(() => Model.Status)">
+                <SelectList Options="@BookingEditModel.StatusOptions" @bind-Value="@Model.Status" Width="100%"></SelectList>
+            </FormField>
+
+            <FormField Label="Room" ValidateFor="@(() => Model.Room)">
+                <TextBox @bind-Value="@Model.Room"></TextBox>
+            </FormField>
+
+            <FieldSet>
+                <FormField Label="Check In" ValidateFor="@(() => Model.CheckInDate)">
+                    <DateTimePicker @bind-Value="@Model.CheckInDate"></DateTimePicker>
+                </FormField>
+                <FormField Label="Check Out" ValidateFor="@(() => Model.CheckOutDate)">
+                    <DateTimePicker @bind-Value="@Model.CheckOutDate"></DateTimePicker>
+                </FormField>
+            </FieldSet>
+
+            @*<FieldSet>
+            <FormField Label="Adults" ValidateFor="@(() => Model.NumberOfAdults)">
+                <NumberInput @bind-Value="@Model.NumberOfAdults" Minimum="1" Maximum="4"></NumberInput>
+            </FormField>
+            <FormField Label="Children" ValidateFor="@(() => Model.NumberOfChildren)">
+                <NumberInput @bind-Value="@Model.NumberOfAdults" Maximum="4"></NumberInput>
+            </FormField>
+        </FieldSet>*@
+
+            <FieldSet>
+                <FormField Label="First Name" ValidateFor="@(() => Model.GuestFirstName)">
+                    <TextBox @bind-Value="@Model.GuestFirstName"></TextBox>
+                </FormField>
+                <FormField Label="Last Name" ValidateFor="@(() => Model.GuestLastName)">
+                    <TextBox @bind-Value="@Model.GuestLastName"></TextBox>
+                </FormField>
+            </FieldSet>
+
+            <FieldSet>
+                <FormField Label="Email Address" ValidateFor="@(() => Model.GuestEmail)">
+                    <TextBox @bind-Value="@Model.GuestEmail"></TextBox>
+                </FormField>
+                <FormField Label="Phone Number" ValidateFor="@(() => Model.GuestPhone)">
+                    <TextBox @bind-Value="@Model.GuestPhone"></TextBox>
+                </FormField>
+            </FieldSet>
+
+            <DialogActions>
+                <Button Icon="@ApplicationIcons.Block" Label="@Helper.Localize["Cancel"]" Clicked="@Cancel"></Button>
+                @if (!Model.IsNew)
+                {
+                    <Button type="button" Icon="@ApplicationIcons.ContentDelete" Style="@ElementStyle.Danger" Label="@Helper.Localize["Delete"]" Clicked="@Delete"></Button>
+                }
+                <Button type="submit" Icon="@ApplicationIcons.Save" Label="@(Model.IsNew ? "Create Booking": "Save Changes")" Style="@ElementStyle.Primary"></Button>
+            </DialogActions>
+        </EditForm>
+        }
+    </DialogContent>
+</Dialog>

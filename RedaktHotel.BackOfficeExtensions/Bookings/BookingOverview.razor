@@ -1,0 +1,34 @@
+﻿@page "/bookings"
+@page "/bookings/{Status}"
+<BookingSidebar></BookingSidebar>
+<MainView>
+    @if (!IsInitialized)
+    {
+        <Loader />
+    }
+    else
+    {
+        <Toolbar>
+            <Button Icon="@ApplicationIcons.Add" Label="New Booking" Style="@ElementStyle.Ghost" Clicked="@OnNewBooking"></Button>
+        </Toolbar>
+        <Panel>
+            <Heading>Bookings (@Status)</Heading>
+            <div class="rx-form" @key="@Status">
+                <GridView Items="@Bookings" TItem="BookingEntity" ItemClicked="@OnBookingClicked">
+                    <GridViewColumn TItem="BookingEntity" Header="Room">
+                        <span>@context.Room</span>
+                    </GridViewColumn>
+                    <GridViewColumn TItem="BookingEntity" Header="Check In">
+                        <span>@context.CheckInDate.ToShortDateString()</span>
+                    </GridViewColumn>
+                    <GridViewColumn TItem="BookingEntity" Header="Check Out">
+                        <span>@context.CheckOutDate.ToShortDateString()</span>
+                    </GridViewColumn>
+                    <GridViewColumn TItem="BookingEntity" Header="Guest">
+                        <span>@context.GuestFirstName @context.GuestLastName</span>
+                    </GridViewColumn>
+                </GridView>
+            </div>
+        </Panel>
+    }
+</MainView>
