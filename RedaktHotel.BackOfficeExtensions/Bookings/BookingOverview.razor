@@ -13,6 +13,10 @@
         </Toolbar>
         <Panel>
             <Heading>Bookings (@Status)</Heading>
+            <AlertBox AlertStyle="@AlertStyle.Info">
+                Please note: this booking module is not part of standard Redakt features. It is an example of a custom back office module, demonstrating the ability to seamlessly integrate your own business processes within a Redakt solution.
+            </AlertBox>
+
             <div class="rx-form" @key="@Status">
                 <GridView Items="@Bookings" TItem="BookingEntity" ItemClicked="@OnBookingClicked">
                     <GridViewColumn TItem="BookingEntity" Header="Room">
