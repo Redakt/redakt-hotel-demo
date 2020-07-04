@@ -1,7 +1,6 @@
-﻿using Redakt.BackOffice.Icons;
-using Redakt.ContentManagement.Annotations;
+﻿using Redakt.ContentManagement.Annotations;
 using Redakt.ContentManagement.Configuration;
-using Redakt.ContentManagement.Editors;
+using Redakt.ContentManagement.Models;
 using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded

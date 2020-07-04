@@ -3,6 +3,7 @@ using Redakt.ContentManagement.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
+using RedaktHotel.BackOfficeExtensions.Annotations;
 using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Pages
@@ -19,6 +20,7 @@ namespace RedaktHotel.Web.Models.Pages
 
         [Required]
         [CultureInvariant]
+        [MinCurrentDate]  // Custom validation attribute that does not allow dates in the past.
         [Section("Article")]
         public DateTime PublicationDate { get; set; }
 

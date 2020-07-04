@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Redakt.BackOffice.Form;
+using Redakt.BackOffice.Forms;
 
 namespace RedaktHotel.BackOfficeExtensions.Bookings
 {

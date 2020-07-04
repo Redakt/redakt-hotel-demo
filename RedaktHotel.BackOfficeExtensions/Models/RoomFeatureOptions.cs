@@ -1,5 +1,4 @@
-﻿using Redakt.BackOffice.Form;
-using Redakt.ContentManagement.Editors;
+﻿using Redakt.BackOffice.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

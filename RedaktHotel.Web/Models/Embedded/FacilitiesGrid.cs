@@ -1,6 +1,6 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Editors;
+using Redakt.ContentManagement.Models;
 using System.Collections.Generic;
 using RedaktHotel.Web.Models.Pages;
 

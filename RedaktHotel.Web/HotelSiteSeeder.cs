@@ -19,13 +19,15 @@ using Microsoft.AspNetCore.Http;
 using RedaktHotel.Web.Models.Pages;
 using RedaktHotel.Web.Models.Embedded;
 using LoremNET;
-using Redakt.ContentManagement.Editors;
 using Redakt.Data;
 using Redakt.Domain.Commands;
 using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
 using Redakt.Dictionary.Commands;
+using Redakt.ContentManagement.Models;
+using Redakt.Files.Commands;
+using Redakt.ContentManagement.Files;
 
 namespace RedaktHotel.Web
 {
@@ -570,25 +572,18 @@ namespace RedaktHotel.Web
 
         private async Task CreateStaffMemberAsync(IServiceProvider serviceProvider, SeederContext context, int imageNumber, string name, string roleEnglish, string roleDutch)
         {
-            var fileService = serviceProvider.GetRequiredService<IFileService>();
             var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
 
-            var file = new ImageFile
-            {
-                ContentType = "image/jpeg",
-                FileName = $"staff-{imageNumber}.jpg",
-                RelativeUrl = $"staff-{imageNumber}.jpg"
-            };
-
+            var fileId = IdGenerator.GenerateId();
             await using (var fileStream = File.OpenRead(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\staff\staff-{imageNumber}.jpg")))
             {
-                await fileService.WriteFileAsync(file, fileStream).NoSync();
+                await dispatcher.ExecuteAsync(new CreateFile(fileId, fileStream, $"staff-{imageNumber}.jpg", "image/jpeg"));
             }
 
             var contentType = ContentTypeDefinition.Lookup<StaffMember>();
             var content = new LocalizedContent(contentType);
 
-            this.SetProperty(content, nameof(StaffMember.Picture), file);
+            this.SetProperty(content, nameof(StaffMember.Picture), new MediaFile(fileId));
             this.SetProperty(content, nameof(StaffMember.Name), name);
             this.SetProperty(content, nameof(StaffMember.Role), roleEnglish, roleDutch);
 
@@ -609,23 +604,16 @@ namespace RedaktHotel.Web
             var fileService = serviceProvider.GetRequiredService<IFileService>();
             var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
 
-            var fileName = Path.GetFileName(imageFile);
-            var file = new ImageFile
-            {
-                ContentType = "image/jpeg",
-                FileName = fileName,
-                RelativeUrl = fileName
-            };
-
+            var fileId = IdGenerator.GenerateId();
             await using (var fileStream = File.OpenRead(imageFile))
             {
-                await fileService.WriteFileAsync(file, fileStream).NoSync();
+                await dispatcher.ExecuteAsync(new CreateFile(fileId, fileStream, Path.GetFileName(imageFile), "image/jpeg"));
             }
 
             var contentType = ContentTypeDefinition.Lookup<Image>();
             var content = new LocalizedContent(contentType);
 
-            this.SetProperty(content, nameof(Image.File), file);
+            this.SetProperty(content, nameof(Image.File), new MediaFile(fileId));
 
             // Events
             var nodeId = IdGenerator.GenerateId();

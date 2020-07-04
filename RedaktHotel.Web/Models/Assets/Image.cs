@@ -1,7 +1,7 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
 using Redakt.ContentManagement.Configuration;
-using Redakt.Files;
+using Redakt.ContentManagement.Models;
 
 namespace RedaktHotel.Web.Models.Assets
 {
@@ -14,7 +14,7 @@ namespace RedaktHotel.Web.Models.Assets
         [AcceptMimeType("image/jpeg", "image/gif", "image/png", "image/bmp", "image/tiff", "image/svg+xml")]
         [CultureInvariant]
         [Section("Image")]
-        public ImageFile File { get; set; }
+        public Media File { get; set; }
 
         [Section("Image")]
         public string AlternateText { get; set; }

@@ -1,7 +1,7 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
 using Redakt.ContentManagement.Configuration;
-using Redakt.Files;
+using Redakt.ContentManagement.Models;
 
 namespace RedaktHotel.Web.Models.Assets
 {
@@ -11,7 +11,7 @@ namespace RedaktHotel.Web.Models.Assets
     public class Video: IContentType
     {
         [CultureInvariant]
-        public FileDescriptor File { get; set; }
+        public Media File { get; set; }
 
         public string Title { get; set; }
     }
