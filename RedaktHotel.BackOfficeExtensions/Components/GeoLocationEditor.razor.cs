@@ -8,10 +8,6 @@ namespace RedaktHotel.BackOfficeExtensions.Components
 {
     public partial class GeoLocationEditor
     {
-        // The BackOfficeHelper contains convenience methods for localization, dialogs, navigation, etc.
-        [Inject]
-        private BackOfficeHelper Helper {  get; set; }
-
         private string Label { get; set; }
 
         protected override void OnInitialized()
@@ -22,7 +18,7 @@ namespace RedaktHotel.BackOfficeExtensions.Components
         private async Task OpenPicker()
         {
             // Open the geo location dialog so the user can selecxt a location.
-            var dialogResult = await this.Helper.ModalDialog.ShowAsync<GeoLocationDialog>(new ModalOptions().SetParameter(nameof(GeoLocationDialog.Location), this.SingleValue));
+            var dialogResult = await this.Context.ModalDialog.ShowAsync<GeoLocationDialog>(new ModalOptions().SetParameter(nameof(GeoLocationDialog.Location), this.SingleValue));
             if (dialogResult.Cancelled) return;  // User cancelled out of the dialog.
 
             // The dialog has set the (new) geo location in the result data; update the content value.

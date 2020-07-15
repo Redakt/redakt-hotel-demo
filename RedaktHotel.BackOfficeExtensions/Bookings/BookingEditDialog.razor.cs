@@ -27,7 +27,7 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
 
         private async Task Delete()
         {
-            var confirmResult = await this.Helper.ModalDialog.ShowMessageAsync("Delete Booking", "Are you sure you want to delete this booking?", MessageDialogOptions.ConfirmCancel);
+            var confirmResult = await this.Context.ModalDialog.ShowMessageAsync("Delete Booking", "Are you sure you want to delete this booking?", MessageDialogOptions.ConfirmCancel);
             if (confirmResult.Cancelled) return;
 
             this.Close(ModalResult.Ok(true));

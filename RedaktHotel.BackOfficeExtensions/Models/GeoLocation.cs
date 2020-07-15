@@ -2,7 +2,7 @@
 
 namespace RedaktHotel.BackOfficeExtensions.Models
 {
-    [KnownType("GeoLocation")]
+    [TypeDiscriminator("GeoLocation")]
     public class GeoLocation
     {
         public double Latitude { get; set; }

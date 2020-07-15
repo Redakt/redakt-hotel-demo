@@ -52,10 +52,10 @@
             </FieldSet>
 
             <DialogActions>
-                <Button Icon="@ApplicationIcons.Block" Label="@Helper.Localize["Cancel"]" Clicked="@Cancel"></Button>
+                <Button Icon="@ApplicationIcons.Block" Label="@Context.Localize["Cancel"]" Clicked="@Cancel"></Button>
                 @if (!Model.IsNew)
                 {
-                    <Button type="button" Icon="@ApplicationIcons.ContentDelete" Style="@ElementStyle.Danger" Label="@Helper.Localize["Delete"]" Clicked="@Delete"></Button>
+                    <Button type="button" Icon="@ApplicationIcons.ContentDelete" Style="@ElementStyle.Danger" Label="@Context.Localize["Delete"]" Clicked="@Delete"></Button>
                 }
                 <Button type="submit" Icon="@ApplicationIcons.Save" Label="@(Model.IsNew ? "Create Booking": "Save Changes")" Style="@ElementStyle.Primary"></Button>
             </DialogActions>

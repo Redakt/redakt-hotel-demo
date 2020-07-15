@@ -15,7 +15,7 @@ using Redakt.Extensions;
 namespace RedaktHotel.BackOfficeExtensions.Bookings
 {
     [Authorize]
-    [NavigationItem("Bookings", "bookings", "modules", DisplayOrder = 10, Icon = "calendar|Application")]
+    [BackOfficeModule("Bookings", "bookings", "modules", NavigationOrder = 10, Icon = "calendar|Application")]
     public partial class BookingOverview
     {
         #region [ Fields ]
@@ -24,7 +24,7 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
 
         #region [ Dependency Injection
         [Inject]
-        private BackOfficeHelper Helper { get; set; }
+        private BackOfficeContext Context { get; set; }
 
         [Inject]
         private IRepository<BookingEntity> BookingRepository { get; set; }
@@ -44,7 +44,7 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
         #region [ Initialization ]
         protected override void OnInitialized()
         {
-            if (string.IsNullOrWhiteSpace(this.Status)) this.Helper.Navigation.NavigateTo("bookings/open");
+            if (string.IsNullOrWhiteSpace(this.Status)) this.Context.Navigation.NavigateTo("bookings/open");
         }
 
         protected override async Task OnParametersSetAsync()
@@ -65,7 +65,7 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
             var model = new BookingEditModel { Status = this.Status };
 
             // Open booking edit dialog.
-            var dialogResult = await this.Helper.ModalDialog.ShowAsync<BookingEditDialog>(new ModalOptions().SetParameter(nameof(BookingEditDialog.Model), model));
+            var dialogResult = await this.Context.ModalDialog.ShowAsync<BookingEditDialog>(new ModalOptions().SetParameter(nameof(BookingEditDialog.Model), model));
             if (dialogResult.Cancelled) return;  // User has cancelled the action.
 
             // The model now contains validated data for the new booking.
@@ -80,7 +80,7 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
             var model = BookingEditModel.FromEntity(booking);
 
             // Open booking edit dialog.
-            var dialogResult = await this.Helper.ModalDialog.ShowAsync<BookingEditDialog>(new ModalOptions().SetParameter(nameof(BookingEditDialog.Model), model));
+            var dialogResult = await this.Context.ModalDialog.ShowAsync<BookingEditDialog>(new ModalOptions().SetParameter(nameof(BookingEditDialog.Model), model));
             if (dialogResult.Cancelled) return;  // User has cancelled the action.
 
             if ((bool) dialogResult.Data)
@@ -90,11 +90,11 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
                     // Delete booking
                     await this.BookingRepository.DeleteAsync(booking.Id);
 
-                    await this.Helper.Notifications.ShowSuccessAsync(null, "The booking has been deleted.");
+                    await this.Context.Notifications.ShowSuccessAsync(null, "The booking has been deleted.");
                 }
                 catch (Exception ex)
                 {
-                    await this.Helper.Notifications.ShowErrorAsync("Error", ex.Message);
+                    await this.Context.Notifications.ShowErrorAsync("Error", ex.Message);
                 }
                 
                 this.Bookings.Remove(booking);
@@ -118,11 +118,11 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
                 // Add the booking to the current collection if it is the same status.
                 if (entity.Status == this.Status) this.Bookings.Add(entity);
 
-                await this.Helper.Notifications.ShowSuccessAsync(null, "The new booking has been created.");
+                await this.Context.Notifications.ShowSuccessAsync(null, "The new booking has been created.");
             }
             catch (Exception ex)
             {
-                await this.Helper.Notifications.ShowErrorAsync("Error", ex.Message);
+                await this.Context.Notifications.ShowErrorAsync("Error", ex.Message);
             }
         }
         #endregion
