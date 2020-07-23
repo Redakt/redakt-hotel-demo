@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Redakt.BackOffice;
-using Redakt.BackOffice.Annotations;
 using Redakt.BackOffice.Components.Dialog;
-using Redakt.BackOffice.ContentManagement.Nodes.Dialogs;
-using Redakt.BackOffice.ContentManagement.Nodes.EditModels;
+using Redakt.BackOffice.Components.Navigation;
 using Redakt.Data.DocumentStore;
 using Redakt.Extensions;
 
 namespace RedaktHotel.BackOfficeExtensions.Bookings
 {
     [Authorize]
-    [BackOfficeModule("Bookings", "bookings", "modules", NavigationOrder = 10, Icon = "calendar|Application")]
+    [NavigationItem("bookings", "Bookings", NavigationOrder = 10, Icon = "calendar|Application")]
     public partial class BookingOverview
     {
         #region [ Fields ]

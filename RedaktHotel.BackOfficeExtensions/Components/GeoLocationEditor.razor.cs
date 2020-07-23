@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Redakt.BackOffice;
-using Redakt.BackOffice.Components.Dialog;
+﻿using Redakt.BackOffice.Components.Dialog;
 using System.Threading.Tasks;
 using RedaktHotel.BackOfficeExtensions.Models;
 
