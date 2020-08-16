@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.5" />
-    <PackageReference Include="Redakt.BackOffice.ContentManagement" Version="1.0.0-pre7" />
+    <PackageReference Include="Redakt.BackOffice.ContentManagement" Version="1.0.0-pre8" />
   </ItemGroup>
 
 </Project>
