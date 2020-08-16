@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
-using Redakt.Domain.Commands;
+using Redakt.EventSourcing;
 
 namespace RedaktHotel.BackOfficeExtensions.Components
 {
@@ -19,7 +19,7 @@ namespace RedaktHotel.BackOfficeExtensions.Components
         private IHttpContextAccessor HttpContextAccessor { get; set; }
 
         [Inject]
-        private ICommandDispatcher CommandDispatcher { get; set; }
+        private ICommandBus CommandBus { get; set; }
         #endregion
 
         #region [ Properties ]
@@ -39,7 +39,7 @@ namespace RedaktHotel.BackOfficeExtensions.Components
 
                 foreach (var host in site.Hosts)
                 {
-                    await this.CommandDispatcher.ExecuteAsync(new SetNodeCollectionHost(site.Id, new NodeCollectionHost
+                    await this.CommandBus.PublishAsync(new SetNodeCollectionHost(NodeCollectionId.With(site.Id), new NodeCollectionHost
                     {
                         Id = host.Id,
                         Scheme = host.Scheme,

@@ -11,7 +11,6 @@ using Redakt.ContentManagement.Configuration;
 using Redakt.ContentManagement.Content;
 using Redakt.ContentManagement.Nodes;
 using Redakt.Languages;
-using Redakt.Extensions;
 using Redakt.Files;
 using Redakt.ContentManagement.NestedContent;
 using RedaktHotel.Web.Models.Assets;
@@ -19,8 +18,8 @@ using Microsoft.AspNetCore.Http;
 using RedaktHotel.Web.Models.Pages;
 using RedaktHotel.Web.Models.Embedded;
 using LoremNET;
+using Redakt.ContentManagement.Content.Aggregates;
 using Redakt.Data;
-using Redakt.Domain.Commands;
 using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
@@ -28,6 +27,10 @@ using Redakt.Dictionary.Commands;
 using Redakt.ContentManagement.Models;
 using Redakt.Files.Commands;
 using Redakt.ContentManagement.Files;
+using Redakt.ContentManagement.Nodes.Aggregates;
+using Redakt.Dictionary.Aggregates;
+using Redakt.EventSourcing;
+using Redakt.Files.Aggregates;
 
 namespace RedaktHotel.Web
 {
@@ -55,25 +58,23 @@ namespace RedaktHotel.Web
 
         private class SeederContext
         {
-            public string SiteId { get; set; }
+            public NodeCollectionId SiteId { get; set; }
 
-            public string AssetLibraryId { get; set; }
+            public NodeCollectionId AssetLibraryId { get; set; }
 
-            public string StaffMembersFolderId { get; set; }
+            public NodeId StaffMembersFolderId { get; set; }
 
-            public string ImagesFolderId { get; set; }
+            public NodeId ImagesFolderId { get; set; }
 
             public List<string> AllImages { get; } = new List<string>();
 
-            public string BlogParentId { get; set; }
+            public NodeId BlogParentId { get; set; }
 
             public List<string> Rooms { get; } = new List<string>();
 
             public List<string> Facilities { get; } = new List<string>();
 
-            public string LabelsCategoryId { get; set; }
-
-            public List<ICommand> Commands { get; } = new List<ICommand>();
+            public DictionaryCategoryId LabelsCategoryId { get; set; }
         }
 
         private async Task ProvisionSiteAsync()
@@ -115,45 +116,45 @@ namespace RedaktHotel.Web
 
         private async Task CreateDictionaryAsync(IServiceProvider serviceProvider, SeederContext context)
         {
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
             // Create labels dictionary category
-            context.LabelsCategoryId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new CreateDictionaryCategory(context.LabelsCategoryId, "Labels"));
+            context.LabelsCategoryId = DictionaryCategoryId.New;
+            await commandBus.PublishAsync(new CreateDictionaryCategory(context.LabelsCategoryId, "Labels"));
             
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "TheRedaktHotelAndResort", "The Redakt Hotel and Resort", "Het Redakt Hotel en Resort");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "LearnMore", "Learn More", "Meer weten");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "ReadMore", "Read More", "Lees verder");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "TheRedaktHotelAndResort", "The Redakt Hotel and Resort", "Het Redakt Hotel en Resort");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "LearnMore", "Learn More", "Meer weten");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "ReadMore", "Read More", "Lees verder");
 
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "news", "News", "Nieuws");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "hotel", "Hotel", "Hotel");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "dining", "Dining", "Dineren");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "facilities", "Facilities", "Faciliteiten");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "offers", "Offers", "Aanbiedingen");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "events", "Events", "Evenementen");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "excursions", "Excursions", "Excursies");
-            await this.CreateDictionaryEntryAsync(dispatcher, context.LabelsCategoryId, "spa", "Spa & wellness", "Spa & wellness");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "news", "News", "Nieuws");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "hotel", "Hotel", "Hotel");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "dining", "Dining", "Dineren");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "facilities", "Facilities", "Faciliteiten");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "offers", "Offers", "Aanbiedingen");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "events", "Events", "Evenementen");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "excursions", "Excursions", "Excursies");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "spa", "Spa & wellness", "Spa & wellness");
 
             // Create booking dictionary category
-            var bookingCategoryId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new CreateDictionaryCategory(bookingCategoryId, "Booking"));
+            var bookingCategoryId = DictionaryCategoryId.New;
+            await commandBus.PublishAsync(new CreateDictionaryCategory(bookingCategoryId, "Booking"));
             
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "Booking", "Booking", "Reservering");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "BookThisRoom", "Book this room", "Reserveer kamer");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "CheckInDate", "Check In", "Incheckdatum");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "CheckOutDate", "Check Out", "Uitcheckdatum");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "Adults", "Adults", "Volwassenen");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "Adult", "Adult", "Volwassene");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "Children", "Children", "Kinderen");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "Child", "Child", "Kind");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "BookYourStay", "Book your stay with us", "Reserveer uw verblijf bij ons");
-            await this.CreateDictionaryEntryAsync(dispatcher, bookingCategoryId, "BookNow", "Book now", "Reserveer nu");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Booking", "Booking", "Reservering");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookThisRoom", "Book this room", "Reserveer kamer");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckInDate", "Check In", "Incheckdatum");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckOutDate", "Check Out", "Uitcheckdatum");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Adults", "Adults", "Volwassenen");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Adult", "Adult", "Volwassene");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Children", "Children", "Kinderen");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Child", "Child", "Kind");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookYourStay", "Book your stay with us", "Reserveer uw verblijf bij ons");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookNow", "Book now", "Reserveer nu");
         }
 
-        private async Task CreateDictionaryEntryAsync(ICommandDispatcher dispatcher, string categoryId, string key, string englishLabel, string dutchLabel)
+        private async Task CreateDictionaryEntryAsync(ICommandBus commandBus, string categoryId, string key, string englishLabel, string dutchLabel)
         {
-            var itemId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new CreateDictionaryItem(itemId, categoryId, key));
+            var itemId = DictionaryItemId.New;
+            await commandBus.PublishAsync(new CreateDictionaryItem(itemId, categoryId, key));
 
             var values = new Dictionary<CultureInfo, string>
             {
@@ -161,47 +162,47 @@ namespace RedaktHotel.Web
                 [_dutchCulture] = dutchLabel
             };
 
-            await dispatcher.ExecuteAsync(new SetDictionaryItemValues(itemId, values));
+            await commandBus.PublishAsync(new SetDictionaryItemValues(itemId, values));
         }
 
         private async Task CreateLibrariesAsync(IServiceProvider serviceProvider, SeederContext context)
         {
             var folderDefinition = ContentTypeDefinition.Lookup<MediaFolder>();
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
             // Create media library
-            context.AssetLibraryId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new CreateNodeCollection(context.AssetLibraryId, NodeCollectionTypes.AssetLibrary, "Media", 0));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
-            //await dispatcher.ExecuteAsync(new AddNodeCollectionMapping(context.AssetLibraryId, IdGenerator.GenerateId(), CultureInfo.GetCultureInfo("en-US"), _englishCulture));
+            context.AssetLibraryId = NodeCollectionId.New;
+            await commandBus.PublishAsync(new CreateNodeCollection(context.AssetLibraryId, NodeCollectionTypes.AssetLibrary, "Media", 0));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
+            //await commandBus.PublishAsync(new AddNodeCollectionMapping(context.AssetLibraryId, IdGenerator.GenerateId(), CultureInfo.GetCultureInfo("en-US"), _englishCulture));
 
             // Create staff library
-            var staffLibraryId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new CreateNodeCollection(staffLibraryId, NodeCollectionTypes.AssetLibrary, "Staff", 0));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
+            var staffLibraryId = NodeCollectionId.New;
+            await commandBus.PublishAsync(new CreateNodeCollection(staffLibraryId, NodeCollectionTypes.AssetLibrary, "Staff", 0));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
 
-            context.ImagesFolderId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(context.ImagesFolderId, folderDefinition, "Images", context.AssetLibraryId, 0));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(IdGenerator.GenerateId(), folderDefinition, "Videos", context.AssetLibraryId, 1));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(IdGenerator.GenerateId(), folderDefinition, "Documents", context.AssetLibraryId, 2));
+            context.ImagesFolderId = NodeId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(context.ImagesFolderId, folderDefinition, "Images", context.AssetLibraryId, 0));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(NodeId.New, folderDefinition, "Videos", context.AssetLibraryId, 1));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(NodeId.New, folderDefinition, "Documents", context.AssetLibraryId, 2));
 
-            context.StaffMembersFolderId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(context.StaffMembersFolderId, ContentTypeDefinition.Lookup<StaffFolder>(), "Staff Members", staffLibraryId, 0));
+            context.StaffMembersFolderId = NodeId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(context.StaffMembersFolderId, ContentTypeDefinition.Lookup<StaffFolder>(), "Staff Members", staffLibraryId, 0));
         }
 
         private async Task CreateSiteAsync(IServiceProvider serviceProvider, SeederContext context, string hostname)
         {
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
-            context.SiteId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new CreateNodeCollection(context.SiteId, NodeCollectionTypes.Site, "The Redakt Hotel", 0));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
+            context.SiteId = NodeCollectionId.New;
+            await commandBus.PublishAsync(new CreateNodeCollection(context.SiteId, NodeCollectionTypes.Site, "The Redakt Hotel", 0));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
 
-            await dispatcher.ExecuteAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = IdGenerator.GenerateId(), Hostname = hostname, RootPath = "/en", Cultures = new List<CultureInfo> { _englishCulture } }));
-            await dispatcher.ExecuteAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = IdGenerator.GenerateId(), Hostname = hostname, RootPath = "/nl", Cultures = new List<CultureInfo> { _dutchCulture } }));
+            await commandBus.PublishAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = IdGenerator.GenerateId(), Hostname = hostname, RootPath = "/en", Cultures = new List<CultureInfo> { _englishCulture } }));
+            await commandBus.PublishAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = IdGenerator.GenerateId(), Hostname = hostname, RootPath = "/nl", Cultures = new List<CultureInfo> { _dutchCulture } }));
         }
 
         private async Task CreatePagesAsync(IServiceProvider serviceProvider, SeederContext context)
@@ -236,21 +237,21 @@ namespace RedaktHotel.Web
             await this.AddHomepageContentAsync(serviceProvider, context, homepageId);
         }
 
-        private async Task<string> CreateHomepageAsync(IServiceProvider serviceProvider, SeederContext context)
+        private async Task<NodeId> CreateHomepageAsync(IServiceProvider serviceProvider, SeederContext context)
         {
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
             // Events
-            var nodeId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(nodeId, ContentTypeDefinition.Lookup<Homepage>(), "Homepage", context.SiteId, 0));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.SetNodeView(nodeId, "Homepage"));
+            var nodeId = NodeId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(nodeId, ContentTypeDefinition.Lookup<Homepage>(), "Homepage", context.SiteId, 0));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.SetNodeView(nodeId, "Homepage"));
 
             return nodeId;
         }
 
-        private async Task AddHomepageContentAsync(IServiceProvider serviceProvider, SeederContext context, string homepageId)
+        private async Task AddHomepageContentAsync(IServiceProvider serviceProvider, SeederContext context, NodeId homepageId)
         {
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
             var contentType = ContentTypeDefinition.Lookup<Homepage>();
             var content = new LocalizedContent(contentType);
@@ -328,15 +329,15 @@ namespace RedaktHotel.Web
             blogContent.SetValue(nameof(LatestBlogArticles.IntroText), _dutchCulture, Lorem.Paragraph(5, 10, 4, 8));
             content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(blogContent));
 
-            var contentId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(homepageId, IdGenerator.GenerateId(), "Version 1", contentId, NodeVersionStateKey.New));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(homepageId, _englishCulture, contentId, null));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(homepageId, _dutchCulture, contentId, null));
+            var contentId = ContentId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(homepageId, IdGenerator.GenerateId(), "Version 1", contentId, NodeVersionStateKey.New));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(homepageId, _englishCulture, contentId, null));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(homepageId, _dutchCulture, contentId, null));
         }
 
-        private async Task CreateFacilitiesPagesAsync(IServiceProvider serviceProvider, SeederContext context, string parentId)
+        private async Task CreateFacilitiesPagesAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId)
         {
             // Create Facilities list
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<SimplePage>());
@@ -355,7 +356,7 @@ namespace RedaktHotel.Web
             await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "wedding", "Wedding Venue", "Trouwlocatie");
         }
 
-        private async Task CreateFacilityPageAsync(IServiceProvider serviceProvider, SeederContext context, string facilitiesParentId, string imageFolder, string englishName, string dutchName)
+        private async Task CreateFacilityPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId facilitiesParentId, string imageFolder, string englishName, string dutchName)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<FacilityPage>());
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\facilities\{imageFolder}"));
@@ -375,7 +376,7 @@ namespace RedaktHotel.Web
             context.Facilities.Add(facilityPageId);
         }
 
-        private async Task CreateBlogPagesAsync(IServiceProvider serviceProvider, SeederContext context, string parentId)
+        private async Task CreateBlogPagesAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId)
         {
             // Create Blog overview
             var blogContent = new LocalizedContent(ContentTypeDefinition.Lookup<SimplePage>());
@@ -404,7 +405,7 @@ namespace RedaktHotel.Web
             }
         }
 
-        private async Task CreateRoomsPagesAsync(IServiceProvider serviceProvider, SeederContext context, string parentId)
+        private async Task CreateRoomsPagesAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId)
         {
             // Create Rooms list
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<SimplePage>());
@@ -424,7 +425,7 @@ namespace RedaktHotel.Web
             await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "villa-sea-view-private-pool", "Villa Sea View Private Pool", "Villa Zeezicht met Privezwembad");
         }
 
-        private async Task CreateRoomPageAsync(IServiceProvider serviceProvider, SeederContext context, string roomsPageId, string imageFolder, string englishName, string dutchName)
+        private async Task CreateRoomPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId roomsPageId, string imageFolder, string englishName, string dutchName)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<RoomDetail>());
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\rooms\{imageFolder}"));
@@ -448,9 +449,9 @@ namespace RedaktHotel.Web
             context.Rooms.Add(roomPage);
         }
 
-        private async Task<string> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, string parentId, ILocalizedContent content, string englishName, string dutchName, string viewName = null)
+        private async Task<NodeId> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId, ILocalizedContent content, string englishName, string dutchName, string viewName = null)
         {
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
             var contentType = content.ContentType();
 
             this.SetProperty(content, nameof(PageBase.PageTitle), englishName, dutchName);
@@ -461,15 +462,15 @@ namespace RedaktHotel.Web
             }
 
             // Events
-            var nodeId = IdGenerator.GenerateId();
-            var contentId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, englishName, parentId, 0));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.SetNodeView(nodeId, viewName ?? contentType.AllowedViewNames.First()));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, IdGenerator.GenerateId(), "Version 1", contentId, NodeVersionStateKey.New));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, contentId, englishName.UrlFriendly()));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _dutchCulture, contentId, dutchName.UrlFriendly()));
+            var nodeId = NodeId.New;
+            var contentId = ContentId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, englishName, parentId, 0));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.SetNodeView(nodeId, viewName ?? contentType.AllowedViewNames.First()));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, IdGenerator.GenerateId(), "Version 1", contentId, NodeVersionStateKey.New));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, contentId, englishName.UrlFriendly()));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _dutchCulture, contentId, dutchName.UrlFriendly()));
 
             return nodeId;
         }
@@ -572,12 +573,12 @@ namespace RedaktHotel.Web
 
         private async Task CreateStaffMemberAsync(IServiceProvider serviceProvider, SeederContext context, int imageNumber, string name, string roleEnglish, string roleDutch)
         {
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
-            var fileId = IdGenerator.GenerateId();
+            var fileId = FileDescriptorId.New;
             await using (var fileStream = File.OpenRead(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\staff\staff-{imageNumber}.jpg")))
             {
-                await dispatcher.ExecuteAsync(new CreateFile(fileId, fileStream, $"staff-{imageNumber}.jpg", "image/jpeg"));
+                await commandBus.PublishAsync(new CreateFile(fileId, fileStream, $"staff-{imageNumber}.jpg", "image/jpeg"));
             }
 
             var contentType = ContentTypeDefinition.Lookup<StaffMember>();
@@ -588,26 +589,26 @@ namespace RedaktHotel.Web
             this.SetProperty(content, nameof(StaffMember.Role), roleEnglish, roleDutch);
 
             // Events
-            var nodeId = IdGenerator.GenerateId();
+            var nodeId = NodeId.New;
             var versionId = IdGenerator.GenerateId();
-            var contentId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, name, context.StaffMembersFolderId, 0));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, versionId, "Version 1", contentId, NodeVersionStateKey.New));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, contentId, null));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _dutchCulture, contentId, null));
+            var contentId = ContentId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, name, context.StaffMembersFolderId, 0));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, versionId, "Version 1", contentId, NodeVersionStateKey.New));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, contentId, null));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _dutchCulture, contentId, null));
         }
 
         private async Task<string> CreateImageAsync(IServiceProvider serviceProvider, SeederContext context, string imageFile, string nodeName)
         {
             var fileService = serviceProvider.GetRequiredService<IFileService>();
-            var dispatcher = serviceProvider.GetRequiredService<ICommandDispatcher>();
+            var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
-            var fileId = IdGenerator.GenerateId();
+            var fileId = FileDescriptorId.New;
             await using (var fileStream = File.OpenRead(imageFile))
             {
-                await dispatcher.ExecuteAsync(new CreateFile(fileId, fileStream, Path.GetFileName(imageFile), "image/jpeg"));
+                await commandBus.PublishAsync(new CreateFile(fileId, fileStream, Path.GetFileName(imageFile), "image/jpeg"));
             }
 
             var contentType = ContentTypeDefinition.Lookup<Image>();
@@ -616,14 +617,14 @@ namespace RedaktHotel.Web
             this.SetProperty(content, nameof(Image.File), new MediaFile(fileId));
 
             // Events
-            var nodeId = IdGenerator.GenerateId();
-            var contentId = IdGenerator.GenerateId();
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, nodeName, context.ImagesFolderId, 0));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, IdGenerator.GenerateId(), "Version 1", contentId, NodeVersionStateKey.New));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, contentId, null));
-            await dispatcher.ExecuteAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _dutchCulture, contentId, null));
+            var nodeId = NodeId.New;
+            var contentId = ContentId.New;
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, nodeName, context.ImagesFolderId, 0));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, IdGenerator.GenerateId(), "Version 1", contentId, NodeVersionStateKey.New));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, contentId, null));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _dutchCulture, contentId, null));
 
             context.AllImages.Add(nodeId);
 
