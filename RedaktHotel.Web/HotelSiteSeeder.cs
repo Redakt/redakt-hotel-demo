@@ -148,6 +148,7 @@ namespace RedaktHotel.Web
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Children", "Children", "Kinderen");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Child", "Child", "Kind");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookYourStay", "Book your stay with us", "Reserveer uw verblijf bij ons");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckAvailability", "Check availability", "Bekijk beschikbaarheid");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookNow", "Book now", "Reserveer nu");
         }
 

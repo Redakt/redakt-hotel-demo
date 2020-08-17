@@ -1,127 +1,121 @@
-﻿@inherits RedaktPage<BookingPage>
+﻿@using System.Globalization
+@inherits RedaktPage<BookingPage>
 @attribute [DisplayName("Booking Form")]
-@await Html.PartialAsync("_PageHeading")
+@{
+    var queryParams = Redakt.Context.HttpContext.Request.Query;
+    var room = await Redakt.Context.ModelAsync<RoomDetail>((string)queryParams["roomId"]);
+    var checkInDate = DateTime.Parse(queryParams["checkin"], CultureInfo.GetCultureInfo("en-US"));
+    var checkOutDate = DateTime.Parse(queryParams["checkout"], CultureInfo.GetCultureInfo("en-US"));
+    var nights = Convert.ToInt32(checkOutDate.Subtract(checkOutDate).TotalDays);
+}
 <div class="section">
     <div class="widget-booking-form">
         <div class="wrapper-inner">
             <div class="widget-inner">
                 <div class="row">
                     <div class="col-lg-8 col-md-7">
-                        <!-- Booking Complete -->
                         <div class="booking-complete">
                             <h5>BOOKING</h5>
-                            <h2>Your Reservation Completed</h2>
+                            <h2>Complete your reservation</h2>
                             <div class="complete-message">
                                 <i class="fa fa-check"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget commodo orci. Integer varius nibh eu mattis porta. Pellentesque dictum sem eget cursus semper.
                             </div>
                         </div>
-                        <!-- Booking Complete End -->
-                        <!-- Booking Form -->
+
                         <div class="booking-form">
                             <h5>BOOKING FORM</h5>
                             <h2>Personal Info</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget commodo orci. Integer varius nibh eu mattis porta. Pellentesque dictum sem eget cursus semper.</p>
                             <div class="data-form">
-                                <form action="booking.php" id="booking-form" method="post">
-                                    <input type="hidden" name="form-room" value="Royal Single Room">
+                                <form action="/forms/booking" method="post">
+                                    <input type="hidden" name="RoomName" value="@room.Content.PageTitle">
+                                    <input type="hidden" name="CheckInDate" value="@checkInDate">
+                                    <input type="hidden" name="CheckOutDate" value="@checkOutDate">
+                                    <input type="hidden" name="NumberOfAdults" value="@queryParams["adults"]">
+                                    <input type="hidden" name="NumberOfChildren" value="@queryParams["children"]">
+                                    <input type="hidden" name="RedirectToUrl" value="@Model.Url()">
+
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <i class="fa fa-calendar-plus-o"></i>
-                                            <input type="text" name="form-checkin" id="form-checkin" value="04/20/2016" placeholder="CHECK IN" class="datepicker">
+                                            <input type="text" name="FirstName" placeholder="YOUR NAME">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <i class="fa fa-calendar-plus-o"></i>
-                                            <input type="text" name="form-checkout" id="form-checkout" value="05/22/2016" placeholder="CHECK OUT" class="datepicker">
+                                            <input type="text" name="LastName" placeholder="YOUR SURNAME">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <i class="fa fa-caret-down"></i>
-                                            <select name="form-adults" id="form-adults">
-                                                <option value="">ADULTS</option>
-                                                <option value="1">1 ADULT</option>
-                                                <option value="2" selected>2 ADULT</option>
-                                                <option value="3">3 ADULT</option>
-                                            </select>
+                                            <input type="text" name="EmailAddress" placeholder="YOUR EMAIL ADDRESS">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <i class="fa fa-caret-down"></i>
-                                            <select name="form-childrens" id="form-childrens">
-                                                <option value="">CHILDRENS</option>
-                                                <option value="1" selected>1 CHILDREN</option>
-                                                <option value="2">2 CHILDREN</option>
-                                                <option value="3">3 CHILDREN</option>
-                                            </select>
+                                            <input type="text" name="PhoneNumber" placeholder="YOUR PHONE">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <input type="text" name="form-name" id="form-name" placeholder="YOUR NAME">
+                                            <input type="text" name="AddressLine1" placeholder="ADDRESS LINE 1">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <input type="text" name="form-surname" id="form-surname" placeholder="YOUR SURNAME">
+                                            <input type="text" name="AddressLine2" placeholder="ADDRESS LINE 2">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <input type="text" name="form-email" id="form-email" placeholder="YOUR EMAIL ADDRESS">
+                                            <input type="text" name="City" placeholder="CITY">
                                         </div>
+
                                         <div class="col-md-6">
-                                            <input type="text" name="form-phone" id="form-phone" placeholder="YOUR PHONE">
+                                            <input type="text" name="Country" placeholder="COUNTRY">
                                         </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="form-address1" id="form-address1" placeholder="ADDRESS LINE 1">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="form-address2" id="form-address2" placeholder="ADDRESS LINE 2">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="form-city" id="form-city" placeholder="CITY">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="form-country" id="form-country" placeholder="COUNTRY">
-                                        </div>
+
                                         <div class="col-md-12">
-                                            <textarea cols="6" rows="8" name="form-requirements" id="form-requirements" placeholder="SPECIAL REQUIREMENTS"></textarea>
+                                            <textarea cols="6" rows="8" name="SpecialRequirements" placeholder="SPECIAL REQUIREMENTS"></textarea>
                                         </div>
+
                                         <div class="col-md-6">
-                                            <input type="submit" value="BOOK NOW BY EMAIL" class="btn">
+                                            <button type="submit" class="btn" rx-dictionary-key="BookNow"></button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <!-- Booking Form End -->
                     </div>
+
                     <div class="col-lg-4 col-md-5">
-                        <!-- Booking Detail -->
                         <div class="booking-detail">
                             <h5>BOOKING DETAILS</h5>
                             <h2>Selected Room</h2>
                             <div class="detail-room">
                                 <div class="room-photo">
-                                    <a href="rooms-detail.html" data-background="assets/img/photo-room-5.jpg"></a>
+                                    <a href="@room.Url()" data-background="@room.Content.MainImage.File.AbsoluteUrl()"></a>
                                 </div>
                                 <div class="room-desc">
-                                    <h3><a href="rooms-detail.html">Single Room</a></h3>
-                                    <h4>$ 230 <small>PER NIGHT</small></h4>
+                                    <h3><a href="@room.Url()">@room.Content.PageTitle</a></h3>
+                                    <h4>&euro; @room.Content.NightlyRate <small>PER NIGHT</small></h4>
                                 </div>
                             </div>
+
                             <div class="detail-info">
                                 <ul>
                                     <li>
                                         <label>CHECK IN</label>
-                                        <p>04/20/2016</p>
+                                        <p>@checkInDate</p>
                                     </li>
                                     <li>
                                         <label>CHECK OUT</label>
-                                        <p>04/22/2016</p>
+                                        <p>@checkOutDate</p>
                                     </li>
                                     <li>
                                         <label>ADULTS</label>
-                                        <p>2 PERSON</p>
+                                        <p>@queryParams["adults"] @(queryParams["adults"] == "1" ? "PERSON" : "PERSONS")</p>
                                     </li>
                                     <li>
                                         <label>CHILDRENS</label>
-                                        <p>1 CHILDREN</p>
+                                        <p>@queryParams["children"] @(queryParams["children"] == "1" ? "CHILD" : "CHILDREN")</p>
                                     </li>
                                     <li>
-                                        <label>NIGHT</label>
-                                        <p>2 NIGHT</p>
+                                        <label>DURATION</label>
+                                        <p>@nights @(nights == 1 ? "NIGHT" : "NIGHTS")</p>
                                     </li>
                                     <li>
                                         <label>TAX (10%)</label>
@@ -129,13 +123,12 @@
                                     </li>
                                     <li class="total">
                                         <label>TOTAL PRICE</label>
-                                        <p>$ 510</p>
+                                        <p>&euro; @(nights * room.Content.NightlyRate)</p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <!-- Booking Detail End -->
-                        <!-- Booking Help -->
+
                         <div class="booking-help">
                             <h5>HELP</h5>
                             <h2>Need Booking Help?</h2>
@@ -143,7 +136,6 @@
                             <p><a href="mailto:help@thegrandiumhotel.com">help@thegrandiumhotel.com</a></p>
                             <h3><i class="fa fa-phone-square"></i>1-800-123-45-67</h3>
                         </div>
-                        <!-- Booking Help End -->
                     </div>
                 </div>
             </div>

@@ -38,7 +38,8 @@
                             <h5 rx-dictionary-key="Booking"></h5>
                             <h2 rx-dictionary-key="BookThisRoom"></h2>
                             <div class="data-form">
-                                <form>
+                                <form action="/en/bookings">
+                                    <input type="hidden" name="roomId" value="@Model.Id" />
                                     <div class="row">
                                         <div class="col-md-12">
                                             <i class="fa fa-calendar-plus-o"></i>
@@ -56,20 +57,20 @@
                                             <i class="fa fa-caret-down"></i>
                                             <select name="adults" required>
                                                 <option value="" rx-dictionary-key="Adults"></option>
-                                                <option value="1">1 <rx-dictionary key="Adult" /></option>
-                                                <option value="2">2 <rx-dictionary key="Adults" /></option>
-                                                <option value="3">3 <rx-dictionary key="Adults" /></option>
+                                                <option value="1">1 <rx-dictionary key="Adult"/></option>
+                                                <option value="2">2 <rx-dictionary key="Adults"/></option>
+                                                <option value="3">3 <rx-dictionary key="Adults"/></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <i class="fa fa-caret-down"></i>
-                                            <select name="children" required>
+                                            <select name="children">
                                                 <option value="" rx-dictionary-key="Children"></option>
-                                                <option value="1">1 <rx-dictionary key="Child" /></option>
-                                                <option value="2">2 <rx-dictionary key="Children" /></option>
-                                                <option value="3">3 <rx-dictionary key="Children" /></option>
+                                                <option value="1">1 <rx-dictionary key="Child"/></option>
+                                                <option value="2">2 <rx-dictionary key="Children"/></option>
+                                                <option value="3">3 <rx-dictionary key="Children"/></option>
                                             </select>
                                         </div>
                                     </div>
