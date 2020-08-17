@@ -3,140 +3,148 @@
 @attribute [DisplayName("Booking Form")]
 @{
     var queryParams = Redakt.Context.HttpContext.Request.Query;
-    var room = await Redakt.Context.ModelAsync<RoomDetail>((string)queryParams["roomId"]);
-    var checkInDate = DateTime.Parse(queryParams["checkin"], CultureInfo.GetCultureInfo("en-US"));
-    var checkOutDate = DateTime.Parse(queryParams["checkout"], CultureInfo.GetCultureInfo("en-US"));
-    var nights = Convert.ToInt32(checkOutDate.Subtract(checkOutDate).TotalDays);
+    var isCompleted = !string.IsNullOrWhiteSpace(queryParams["completed"]);
 }
 <div class="section">
     <div class="widget-booking-form">
         <div class="wrapper-inner">
             <div class="widget-inner">
                 <div class="row">
-                    <div class="col-lg-8 col-md-7">
-                        <div class="booking-complete">
-                            <h5>BOOKING</h5>
-                            <h2>Complete your reservation</h2>
-                            <div class="complete-message">
-                                <i class="fa fa-check"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget commodo orci. Integer varius nibh eu mattis porta. Pellentesque dictum sem eget cursus semper.
+                    @if (isCompleted)
+                    {
+                        <div class="col-lg-8 col-md-7">
+                            <div class="booking-complete" style="display: block;">
+                                <h5>BOOKING</h5>
+                                <h2>Your booking is complete</h2>
+                                <div class="complete-message">
+                                    <i class="fa fa-check"></i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget commodo orci. Integer varius nibh eu mattis porta. Pellentesque dictum sem eget cursus semper.
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        var room = await Redakt.Context.ModelAsync<RoomDetail>((string)queryParams["roomId"]);
+                        var checkInDate = DateTime.Parse(queryParams["checkin"], CultureInfo.GetCultureInfo("en-US"));
+                        var checkOutDate = DateTime.Parse(queryParams["checkout"], CultureInfo.GetCultureInfo("en-US"));
+                        var nights = Convert.ToInt32(checkOutDate.Subtract(checkInDate).TotalDays);
+                        <div class="col-lg-8 col-md-7">
+                            <div class="booking-form">
+                                <h5>BOOKING FORM</h5>
+                                <h2>Personal Info</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget commodo orci. Integer varius nibh eu mattis porta. Pellentesque dictum sem eget cursus semper.</p>
+                                <div class="data-form">
+                                    <form action="/forms/booking" method="post">
+                                        <input type="hidden" name="RoomName" value="@room.Content.PageTitle">
+                                        <input type="hidden" name="CheckInDate" value="@checkInDate">
+                                        <input type="hidden" name="CheckOutDate" value="@checkOutDate">
+                                        <input type="hidden" name="NumberOfAdults" value="@queryParams["adults"]">
+                                        <input type="hidden" name="NumberOfChildren" value="@queryParams["children"]">
+                                        <input type="hidden" name="RedirectToUrl" value="@Model.Url()?completed=true">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="text" name="FirstName" placeholder="@Redakt.DictionaryString("FirstName")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="LastName" placeholder="@Redakt.DictionaryString("LastName")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="EmailAddress" placeholder="@Redakt.DictionaryString("EmailAddress")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="PhoneNumber" placeholder="@Redakt.DictionaryString("PhoneNumber")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="AddressLine1" placeholder="@Redakt.DictionaryString("AddressLine1")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="AddressLine2" placeholder="@Redakt.DictionaryString("AddressLine2")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="City" placeholder="@Redakt.DictionaryString("City")">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <input type="text" name="Country" placeholder="@Redakt.DictionaryString("Country")">
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <textarea cols="6" rows="8" name="SpecialRequirements" placeholder="@Redakt.DictionaryString("SpecialRequirements")"></textarea>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn" rx-dictionary-key="BookNow"></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="booking-form">
-                            <h5>BOOKING FORM</h5>
-                            <h2>Personal Info</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget commodo orci. Integer varius nibh eu mattis porta. Pellentesque dictum sem eget cursus semper.</p>
-                            <div class="data-form">
-                                <form action="/forms/booking" method="post">
-                                    <input type="hidden" name="RoomName" value="@room.Content.PageTitle">
-                                    <input type="hidden" name="CheckInDate" value="@checkInDate">
-                                    <input type="hidden" name="CheckOutDate" value="@checkOutDate">
-                                    <input type="hidden" name="NumberOfAdults" value="@queryParams["adults"]">
-                                    <input type="hidden" name="NumberOfChildren" value="@queryParams["children"]">
-                                    <input type="hidden" name="RedirectToUrl" value="@Model.Url()">
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <input type="text" name="FirstName" placeholder="YOUR NAME">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="LastName" placeholder="YOUR SURNAME">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="EmailAddress" placeholder="YOUR EMAIL ADDRESS">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="PhoneNumber" placeholder="YOUR PHONE">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="AddressLine1" placeholder="ADDRESS LINE 1">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="AddressLine2" placeholder="ADDRESS LINE 2">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="City" placeholder="CITY">
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <input type="text" name="Country" placeholder="COUNTRY">
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <textarea cols="6" rows="8" name="SpecialRequirements" placeholder="SPECIAL REQUIREMENTS"></textarea>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <button type="submit" class="btn" rx-dictionary-key="BookNow"></button>
-                                        </div>
+                        <div class="col-lg-4 col-md-5">
+                            <div class="booking-detail">
+                                <h5>BOOKING DETAILS</h5>
+                                <h2>Selected Room</h2>
+                                <div class="detail-room">
+                                    <div class="room-photo">
+                                        <a href="@room.Url()" data-background="@room.Content.MainImage.File.AbsoluteUrl()"></a>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-5">
-                        <div class="booking-detail">
-                            <h5>BOOKING DETAILS</h5>
-                            <h2>Selected Room</h2>
-                            <div class="detail-room">
-                                <div class="room-photo">
-                                    <a href="@room.Url()" data-background="@room.Content.MainImage.File.AbsoluteUrl()"></a>
+                                    <div class="room-desc">
+                                        <h3><a href="@room.Url()">@room.Content.PageTitle</a></h3>
+                                        <h4>&euro; @room.Content.NightlyRate <small>PER NIGHT</small></h4>
+                                    </div>
                                 </div>
-                                <div class="room-desc">
-                                    <h3><a href="@room.Url()">@room.Content.PageTitle</a></h3>
-                                    <h4>&euro; @room.Content.NightlyRate <small>PER NIGHT</small></h4>
+
+                                <div class="detail-info">
+                                    <ul>
+                                        <li>
+                                            <label>CHECK IN</label>
+                                            <p>@checkInDate</p>
+                                        </li>
+                                        <li>
+                                            <label>CHECK OUT</label>
+                                            <p>@checkOutDate</p>
+                                        </li>
+                                        <li>
+                                            <label>ADULTS</label>
+                                            <p>@queryParams["adults"] @(queryParams["adults"] == "1" ? "PERSON" : "PERSONS")</p>
+                                        </li>
+                                        <li>
+                                            <label>CHILDRENS</label>
+                                            <p>@queryParams["children"] @(queryParams["children"] == "1" ? "CHILD" : "CHILDREN")</p>
+                                        </li>
+                                        <li>
+                                            <label>DURATION</label>
+                                            <p>@nights @(nights == 1 ? "NIGHT" : "NIGHTS")</p>
+                                        </li>
+                                        <li>
+                                            <label>TAX (10%)</label>
+                                            <p>$ 50</p>
+                                        </li>
+                                        <li class="total">
+                                            <label>TOTAL PRICE</label>
+                                            <p>&euro; @(nights * room.Content.NightlyRate)</p>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
 
-                            <div class="detail-info">
-                                <ul>
-                                    <li>
-                                        <label>CHECK IN</label>
-                                        <p>@checkInDate</p>
-                                    </li>
-                                    <li>
-                                        <label>CHECK OUT</label>
-                                        <p>@checkOutDate</p>
-                                    </li>
-                                    <li>
-                                        <label>ADULTS</label>
-                                        <p>@queryParams["adults"] @(queryParams["adults"] == "1" ? "PERSON" : "PERSONS")</p>
-                                    </li>
-                                    <li>
-                                        <label>CHILDRENS</label>
-                                        <p>@queryParams["children"] @(queryParams["children"] == "1" ? "CHILD" : "CHILDREN")</p>
-                                    </li>
-                                    <li>
-                                        <label>DURATION</label>
-                                        <p>@nights @(nights == 1 ? "NIGHT" : "NIGHTS")</p>
-                                    </li>
-                                    <li>
-                                        <label>TAX (10%)</label>
-                                        <p>$ 50</p>
-                                    </li>
-                                    <li class="total">
-                                        <label>TOTAL PRICE</label>
-                                        <p>&euro; @(nights * room.Content.NightlyRate)</p>
-                                    </li>
-                                </ul>
+                            <div class="booking-help">
+                                <h5>HELP</h5>
+                                <h2>Need Booking Help?</h2>
+                                <p>If you need help with booking, Our advisor team are 24/7 at your service to help you.</p>
+                                <p><a href="mailto:help@thegrandiumhotel.com">help@thegrandiumhotel.com</a></p>
+                                <h3><i class="fa fa-phone-square"></i>1-800-123-45-67</h3>
                             </div>
                         </div>
-
-                        <div class="booking-help">
-                            <h5>HELP</h5>
-                            <h2>Need Booking Help?</h2>
-                            <p>If you need help with booking, Our advisor team are 24/7 at your service to help you.</p>
-                            <p><a href="mailto:help@thegrandiumhotel.com">help@thegrandiumhotel.com</a></p>
-                            <h3><i class="fa fa-phone-square"></i>1-800-123-45-67</h3>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

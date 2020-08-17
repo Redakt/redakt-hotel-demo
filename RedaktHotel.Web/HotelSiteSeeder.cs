@@ -141,15 +141,24 @@ namespace RedaktHotel.Web
             
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Booking", "Booking", "Reservering");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookThisRoom", "Book this room", "Reserveer kamer");
-            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckInDate", "Check In", "Incheckdatum");
-            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckOutDate", "Check Out", "Uitcheckdatum");
-            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Adults", "Adults", "Volwassenen");
-            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Adult", "Adult", "Volwassene");
-            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Children", "Children", "Kinderen");
-            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Child", "Child", "Kind");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckInDate", "CHECK IN", "INCHECKDATUM");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckOutDate", "CHECK OUT", "UITCHECKDATUM");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Adults", "ADULTS", "VOLWASSENEN");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Adult", "ADULT", "VOLWASSENE");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Children", "CHILDREN", "KINDEREN");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Child", "CHILD", "KIND");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookYourStay", "Book your stay with us", "Reserveer uw verblijf bij ons");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "CheckAvailability", "Check availability", "Bekijk beschikbaarheid");
             await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "BookNow", "Book now", "Reserveer nu");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "FirstName", "GIVEN NAME", "VOORNAAM");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "LastName", "FAMILY NAME", "ACHTERNAAM");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "EmailAddress", "EMAIL ADDRESS", "E-MAILADRES");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "PhoneNumber", "PHONE NUMBER", "TELEFOONNUMMER");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "AddressLine1", "ADDRESS LINE 1", "ADRESREGEL 1");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "AddressLine2", "ADDRESS LINE 2", "ADRESREGEL 2");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "City", "CITY", "PLAATS");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "Country", "COUNTRY", "LAND");
+            await this.CreateDictionaryEntryAsync(commandBus, bookingCategoryId, "SpecialRequirements", "SPECIAL REQUIREMENTS", "BIJZONDERE VEREISTEN");
         }
 
         private async Task CreateDictionaryEntryAsync(ICommandBus commandBus, string categoryId, string key, string englishLabel, string dutchLabel)
