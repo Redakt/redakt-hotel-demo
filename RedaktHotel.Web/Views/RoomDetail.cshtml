@@ -1,5 +1,9 @@
 ﻿@inherits RedaktPage<RoomDetail>
 @attribute [DisplayName("Room Detail Page")]
+@{
+    var homePage = await Redakt.Context.RootAsync<Homepage>();
+    var bookingPage = await homePage.FirstDescendantAsync<BookingPage>();
+}
 @await Html.PartialAsync("_PageHeading")
 <div class="section">
     <div class="wrapper-inner">
@@ -38,7 +42,7 @@
                             <h5 rx-dictionary-key="Booking"></h5>
                             <h2 rx-dictionary-key="BookThisRoom"></h2>
                             <div class="data-form">
-                                <form action="/en/bookings">
+                                <form action="@bookingPage.Url()">
                                     <input type="hidden" name="roomId" value="@Model.Id" />
                                     <div class="row">
                                         <div class="col-md-12">
