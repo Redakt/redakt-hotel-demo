@@ -67,7 +67,7 @@ namespace RedaktHotel.Web
 
             app.UseAuthorization();
 
-            // Redakt middleware registration
+            // Add Redakt middleware components to the pipeline
             app.UseRedaktIdentityServer();
             app.UseRedaktBackOffice();
             app.UseRedaktContentManagement();
