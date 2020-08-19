@@ -298,7 +298,7 @@ namespace RedaktHotel.Web
 
             // Text content
             var textContent = new LocalizedContent(ContentTypeDefinition.Lookup<TextWithImage>());
-            var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\home\home-text-image.png"), "Homepage Image");
+            var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\home\home-text-image.jpg"), "Homepage Image");
             textContent.SetValue(nameof(TextWithImage.Image), CultureInfo.InvariantCulture, new NestedContentItem(imageId));
             textContent.SetValue(nameof(TextWithImage.HeadingCaption), _englishCulture, "Welcome to The Redakt");
             textContent.SetValue(nameof(TextWithImage.Heading), _englishCulture, "The Perfect Escape");
