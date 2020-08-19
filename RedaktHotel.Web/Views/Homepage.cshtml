@@ -1,7 +1,7 @@
 ﻿@inherits RedaktPage<Homepage>
 @{
-//var roomPage = await Model.FirstDescendantAsync<RoomDetail>();
-//var roomsPage = await roomPage.ParentAsync();
+    var roomPage = await Model.FirstDescendantAsync<RoomDetail>();
+    var roomsPage = await roomPage.ParentAsync();
 }
 <div class="section">
     <div class="widget-slider">
@@ -24,7 +24,7 @@
             <div class="slider-booking">
                 <div class="wrapper">
                     <h5 rx-dictionary-key="BookYourStay"></h5>
-                    <form action="/en/rooms">
+                    <form action="@roomsPage.Url()">
                         <ul>
                             <li>
                                 <i class="fa fa-calendar-plus-o"></i>
