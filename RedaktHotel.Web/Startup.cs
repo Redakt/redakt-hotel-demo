@@ -28,7 +28,6 @@ namespace RedaktHotel.Web
 
             services.AddRedakt(Configuration, true)
                 .AddLiteDbDataStore()
-                .AddLiteDbFileStore()
                 .AddIdentityServer()
                 .AddContentManagement()
                 .AddBackOffice();

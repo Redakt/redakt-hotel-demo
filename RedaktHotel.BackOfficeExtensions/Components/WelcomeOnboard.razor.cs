@@ -41,7 +41,7 @@ namespace RedaktHotel.BackOfficeExtensions.Components
                 {
                     await this.CommandBus.PublishAsync(new SetNodeCollectionHost(NodeCollectionId.With(site.Id), new NodeCollectionHost
                     {
-                        Id = host.Id,
+                        Id = NodeCollectionHostId.With(host.Id),
                         Scheme = host.Scheme,
                         Hostname = this.Hostname,
                         Cultures = host.Cultures.ToList(),

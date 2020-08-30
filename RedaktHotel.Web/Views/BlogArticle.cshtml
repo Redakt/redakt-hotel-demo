@@ -27,114 +27,27 @@
                             {
                                 <a href="#" rx-dictionary-key="@category">@category</a> 
                             }
-                            <i class="fa fa-commenting-o"></i> <a href="#">3 COMMENT</a>
                         </div>
                         <div class="detail-content" rx-content="@Model.Content.Body"></div>
-                        <div class="detail-tags">
-                            <h5>TAGS</h5>
-                            <ul>
-                                <li><a href="#">#TRAVEL</a></li>
-                                <li><a href="#">#SERVICES</a></li>
-                                <li><a href="#">#EVENTS</a></li>
-                                <li><a href="#">#ROOMS</a></li>
-                                <li><a href="#">#POOL</a></li>
-                                <li><a href="#">#SPA</a></li>
-                                <li><a href="#">#ACCOMONDATION</a></li>
-                            </ul>
-                        </div>
                     </div>
-
-                    <div class="single-comments">
-                        <div class="comments-list">
-                            <h5>COMMENTS (4)</h5>
-                            <ul>
-                                <li class="comment">
-                                    <div class="comment-avatar"><img src="assets/img/user-1.jpg" alt="Author Name"></div>
-                                    <div class="comment-info">
-                                        <div class="comment-user">MARILYN SUTTLE</div>
-                                        <div class="comment-date">28 OCT 2016 AT 06:30 PM</div>
-                                        <div class="comment-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ac dolor sit amet diam vestibulum ullamcorper quis in ipsum.</div>
-                                        <div class="comment-reply"><a href="#">REPLY</a></div>
-                                    </div>
-                                    <ul class="children">
-                                        <li class="comment">
-                                            <div class="comment-avatar"><img src="assets/img/user-2.jpg" alt="Author Name"></div>
-                                            <div class="comment-info">
-                                                <div class="comment-user">JACK MASON</div>
-                                                <div class="comment-date">21 OCT 2016 AT 06:30 PM</div>
-                                                <div class="comment-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                                                <div class="comment-reply"><a href="#">REPLY</a></div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="comment">
-                                    <div class="comment-avatar"><img src="assets/img/user-3.jpg" alt="Author Name"></div>
-                                    <div class="comment-info">
-                                        <div class="comment-user">MICHAEL FELDSTEIN</div>
-                                        <div class="comment-date">16 OCT 2016 AT 06:30 PM</div>
-                                        <div class="comment-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ac dolor sit amet diam vestibulum ullamcorper quis in ipsum. Cras orci urna, ullamcorper lobortis laoreet eu, pulvinar sit amet leo. </div>
-                                        <div class="comment-reply"><a href="#">REPLY</a></div>
-                                    </div>
-                                </li>
-                                <li class="comment">
-                                    <div class="comment-avatar"><img src="assets/img/user-4.jpg" alt="Author Name"></div>
-                                    <div class="comment-info">
-                                        <div class="comment-user">JOHN FEDERICO</div>
-                                        <div class="comment-date">14 OCT 2016 AT 06:30 PM</div>
-                                        <div class="comment-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                                        <div class="comment-reply"><a href="#">REPLY</a></div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="comments-form">
-                            <h5>LEAVE A COMMENT</h5>
-                            <div class="data-form">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-4 col-sm-6">
-                                            <input type="text" name="name" placeholder="ENTER YOUR NAME" required>
-                                        </div>
-                                        <div class="col-md-4 col-sm-6">
-                                            <input type="text" name="email" placeholder="ENTER YOUR EMAIL" required>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <input type="text" name="website" placeholder="ENTER YOUR WEBSITE">
-                                        </div>
-                                        <div class="col-md-12">
-                                            <textarea name="message" cols="6" rows="8" placeholder="ENTER YOUR MESSAGE" required></textarea>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn">SUBMIT MESSAGE</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Comments End -->
                 </div>
-                <!-- Blog Single End -->
             </div>
+
             <div class="col-md-3">
-                <!-- Blog Sidebar -->
                 <div class="widget-blog-sidebar">
-                    <!-- Sidebar Search -->
                     <div class="widget sidebar-search">
-                        <h5>SEARCH</h5>
+                        <h5 rx-dictionary-key="search">SEARCH</h5>
                         <form>
                             <input type="text" placeholder="ENTER KEYWORDS" required>
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
-                    <!-- Sidebar Search End -->
-                    <!-- Sidebar Categories -->
+
                     <div class="widget sidebar-categories">
-                        <h5>CATEGORIES</h5>
+                        <h5 rx-dictionary-key="categories">CATEGORIES</h5>
                         <nav>
                             <ul>
-                                <li><a href="#">ACCOMONDATION</a></li>
+                                <li><a href="#">ACCOMODATION</a></li>
                                 <li><a href="#">TRAVEL</a></li>
                                 <li><a href="#">SERVICES</a></li>
                                 <li><a href="#">EVENTS</a></li>
@@ -144,43 +57,27 @@
                             </ul>
                         </nav>
                     </div>
-                    <!-- Sidebar Categories End -->
-                    <!-- Sidebar Events -->
+
                     <div class="widget sidebar-events">
-                        <h5>UPCOMING EVENTS</h5>
+                        <h5 rx-dictionary-key="upcomingEvents">UPCOMING EVENTS</h5>
                         <ul>
                             <li><a href="#"><span><b>APRIL</b>25</span>Mothers Day Lunch at The Grandium</a></li>
                             <li><a href="#"><span><b>MARCH</b>17</span>New Year's Brunch at The Grandium</a></li>
                             <li><a href="#"><span><b>JANUARY</b>12</span>Family Christmas Lunch at The Grandium</a></li>
                         </ul>
                     </div>
-                    <!-- Sidebar Events End -->
-                    <!-- Sidebar Recent -->
+
                     <div class="widget sidebar-recent">
-                        <h5>RECENT POSTS</h5>
+                        <h5 rx-dictionary-key="recentPosts">RECENT POSTS</h5>
                         <ul>
-                            <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue pharetra diam, eget vestibulum.<span><i class="fa fa-calendar"></i>25 APR 2016 - 18:30</span></a></li>
-                            <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue pharetra diam, eget vestibulum.<span><i class="fa fa-calendar"></i>17 APR 2016 - 18:30</span></a></li>
-                            <li><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue pharetra diam, eget vestibulum.<span><i class="fa fa-calendar"></i>12 APR 2016 - 18:30</span></a></li>
+                            @foreach (var articlePage in allArticles.OrderByDescending(x => x.Content.PublicationDate).Take(3))
+                            {
+                                <li><a href="@articlePage.Url()">@articlePage.Content.PageTitle<span><i class="fa fa-calendar"></i>@articlePage.Content.PublicationDate.ToString("dd MMM yyyy")</span></a></li>
+                            }
                         </ul>
                     </div>
-                    <!-- Sidebar Recent End -->
-                    <!-- Sidebar Tags -->
-                    <div class="widget sidebar-tags">
-                        <h5>TAGS</h5>
-                        <ul>
-                            <li><a href="#">#TRAVEL</a></li>
-                            <li><a href="#">#SERVICES</a></li>
-                            <li><a href="#">#EVENTS</a></li>
-                            <li><a href="#">#ROOMS</a></li>
-                            <li><a href="#">#POOL</a></li>
-                            <li><a href="#">#SPA</a></li>
-                            <li><a href="#">#ACCOMONDATION</a></li>
-                        </ul>
-                    </div>
-                    <!-- Sidebar Tags End -->
-                    <!-- Sidebar Archive -->
-                    <div class="widget sidebar-archive">
+
+                    @*<div class="widget sidebar-archive">
                         <h5>BLOG ARCHIVE</h5>
                         <ul>
                             <li><a href="#">MARCH 2016</a></li>
@@ -190,10 +87,8 @@
                             <li><a href="#">NOVEMBER 2015</a></li>
                             <li><a href="#">OCTOBER 2015</a></li>
                         </ul>
-                    </div>
-                    <!-- Sidebar Archive End -->
+                    </div>*@
                 </div>
-                <!-- Blog Sidebar End -->
             </div>
         </div>
     </div>

@@ -135,6 +135,12 @@ namespace RedaktHotel.Web
             await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "excursions", "Excursions", "Excursies");
             await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "spa", "Spa & wellness", "Spa & wellness");
 
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "search", "SEARCH", "ZOEKEN");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "tags", "TAGS", "TAGS");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "categories", "CATEGORIES", "CATEGORIEN");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "upcomingEvents", "UPCOMING EVENTS", "KOMENDE EVENEMENTEN");
+            await this.CreateDictionaryEntryAsync(commandBus, context.LabelsCategoryId, "recentPosts", "RECENT POSTS", "RECENTE ARTIKELEN");
+
             // Create booking dictionary category
             var bookingCategoryId = DictionaryCategoryId.New;
             await commandBus.PublishAsync(new CreateDictionaryCategory(bookingCategoryId, "Booking"));
@@ -183,15 +189,15 @@ namespace RedaktHotel.Web
             // Create media library
             context.AssetLibraryId = NodeCollectionId.New;
             await commandBus.PublishAsync(new CreateNodeCollection(context.AssetLibraryId, NodeCollectionTypes.AssetLibrary, "Media", 0));
-            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
-            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = NodeCollectionMappingId.New, Culture = _englishCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.AssetLibraryId, new NodeCollectionMapping { Id = NodeCollectionMappingId.New, Culture = _dutchCulture }));
             //await commandBus.PublishAsync(new AddNodeCollectionMapping(context.AssetLibraryId, IdGenerator.GenerateId(), CultureInfo.GetCultureInfo("en-US"), _englishCulture));
 
             // Create staff library
             var staffLibraryId = NodeCollectionId.New;
             await commandBus.PublishAsync(new CreateNodeCollection(staffLibraryId, NodeCollectionTypes.AssetLibrary, "Staff", 0));
-            await commandBus.PublishAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
-            await commandBus.PublishAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = NodeCollectionMappingId.New, Culture = _englishCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(staffLibraryId, new NodeCollectionMapping { Id = NodeCollectionMappingId.New, Culture = _dutchCulture }));
 
             context.ImagesFolderId = NodeId.New;
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateRootNode(context.ImagesFolderId, folderDefinition, "Images", context.AssetLibraryId, 0));
@@ -208,11 +214,11 @@ namespace RedaktHotel.Web
 
             context.SiteId = NodeCollectionId.New;
             await commandBus.PublishAsync(new CreateNodeCollection(context.SiteId, NodeCollectionTypes.Site, "The Redakt Hotel", 0));
-            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _englishCulture }));
-            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = IdGenerator.GenerateId(), Culture = _dutchCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = NodeCollectionMappingId.New, Culture = _englishCulture }));
+            await commandBus.PublishAsync(new SetNodeCollectionMapping(context.SiteId, new NodeCollectionMapping { Id = NodeCollectionMappingId.New, Culture = _dutchCulture }));
 
-            await commandBus.PublishAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = IdGenerator.GenerateId(), Hostname = hostname, RootPath = "/en", Cultures = new List<CultureInfo> { _englishCulture } }));
-            await commandBus.PublishAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = IdGenerator.GenerateId(), Hostname = hostname, RootPath = "/nl", Cultures = new List<CultureInfo> { _dutchCulture } }));
+            await commandBus.PublishAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = NodeCollectionHostId.New, Hostname = hostname, RootPath = "/en", Cultures = new List<CultureInfo> { _englishCulture } }));
+            await commandBus.PublishAsync(new SetNodeCollectionHost(context.SiteId, new NodeCollectionHost { Id = NodeCollectionHostId.New, Hostname = hostname, RootPath = "/nl", Cultures = new List<CultureInfo> { _dutchCulture } }));
         }
 
         private async Task CreatePagesAsync(IServiceProvider serviceProvider, SeederContext context)
@@ -225,7 +231,7 @@ namespace RedaktHotel.Web
             // The Hotel
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<ContentPage>());
             this.SetProperty(content, nameof(ContentPage.NavigationTitle), "The Hotel", "Het Hotel");
-            await this.CreatePageAsync(serviceProvider, context, homepageId, content, "The Hotel", "Het Hotel");
+            await this.CreatePageAsync(serviceProvider, context, homepageId, content, "The Hotel", "Het Hotel", 1);
 
             // Facilities
             await this.CreateFacilitiesPagesAsync(serviceProvider, context, homepageId);
@@ -234,14 +240,14 @@ namespace RedaktHotel.Web
             content = new LocalizedContent(ContentTypeDefinition.Lookup<BookingPage>());
             this.SetProperty(content, nameof(ContentPage.NavigationTitle), "Bookings", "Reserveringen");
             this.SetProperty(content, nameof(ContentPage.HideInNavigation), true);
-            await this.CreatePageAsync(serviceProvider, context, homepageId, content, "Bookings", "Reserveringen");
+            await this.CreatePageAsync(serviceProvider, context, homepageId, content, "Bookings", "Reserveringen", 3);
 
             // Blog
             await this.CreateBlogPagesAsync(serviceProvider, context, homepageId);
 
             // Contact
             content = new LocalizedContent(ContentTypeDefinition.Lookup<ContactPage>());
-            await this.CreatePageAsync(serviceProvider, context, homepageId, content, "Contact", "Contact");
+            await this.CreatePageAsync(serviceProvider, context, homepageId, content, "Contact", "Contact", 5);
 
             // Homepage content
             await this.AddHomepageContentAsync(serviceProvider, context, homepageId);
@@ -301,11 +307,11 @@ namespace RedaktHotel.Web
             var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\home\home-text-image.jpg"), "Homepage Image");
             textContent.SetValue(nameof(TextWithImage.Image), CultureInfo.InvariantCulture, new NestedContentItem(imageId));
             textContent.SetValue(nameof(TextWithImage.HeadingCaption), _englishCulture, "Welcome to The Redakt");
-            textContent.SetValue(nameof(TextWithImage.Heading), _englishCulture, "The Perfect Escape");
-            textContent.SetValue(nameof(TextWithImage.BodyText), _englishCulture, Lorem.Paragraph(8, 16, 5, 10));
+            textContent.SetValue(nameof(TextWithImage.Heading), _englishCulture, "Demonstration website");
+            textContent.SetValue(nameof(TextWithImage.BodyText), _englishCulture, "The Redakt Hotel & Resort is a demo website for the <a href=\"https://www.redaktcms.com\" target=\"_blank\">Redakt Content Management System</a>. Therefore most content is fictional and automatically generated. You can visit the back office application at <a href=\"/redakt\">/redakt</a>. In the back office and application code you can play with many of the features that are part of the Redakt system. Please note, as this website is meant as a showcase for Redakt CMS only, and it does not necessarily reflect best web software development practices. Parts of the website may be functionally incomplete or missing.");
             textContent.SetValue(nameof(TextWithImage.HeadingCaption), _dutchCulture, "Welkom bij The Redakt");
-            textContent.SetValue(nameof(TextWithImage.Heading), _dutchCulture, "De Perfecte Ontsnapping");
-            textContent.SetValue(nameof(TextWithImage.BodyText), _dutchCulture, Lorem.Paragraph(8, 16, 5, 10));
+            textContent.SetValue(nameof(TextWithImage.Heading), _dutchCulture, "Demonstratie website");
+            textContent.SetValue(nameof(TextWithImage.BodyText), _dutchCulture, "The Redakt Hotel & Resort is een demo website voor het <a href=\"https://www.redaktcms.com\" target=\"_blank\">Redakt Content Management System</a>. Om deze reden is de meeste content fictioneel en automatisch gegenereerd. Je kan de back office applicatie bezoeken op <a href=\"/redakt\">/redakt</a>. In the back office en applicatie code kan je veel van de functionaliteiten uitproberen die onderdeel maken van het Redakt systeem. Let wel, aangezien deze website alleen bedoeld is als showcase voor Redakt CMS, is het niet per se een goed voorbeeld van web software ontwikkeling. Sommige onderdelen van de website kunnen functioneel incompleet zijn.");
             content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(textContent));
 
             // Facilities grid
@@ -354,20 +360,20 @@ namespace RedaktHotel.Web
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<SimplePage>());
             this.SetProperty(content, nameof(ContentPage.NavigationTitle), "Facilities", "Faciliteiten");
 
-            var facilitiesPage = await this.CreatePageAsync(serviceProvider, context, parentId, content, "Facilities", "Faciliteiten", "FacilitiesList");
+            var facilitiesPage = await this.CreatePageAsync(serviceProvider, context, parentId, content, "Facilities", "Faciliteiten", 2, "FacilitiesList");
 
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "buffet-restaurants", "Buffet Restaurants", "Buffetten");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "private-dining", "A-la-carte & Private Dining", "A-la-carte & Prive Dineren");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "skybar-lounge", "Bars & Lounges", "Bars & Lounges");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "spa-wellness", "Spa & Beauty Center", "Spa & Wellness");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "pools-waterpark", "Pools & Waterpark", "Zwembaden & Waterpark");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "games-recreation", "Games & Recreation", "Spel & Ontspanning");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "sport-fitness", "Sport & Fitness", "Sport & Fitness");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "conference-events", "Conference & Events", "Conferentie & Evenementen");
-            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "wedding", "Wedding Venue", "Trouwlocatie");
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "buffet-restaurants", "Buffet Restaurants", "Buffetten", 0);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "private-dining", "A-la-carte & Private Dining", "A-la-carte & Prive Dineren", 1);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "skybar-lounge", "Bars & Lounges", "Bars & Lounges", 2);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "spa-wellness", "Spa & Beauty Center", "Spa & Wellness", 3);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "pools-waterpark", "Pools & Waterpark", "Zwembaden & Waterpark", 4);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "games-recreation", "Games & Recreation", "Spel & Ontspanning", 5);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "sport-fitness", "Sport & Fitness", "Sport & Fitness", 6);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "conference-events", "Conference & Events", "Conferentie & Evenementen", 7);
+            await this.CreateFacilityPageAsync(serviceProvider, context, facilitiesPage, "wedding", "Wedding Venue", "Trouwlocatie", 8);
         }
 
-        private async Task CreateFacilityPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId facilitiesParentId, string imageFolder, string englishName, string dutchName)
+        private async Task CreateFacilityPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId facilitiesParentId, string imageFolder, string englishName, string dutchName, int sortOrder)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<FacilityPage>());
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\facilities\{imageFolder}"));
@@ -382,7 +388,7 @@ namespace RedaktHotel.Web
 
             this.SetProperty(content, nameof(FacilityPage.ListDescription), Lorem.Sentence(8, 14), Lorem.Sentence(8, 14));
 
-            var facilityPageId = await this.CreatePageAsync(serviceProvider, context, facilitiesParentId, content, englishName, dutchName);
+            var facilityPageId = await this.CreatePageAsync(serviceProvider, context, facilitiesParentId, content, englishName, dutchName, sortOrder);
 
             context.Facilities.Add(facilityPageId);
         }
@@ -393,10 +399,11 @@ namespace RedaktHotel.Web
             var blogContent = new LocalizedContent(ContentTypeDefinition.Lookup<SimplePage>());
             this.SetProperty(blogContent, nameof(ContentPage.NavigationTitle), "Blog", "Blog");
 
-            context.BlogParentId = await this.CreatePageAsync(serviceProvider, context, parentId, blogContent, "Blog", "Blog", "BlogOverview");
+            context.BlogParentId = await this.CreatePageAsync(serviceProvider, context, parentId, blogContent, "Blog", "Blog", 4, "BlogOverview");
 
             var articleDate = DateTime.Today.AddDays(-_rnd.Next(0, 7));
             var imageFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\blog"));
+            var sortIndex = 0;
             foreach (var imageFile in imageFiles)
             {
                 var imageId = await CreateImageAsync(serviceProvider, context, imageFile, $"Blog Article Image {articleDate.ToShortDateString()}");
@@ -410,7 +417,7 @@ namespace RedaktHotel.Web
                 this.SetProperty(content, nameof(BlogArticle.ListDescription), Lorem.Sentence(8, 14), Lorem.Sentence(8, 14));
                 this.SetProperty(content, nameof(BlogArticle.Body), "<p>" + string.Join("</p><p>", Lorem.Paragraphs(6, 16, 5, 10, 3)) + "</p>", "<p>" + string.Join("</p><p>", Lorem.Paragraphs(6, 16, 5, 10, 3)) + "</p>");
 
-                await this.CreatePageAsync(serviceProvider, context, context.BlogParentId, content, Lorem.Words(4, 8), Lorem.Words(4, 8));
+                await this.CreatePageAsync(serviceProvider, context, context.BlogParentId, content, Lorem.Words(4, 8), Lorem.Words(4, 8), sortIndex++);
                 
                 articleDate = articleDate.AddDays(-_rnd.Next(0, 7));
             }
@@ -422,21 +429,21 @@ namespace RedaktHotel.Web
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<SimplePage>());
             this.SetProperty(content, nameof(ContentPage.NavigationTitle), "Rooms", "Kamers");
 
-            var roomsPageId = await this.CreatePageAsync(serviceProvider, context, parentId, content, "Rooms", "Kamers", "RoomList");
+            var roomsPageId = await this.CreatePageAsync(serviceProvider, context, parentId, content, "Rooms", "Kamers", 0, "RoomList");
 
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "twin-sea-view", "Twin Sea View", "Tweepersoonskamer Zeezicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "twin-private-pool", "Twin Private Pool", "Tweepersoonskamer met Privezwembad");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-garden-view", "Bungalow Garden View", "Bungalow Tuinzicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-sea-view", "Bungalow Sea View", "Bungalow Zeezicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-sharing-pool", "Bungalow Sharing Pool", "Bungalow met gedeeld zwembad");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-family-garden-view", "Bungalow Family Garden View", "Familiebungalow Tuinzicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-family-side-sea-view", "Bungalow Family Side Sea View", "Familiebungalow Zeezicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "maisonette-garden-view", "Maisonette Garden View", "Maisonette Tuinzicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "suite-sea-view", "Suite Sea View", "Suite Zeezicht");
-            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "villa-sea-view-private-pool", "Villa Sea View Private Pool", "Villa Zeezicht met Privezwembad");
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "twin-sea-view", "Twin Sea View", "Tweepersoonskamer Zeezicht", 180, 0);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "twin-private-pool", "Twin Private Pool", "Tweepersoonskamer met Privezwembad", 220, 1);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-garden-view", "Bungalow Garden View", "Bungalow Tuinzicht", 210, 2);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-sea-view", "Bungalow Sea View", "Bungalow Zeezicht", 240, 3);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-sharing-pool", "Bungalow Sharing Pool", "Bungalow met gedeeld zwembad", 260, 4);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-family-garden-view", "Bungalow Family Garden View", "Familiebungalow Tuinzicht", 240, 5);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "bungalow-family-side-sea-view", "Bungalow Family Side Sea View", "Familiebungalow Zeezicht", 280, 6);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "maisonette-garden-view", "Maisonette Garden View", "Maisonette Tuinzicht", 250, 7);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "suite-sea-view", "Suite Sea View", "Suite Zeezicht", 320, 8);
+            await this.CreateRoomPageAsync(serviceProvider, context, roomsPageId, "villa-sea-view-private-pool", "Villa Sea View Private Pool", "Villa Zeezicht met Privezwembad", 400, 9);
         }
 
-        private async Task CreateRoomPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId roomsPageId, string imageFolder, string englishName, string dutchName)
+        private async Task CreateRoomPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId roomsPageId, string imageFolder, string englishName, string dutchName, int nightlyRate, int sortIndex)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<RoomDetail>());
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\rooms\{imageFolder}"));
@@ -450,17 +457,17 @@ namespace RedaktHotel.Web
                 content.AddValue(nameof(RoomDetail.AdditionalImages), CultureInfo.InvariantCulture, new NestedContentItem(additionalImageId));
             }
 
-            this.SetProperty(content, nameof(RoomDetail.NightlyRate), 300);
-            this.SetProperty(content, nameof(RoomDetail.DiscountedFrom), 360);
+            this.SetProperty(content, nameof(RoomDetail.NightlyRate), nightlyRate);
+            this.SetProperty(content, nameof(RoomDetail.DiscountedFrom), new Random().Next(nightlyRate, Convert.ToInt32(nightlyRate * 1.2)));
             this.SetProperty(content, nameof(RoomDetail.ListDescription), Lorem.Sentence(8, 14), Lorem.Sentence(8, 14));
             this.SetProperty(content, nameof(RoomDetail.LongDescription), "<p>" + string.Join("</p><p>", Lorem.Paragraphs(6, 16, 5, 10, 3)) + "</p>", "<p>" + string.Join("</p><p>", Lorem.Paragraphs(6, 16, 5, 10, 3)) + "</p>");
 
-            var roomPage = await this.CreatePageAsync(serviceProvider, context, roomsPageId, content, englishName, dutchName);
+            var roomPage = await this.CreatePageAsync(serviceProvider, context, roomsPageId, content, englishName, dutchName, sortIndex);
 
             context.Rooms.Add(roomPage);
         }
 
-        private async Task<NodeId> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId, ILocalizedContent content, string englishName, string dutchName, string viewName = null)
+        private async Task<NodeId> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId, ILocalizedContent content, string englishName, string dutchName, int sortOrder, string viewName = null)
         {
             var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
             var contentType = content.ContentType();
@@ -478,7 +485,7 @@ namespace RedaktHotel.Web
             var contentId = ContentId.New;
             await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
-            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, englishName, parentId, 0));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, englishName, parentId, sortOrder));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.SetNodeView(nodeId, viewName ?? contentType.AllowedViewNames.First()));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, versionId, contentId, "Version 1", NodeVersionStateKey.New));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, versionId, englishName.UrlFriendly()));
