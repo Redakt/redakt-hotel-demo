@@ -12,12 +12,12 @@ namespace RedaktHotel.Web.Models.Pages
     public class FacilityPage: ContentPage
     {
         [Section("Facility")]
-        [CultureInvariant]
         public IReadOnlyList<Image> Images { get; set; }
 
         [Section("Facility")]
         [Multiline]
         [Required]
+        [CultureDependent]
         [Tooltip("This description will be used when facilities are displayed as a list")]
         public string ListDescription { get; set; }
     }

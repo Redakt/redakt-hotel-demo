@@ -10,7 +10,6 @@ namespace RedaktHotel.Web.Models.Embedded
     public class LatestBlogArticles: ModuleWithIntroBase
     {
         [Required]
-        [CultureInvariant]
         public Link Parent { get; set; }
     }
 }

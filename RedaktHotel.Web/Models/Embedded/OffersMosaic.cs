@@ -8,7 +8,6 @@ namespace RedaktHotel.Web.Models.Embedded
     [NameFormat("[Offers] {Heading}")]
     public class OffersMosaic: ModuleWithIntroBase
     {
-        [CultureInvariant]
         public IReadOnlyList<OfferItem> Offers { get; set; }
     }
 }

@@ -10,12 +10,11 @@ namespace RedaktHotel.Web.Models.Assets
     [Icon(ContentIcons.UserIdCard2)]
     public class StaffMember: IContentType
     {
-        [CultureInvariant]
         public Media Picture { get; set; }
 
-        [CultureInvariant]
         public string Name { get; set; }
 
+        [CultureDependent]
         public string Role { get; set; }
     }
 }

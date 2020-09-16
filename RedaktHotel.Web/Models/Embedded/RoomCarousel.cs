@@ -11,7 +11,6 @@ namespace RedaktHotel.Web.Models.Embedded
     public class RoomCarousel: ModuleWithIntroBase
     {
         [AllowContentType(typeof(RoomDetail))]
-        [CultureInvariant]
         [MinCount(3)]
         public IReadOnlyList<Link> Rooms { get; set; }
     }

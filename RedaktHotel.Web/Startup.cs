@@ -26,7 +26,7 @@ namespace RedaktHotel.Web
             // Startup filters are executed in reverse order of adding; add HotelSiteSeeder first so it gets executed after RedaktStartupFilter.
             services.AddTransient<IStartupFilter, HotelSiteSeeder>();
 
-            services.AddRedakt(Configuration, true)
+            services.AddRedakt(Configuration)
                 .AddLiteDbDataStore()
                 .AddIdentityServer()
                 .AddContentManagement()

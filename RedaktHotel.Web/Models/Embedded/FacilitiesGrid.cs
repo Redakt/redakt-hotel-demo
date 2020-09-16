@@ -11,7 +11,6 @@ namespace RedaktHotel.Web.Models.Embedded
     public class FacilitiesGrid : ModuleWithIntroBase
     {
         [AllowContentType(typeof(FacilityPage))]
-        [CultureInvariant]
         [MinCount(3)]
         public IReadOnlyList<Link> Facilities { get; set; }
     }

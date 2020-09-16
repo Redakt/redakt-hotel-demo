@@ -13,13 +13,11 @@ namespace RedaktHotel.Web.Models.Pages
     public class RoomDetail: SimplePage
     {
         [Section("Room")]
-        [CultureInvariant]
         [Required]
         [Inline("room-images", FieldWidth = "auto")]
         public Image MainImage { get; set; }
 
         [Section("Room")]
-        [CultureInvariant]
         [Inline("room-images")]
         [MaxCount(5)]
         public ICollection<Image> AdditionalImages { get; set; }
@@ -27,12 +25,14 @@ namespace RedaktHotel.Web.Models.Pages
         [Section("Room")]
         [Multiline]
         [Required]
+        [CultureDependent]
         [Tooltip("This description will be used when rooms are displayed as a list")]
         public string ListDescription { get; set; }
 
         [Section("Room")]
         [RichTextEditor]
         [Required]
+        [CultureDependent]
         public string LongDescription { get; set; }
 
         [Section("Room")]
@@ -42,14 +42,12 @@ namespace RedaktHotel.Web.Models.Pages
 
         [Section("Room")]
         [Inline("room-rate", FieldWidth = "240px")]
-        [CultureInvariant]
         [Range(20, 2000)]
         [NumberEditor(Decimals = 2, Prefix = "€")]
         public decimal NightlyRate { get; set; }
 
         [Section("Room")]
         [Inline("room-rate", FieldWidth = "240px")]
-        [CultureInvariant]
         [Range(20, 2000)]
         [NumberEditor(Decimals = 2, Prefix = "€")]
         public decimal? DiscountedFrom { get; set; }

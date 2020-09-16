@@ -10,9 +10,9 @@ namespace RedaktHotel.Web.Models.Assets
     [Icon(ContentIcons.FileVideoPlay)]
     public class Video: IContentType
     {
-        [CultureInvariant]
         public Media File { get; set; }
 
+        [CultureDependent]
         public string Title { get; set; }
     }
 }

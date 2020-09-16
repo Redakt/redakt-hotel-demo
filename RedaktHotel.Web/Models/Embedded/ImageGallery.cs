@@ -9,7 +9,6 @@ namespace RedaktHotel.Web.Models.Embedded
     [NameFormat("[Images] {Heading}")]
     public class ImageGallery: ModuleWithIntroBase
     {
-        [CultureInvariant]
         public IReadOnlyList<Image> Images { get; set; }
     }
 }

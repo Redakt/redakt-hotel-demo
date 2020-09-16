@@ -14,13 +14,11 @@ namespace RedaktHotel.Web.Models.Pages
     {
         [Section("Slider Items")]
         [HideLabel]
-        [CultureInvariant]
         public IReadOnlyList<SliderItem> SliderItems { get; set; }
 
         [Section("Modules")]
         [HideLabel]
-        [CultureInvariant]
-        [HelpText("This list is language invariant, therefore the same set of modules is shared between languages.")]
+        [HelpText("This list is culture invariant, therefore the same set of modules is shared between all cultures.")]
         public IReadOnlyList<ModuleBase> Modules { get; set; }
     }
 }

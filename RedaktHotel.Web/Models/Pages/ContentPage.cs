@@ -13,7 +13,8 @@ namespace RedaktHotel.Web.Models.Pages
     {
         [Section("Modules")]
         [HideLabel]
-        [HelpText("This list is language-dependent, therefore every language will have its separate set of modules.")]
+        [CultureDependent]
+        [HelpText("This list is culture-dependent, therefore every culture will have its separate set of modules.")]
         public IReadOnlyList<ModuleBase> Modules { get; set; }
     }
 }

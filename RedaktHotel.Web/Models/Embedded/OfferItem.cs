@@ -8,11 +8,12 @@ namespace RedaktHotel.Web.Models.Embedded
     [NameFormat("[Offer] {Title}")]
     public class OfferItem: IContentType
     {
-        [CultureInvariant]
         public Image Image { get; set; }
 
+        [CultureDependent]
         public string Title { get; set; }
 
+        [CultureDependent]
         public string Text { get; set; }
 
         public Link ReadMore { get; set; }

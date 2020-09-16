@@ -12,11 +12,13 @@ namespace RedaktHotel.Web.Models.Pages
     {
         [Section("Heading")]
         [DisplayName("Caption")]
+        [CultureDependent]
         public string HeadingCaption { get; set; }
 
         [Section("Heading")]
         [DisplayName("Introduction")]
         [Multiline]
+        [CultureDependent]
         public string HeadingIntro { get; set; }
 
         [Section("Heading")]

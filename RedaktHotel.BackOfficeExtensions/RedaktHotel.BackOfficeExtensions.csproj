@@ -9,11 +9,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.5" />
-    <PackageReference Include="Redakt.BackOffice.ContentManagement" Version="1.0.0-beta.2-20200828.1" />
-    <PackageReference Include="Redakt.BackOffice.IdentityStore" Version="1.0.0-beta.2-20200828.1" />
-    <PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.0-beta.2-20200828.1" />
-    <PackageReference Include="Redakt.Security.IdentityServer" Version="1.0.0-beta.2-20200828.1" />
-    <PackageReference Include="Redakt.Web.ContentManagement" Version="1.0.0-beta.2-20200828.1" />
+    <PackageReference Include="Redakt.BackOffice.ContentManagement" Version="1.0.0-beta.3" />
+    <PackageReference Include="Redakt.BackOffice.IdentityStore" Version="1.0.0-beta.3" />
+    <PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.0-beta.3" />
+    <PackageReference Include="Redakt.Security.IdentityServer" Version="1.0.0-beta.3" />
+    <PackageReference Include="Redakt.Web.ContentManagement" Version="1.0.0-beta.3" />
   </ItemGroup>
 
 </Project>

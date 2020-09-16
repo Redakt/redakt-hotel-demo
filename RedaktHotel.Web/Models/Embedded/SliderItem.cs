@@ -9,13 +9,15 @@ namespace RedaktHotel.Web.Models.Embedded
     [NameFormat("[Slider] {Title} - {Subtitle}")]
     public class SliderItem: IContentType
     {
+        [CultureDependent]
         public string Caption { get; set; }
 
+        [CultureDependent]
         public string Title { get; set; }
 
+        [CultureDependent]
         public string Subtitle { get; set; }
 
-        [CultureInvariant]
         public Image BackgroundImage { get; set; }
     }
 }

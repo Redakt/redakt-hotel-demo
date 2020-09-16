@@ -12,11 +12,11 @@ namespace RedaktHotel.Web.Models.Assets
     public class Image: IContentType
     {
         [AcceptMimeType("image/jpeg", "image/gif", "image/png", "image/bmp", "image/tiff", "image/svg+xml")]
-        [CultureInvariant]
         [Section("Image")]
         public Media File { get; set; }
 
         [Section("Image")]
+        [CultureDependent]
         public string AlternateText { get; set; }
     }
 }
