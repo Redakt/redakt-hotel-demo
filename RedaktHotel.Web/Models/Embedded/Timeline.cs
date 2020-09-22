@@ -1,4 +1,4 @@
-﻿using Redakt.BackOffice.ContentManagement.Content.Editors.NestedContent;
+﻿using Redakt.ContentManagement.BackOffice.Content.Editors.NestedContent;
 using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
 using System.Collections.Generic;

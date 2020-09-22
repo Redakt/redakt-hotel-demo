@@ -348,7 +348,7 @@ namespace RedaktHotel.Web
             var versionId = NodeVersionId.New;
             var contentId = ContentId.New;
             await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, ContentRevisionId.New, content.Properties));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(homepageId, versionId, contentId, "Version 1", NodeVersionStateKey.New));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(homepageId, _englishCulture, versionId, null));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(homepageId, _dutchCulture, versionId, null));
@@ -484,7 +484,7 @@ namespace RedaktHotel.Web
             var versionId = NodeVersionId.New;
             var contentId = ContentId.New;
             await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, ContentRevisionId.New, content.Properties));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, englishName, parentId, sortOrder));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.SetNodeView(nodeId, viewName ?? contentType.AllowedViewNames.First()));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, versionId, contentId, "Version 1", NodeVersionStateKey.New));
@@ -612,7 +612,7 @@ namespace RedaktHotel.Web
             var versionId = NodeVersionId.New;
             var contentId = ContentId.New;
             await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, ContentRevisionId.New, content.Properties));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, name, context.StaffMembersFolderId, 0));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, versionId, contentId, "Version 1", NodeVersionStateKey.New));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, versionId, null));
@@ -640,7 +640,7 @@ namespace RedaktHotel.Web
             var versionId = NodeVersionId.New;
             var contentId = ContentId.New;
             await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.CreateContent(contentId, contentType));
-            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, IdGenerator.GenerateId(), content.Properties));
+            await commandBus.PublishAsync(new Redakt.ContentManagement.Content.Commands.AddContentRevision(contentId, ContentRevisionId.New, content.Properties));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.CreateNode(nodeId, contentType, nodeName, context.ImagesFolderId, 0));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.AddNodeVersion(nodeId, versionId, contentId, "Version 1", NodeVersionStateKey.New));
             await commandBus.PublishAsync(new Redakt.ContentManagement.Nodes.Commands.PublishNode(nodeId, _englishCulture, versionId, null));

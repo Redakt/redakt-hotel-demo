@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Redakt.Web.ContentManagement;
+using Redakt.ContentManagement.Web;
 
 namespace RedaktHotel.Web.ViewComponents
 {
