@@ -7,7 +7,7 @@ using RedaktHotel.Web.Models.Pages;
 namespace RedaktHotel.Web.Models.Embedded
 {
     [Icon(ContentIcons.LayoutModule)]
-    [NameFormat("[Facilities] {Heading}")]
+    [TitleFormat("[Facilities] {{Heading}}")]
     public class FacilitiesGrid : ModuleWithIntroBase
     {
         [AllowContentType(typeof(FacilityPage))]

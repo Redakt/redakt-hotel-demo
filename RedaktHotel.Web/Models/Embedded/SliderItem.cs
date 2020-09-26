@@ -6,7 +6,7 @@ using RedaktHotel.Web.Models.Assets;
 namespace RedaktHotel.Web.Models.Embedded
 {
     [Icon(ContentIcons.AlignLandscape)]
-    [NameFormat("[Slider] {Title} - {Subtitle}")]
+    [TitleFormat("[Slider] {{Title}} - {{Subtitle}}")]
     public class SliderItem: IContentType
     {
         [CultureDependent]

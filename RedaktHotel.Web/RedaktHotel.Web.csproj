@@ -6,11 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Lorem.Universal.Net" Version="3.0.64" />
-    <PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.0-beta.4" />
-    <PackageReference Include="Redakt.ContentManagement.Web" Version="1.0.0-beta.4" />
-    <PackageReference Include="Redakt.ContentManagement.BackOffice" Version="1.0.0-beta.4" />
-    <PackageReference Include="Redakt.IdentityStore.BackOffice" Version="1.0.0-beta.4" />
-    <PackageReference Include="Redakt.IdentityServer" Version="1.0.0-beta.4" />
+    <PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.0-beta.4-20200926.3" />
+    <PackageReference Include="Redakt.ContentManagement.Web" Version="1.0.0-beta.4-20200926.3" />
+    <PackageReference Include="Redakt.ContentManagement.BackOffice" Version="1.0.0-beta.4-20200926.3" />
+    <PackageReference Include="Redakt.IdentityStore.BackOffice" Version="1.0.0-beta.4-20200926.3" />
+    <PackageReference Include="Redakt.IdentityServer" Version="1.0.0-beta.4-20200926.3" />
   </ItemGroup>
 
   <ItemGroup>

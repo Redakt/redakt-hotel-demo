@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RedaktHotel.Web.Models.Embedded
 {
     [Icon(ContentIcons.ListBullets1)]
-    [NameFormat("[Blog] {Heading}")]
+    [TitleFormat("[Blog] {{Heading}}")]
     public class LatestBlogArticles: ModuleWithIntroBase
     {
         [Required]

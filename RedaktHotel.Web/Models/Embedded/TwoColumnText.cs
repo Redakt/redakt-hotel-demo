@@ -3,7 +3,7 @@ using Redakt.ContentManagement.Annotations;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [NameFormat("[Columns] {LeftHeading} - {RightHeading}")]
+    [TitleFormat("[Columns] {{LeftHeading}} - {{RightHeading}}")]
     [Icon(ContentIcons.ParagraphTwoColumn)]
     public class TwoColumnText: ModuleBase
     {

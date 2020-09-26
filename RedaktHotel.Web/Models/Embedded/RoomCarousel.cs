@@ -7,7 +7,7 @@ using RedaktHotel.Web.Models.Pages;
 namespace RedaktHotel.Web.Models.Embedded
 {
     [Icon(ContentIcons.HotelDoubleBed)]
-    [NameFormat("[Rooms]")]
+    [TitleFormat("[Rooms]")]
     public class RoomCarousel: ModuleWithIntroBase
     {
         [AllowContentType(typeof(RoomDetail))]

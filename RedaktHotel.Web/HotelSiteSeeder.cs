@@ -561,7 +561,7 @@ namespace RedaktHotel.Web
                 content.SetValue(nameof(ImageGallery.Heading), culture, heading);
                 content.SetValue(nameof(ImageGallery.IntroText), culture, Lorem.Paragraph(8, 16, 3, 5));
             }
-            content.SetValues(nameof(ImageGallery.Images), CultureInfo.InvariantCulture, imageIds.Select(x => new NestedContentItem(x)));
+            content.SetValues(nameof(ImageGallery.Images), CultureInfo.InvariantCulture, imageIds.Select(x => ContentValue.New(new NestedContentItem(x))));
 
             return content;
         }

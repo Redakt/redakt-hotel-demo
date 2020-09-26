@@ -6,7 +6,7 @@ using RedaktHotel.Web.Models.Assets;
 namespace RedaktHotel.Web.Models.Embedded
 {
     [Icon(ContentIcons.PictureStackLandscape)]
-    [NameFormat("[Images] {Heading}")]
+    [TitleFormat("[Images] {{Heading}}")]
     public class ImageGallery: ModuleWithIntroBase
     {
         public IReadOnlyList<Image> Images { get; set; }

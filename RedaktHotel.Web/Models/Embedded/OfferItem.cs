@@ -5,7 +5,7 @@ using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [NameFormat("[Offer] {Title}")]
+    [TitleFormat("[Offer] {{Title}}")]
     public class OfferItem: IContentType
     {
         public Image Image { get; set; }
