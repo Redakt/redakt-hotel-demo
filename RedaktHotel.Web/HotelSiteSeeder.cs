@@ -279,40 +279,40 @@ namespace RedaktHotel.Web
 
             var sliderContent1 = new LocalizedContent(sliderContentType);
             var sliderImageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\hotel\slider-item-1.jpg"), "Slider Image 1");
-            this.SetProperty(sliderContent1, nameof(SliderItem.BackgroundImage), new NestedContentItem(sliderImageId));
+            this.SetProperty(sliderContent1, nameof(SliderItem.BackgroundImage), new NodeReference(sliderImageId));
             this.SetProperty(sliderContent1, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.SetProperty(sliderContent1, nameof(SliderItem.Title), "Experience the Luxury", "Ervaar de Luxe");
             this.SetProperty(sliderContent1, nameof(SliderItem.Subtitle), "in our Hotel", "in ons Hotel");
-            content.AddValue(nameof(Homepage.SliderItems), CultureInfo.InvariantCulture, new NestedContentItem(sliderContent1));
+            content.AddValue(nameof(Homepage.SliderItems), CultureInfo.InvariantCulture, new ContentReference { Content = sliderContent1 });
 
             var sliderContent2 = new LocalizedContent(sliderContentType);
-            this.SetProperty(sliderContent2, nameof(SliderItem.BackgroundImage), new NestedContentItem(sliderImageId));
+            this.SetProperty(sliderContent2, nameof(SliderItem.BackgroundImage), new NodeReference(sliderImageId));
             this.SetProperty(sliderContent2, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.SetProperty(sliderContent2, nameof(SliderItem.Title), "Experience Exceptional Dining", "Ervaar Uitzonderlijk Dineren");
             this.SetProperty(sliderContent2, nameof(SliderItem.Subtitle), "in our Restaurants", "in onze Restaurants");
-            content.AddValue(nameof(Homepage.SliderItems), CultureInfo.InvariantCulture, new NestedContentItem(sliderContent2));
+            content.AddValue(nameof(Homepage.SliderItems), CultureInfo.InvariantCulture, new ContentReference { Content = sliderContent2 });
 
             var sliderContent3 = new LocalizedContent(sliderContentType);
-            this.SetProperty(sliderContent3, nameof(SliderItem.BackgroundImage), new NestedContentItem(sliderImageId));
+            this.SetProperty(sliderContent3, nameof(SliderItem.BackgroundImage), new NodeReference(sliderImageId));
             this.SetProperty(sliderContent3, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.SetProperty(sliderContent3, nameof(SliderItem.Title), "Experience Ultimate Relaxation", "Ervaar Ultieme Ontspanning");
             this.SetProperty(sliderContent3, nameof(SliderItem.Subtitle), "in our Spa & Wellness", "in onze Spa & Wellness");
-            content.AddValue(nameof(Homepage.SliderItems), CultureInfo.InvariantCulture, new NestedContentItem(sliderContent3));
+            content.AddValue(nameof(Homepage.SliderItems), CultureInfo.InvariantCulture, new ContentReference { Content = sliderContent3 } );
 
             // Room carousel
-            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(this.CreateRoomCarouselModule(serviceProvider, context)));
+            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new ContentReference { Content = this.CreateRoomCarouselModule(serviceProvider, context) });
 
             // Text content
             var textContent = new LocalizedContent(ContentTypeDefinition.Lookup<TextWithImage>());
             var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\home\home-text-image.jpg"), "Homepage Image");
-            textContent.SetValue(nameof(TextWithImage.Image), CultureInfo.InvariantCulture, new NestedContentItem(imageId));
+            textContent.SetValue(nameof(TextWithImage.Image), CultureInfo.InvariantCulture, new NodeReference(imageId));
             textContent.SetValue(nameof(TextWithImage.HeadingCaption), _englishCulture, "Welcome to The Redakt");
             textContent.SetValue(nameof(TextWithImage.Heading), _englishCulture, "Demonstration website");
             textContent.SetValue(nameof(TextWithImage.BodyText), _englishCulture, "The Redakt Hotel & Resort is a demo website for the <a href=\"https://www.redaktcms.com\" target=\"_blank\">Redakt Content Management System</a>. Therefore most content is fictional and automatically generated. You can visit the back office application at <a href=\"/redakt\">/redakt</a>. In the back office and application code you can play with many of the features that are part of the Redakt system. Please note, as this website is meant as a showcase for Redakt CMS only, and it does not necessarily reflect best web software development practices. Parts of the website may be functionally incomplete or missing.");
             textContent.SetValue(nameof(TextWithImage.HeadingCaption), _dutchCulture, "Welkom bij The Redakt");
             textContent.SetValue(nameof(TextWithImage.Heading), _dutchCulture, "Demonstratie website");
             textContent.SetValue(nameof(TextWithImage.BodyText), _dutchCulture, "The Redakt Hotel & Resort is een demo website voor het <a href=\"https://www.redaktcms.com\" target=\"_blank\">Redakt Content Management System</a>. Om deze reden is de meeste content fictioneel en automatisch gegenereerd. Je kan de back office applicatie bezoeken op <a href=\"/redakt\">/redakt</a>. In the back office en applicatie code kan je veel van de functionaliteiten uitproberen die onderdeel maken van het Redakt systeem. Let wel, aangezien deze website alleen bedoeld is als showcase voor Redakt CMS, is het niet per se een goed voorbeeld van web software ontwikkeling. Sommige onderdelen van de website kunnen functioneel incompleet zijn.");
-            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(textContent));
+            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new ContentReference { Content = textContent });
 
             // Facilities grid
             var facilitiesContent = this.CreateFacilitiesModule(serviceProvider, context);
@@ -322,7 +322,7 @@ namespace RedaktHotel.Web
             facilitiesContent.SetValue(nameof(FacilitiesGrid.HeadingCaption), _dutchCulture, "Onze Faciliteiten");
             facilitiesContent.SetValue(nameof(FacilitiesGrid.Heading), _dutchCulture, "Ontdek The Redakt");
             facilitiesContent.SetValue(nameof(FacilitiesGrid.IntroText), _dutchCulture, Lorem.Paragraph(5, 10, 4, 8));
-            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(facilitiesContent));
+            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new ContentReference { Content = facilitiesContent });
 
             // Offers mosaic
             var offersContent = await this.CreateOffersModuleAsync(serviceProvider, context);
@@ -332,7 +332,7 @@ namespace RedaktHotel.Web
             offersContent.SetValue(nameof(OffersMosaic.HeadingCaption), _dutchCulture, "Onze Aanbiedingen");
             offersContent.SetValue(nameof(OffersMosaic.Heading), _dutchCulture, "The Redakt Speciale Aanbiedingen");
             offersContent.SetValue(nameof(OffersMosaic.IntroText), _dutchCulture, Lorem.Paragraph(5, 10, 4, 8));
-            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(offersContent));
+            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new ContentReference { Content = offersContent });
 
             // Latest Blog Articles
             var blogContent = new LocalizedContent(ContentTypeDefinition.Lookup<LatestBlogArticles>());
@@ -343,7 +343,7 @@ namespace RedaktHotel.Web
             blogContent.SetValue(nameof(LatestBlogArticles.HeadingCaption), _dutchCulture, "Het Blog");
             blogContent.SetValue(nameof(LatestBlogArticles.Heading), _dutchCulture, "Laatste Nieuws");
             blogContent.SetValue(nameof(LatestBlogArticles.IntroText), _dutchCulture, Lorem.Paragraph(5, 10, 4, 8));
-            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new NestedContentItem(blogContent));
+            content.AddValue(nameof(Homepage.Modules), CultureInfo.InvariantCulture, new ContentReference { Content = blogContent });
 
             var versionId = NodeVersionId.New;
             var contentId = ContentId.New;
@@ -382,7 +382,7 @@ namespace RedaktHotel.Web
             for (var i = 0; i < images.Length; i++)
             {
                 var imageId = await CreateImageAsync(serviceProvider, context, images[i], $"{englishName} Image {i + 1}");
-                content.AddValue(nameof(FacilityPage.Images), CultureInfo.InvariantCulture, new NestedContentItem(imageId));
+                content.AddValue(nameof(FacilityPage.Images), CultureInfo.InvariantCulture, new NodeReference(imageId));
                 imageAssets.Add(imageId);
             }
 
@@ -410,8 +410,8 @@ namespace RedaktHotel.Web
                 var categories = Path.GetFileNameWithoutExtension(imageFile).Split('-').Skip(1);
 
                 var content = new LocalizedContent(ContentTypeDefinition.Lookup<BlogArticle>());
-                this.SetProperty(content, nameof(BlogArticle.Image), new NestedContentItem(imageId));
-                this.SetProperty(content, nameof(BlogArticle.Categories), categories);
+                this.SetProperty(content, nameof(BlogArticle.Image), new NodeReference(imageId));
+                content.AddValues(nameof(BlogArticle.Categories), CultureInfo.InvariantCulture, categories.Select(x => ContentValue.New(x)));
                 this.SetProperty(content, nameof(BlogArticle.PublicationDate), articleDate);
                 this.SetProperty(content, nameof(BlogArticle.Author), Lorem.Words(2, 3));
                 this.SetProperty(content, nameof(BlogArticle.ListDescription), Lorem.Sentence(8, 14), Lorem.Sentence(8, 14));
@@ -449,12 +449,12 @@ namespace RedaktHotel.Web
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\rooms\{imageFolder}"));
 
             var mainImageId = await CreateImageAsync(serviceProvider, context, images.First(), $"{englishName} Image 1");
-            this.SetProperty(content, nameof(RoomDetail.MainImage), new NestedContentItem(mainImageId));
+            this.SetProperty(content, nameof(RoomDetail.MainImage), new NodeReference(mainImageId));
 
             for (var i = 1; i < images.Length; i++)
             {
                 var additionalImageId = await CreateImageAsync(serviceProvider, context, images[i], $"{englishName} Image {i + 1}");
-                content.AddValue(nameof(RoomDetail.AdditionalImages), CultureInfo.InvariantCulture, new NestedContentItem(additionalImageId));
+                content.AddValue(nameof(RoomDetail.AdditionalImages), CultureInfo.InvariantCulture, new NodeReference(additionalImageId));
             }
 
             this.SetProperty(content, nameof(RoomDetail.NightlyRate), nightlyRate);
@@ -529,11 +529,11 @@ namespace RedaktHotel.Web
                 var imageId = await CreateImageAsync(serviceProvider, context, imageFile, "Offer");
                 var offer = new LocalizedContent(ContentTypeDefinition.Lookup<OfferItem>());
 
-                this.SetProperty(offer, nameof(OfferItem.Image), new NestedContentItem(imageId));
+                this.SetProperty(offer, nameof(OfferItem.Image), new NodeReference(imageId));
                 this.SetProperty(offer, nameof(OfferItem.Title), Lorem.Words(3, 6), Lorem.Words(3, 6));
                 this.SetProperty(offer, nameof(OfferItem.Text), Lorem.Paragraph(5, 8, 2, 4), Lorem.Paragraph(5, 8, 2, 4));
 
-                content.AddValue(nameof(OffersMosaic.Offers), CultureInfo.InvariantCulture, new NestedContentItem(offer));
+                content.AddValue(nameof(OffersMosaic.Offers), CultureInfo.InvariantCulture, new ContentReference { Content = offer });
             }
 
             return content;
@@ -546,7 +546,7 @@ namespace RedaktHotel.Web
             if (headingCaption != null) content.SetValue(nameof(TextWithImage.HeadingCaption), culture, headingCaption);
             if (heading != null) content.SetValue(nameof(TextWithImage.Heading), culture, heading);
             content.SetValue(nameof(TextWithImage.BodyText), culture, Lorem.Paragraph(8, 16, 5, 10));
-            if (imageId != null) content.SetValue(nameof(TextWithImage.Image), culture, new NestedContentItem(imageId));
+            if (imageId != null) content.SetValue(nameof(TextWithImage.Image), culture, new NodeReference(imageId));
 
             return content;
         }
@@ -561,7 +561,7 @@ namespace RedaktHotel.Web
                 content.SetValue(nameof(ImageGallery.Heading), culture, heading);
                 content.SetValue(nameof(ImageGallery.IntroText), culture, Lorem.Paragraph(8, 16, 3, 5));
             }
-            content.SetValues(nameof(ImageGallery.Images), CultureInfo.InvariantCulture, imageIds.Select(x => ContentValue.New(new NestedContentItem(x))));
+            content.AddValues(nameof(ImageGallery.Images), CultureInfo.InvariantCulture, imageIds.Select(x => ContentValue.New(new NodeReference(x))));
 
             return content;
         }
