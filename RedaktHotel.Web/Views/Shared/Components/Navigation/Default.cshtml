@@ -18,6 +18,7 @@
         </div>
         <div class="header-lang">
             <ul>
+                <li><a href="/redakt" style="text-transform: none;margin-right: 40px;">demo back office</a></li>
                 <li class="@(Context.Request.Path.StartsWithSegments("/en") ? "active" : null)"><a href="@(await Model.Url.ForCultureAsync("en") ?? "/en")">EN</a></li>
                 <li class="@(Context.Request.Path.StartsWithSegments("/nl") ? "active" : null)"><a href="@(await Model.Url.ForCultureAsync("nl") ?? "/nl")">NL</a></li>
             </ul>

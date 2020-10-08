@@ -44,23 +44,14 @@ namespace RedaktHotel.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            //var supportedCultures = new[] { "en", "nl" };
-            //app.UseRequestLocalization(options => options
-            //    .AddSupportedCultures(supportedCultures)
-            //    .AddSupportedUICultures(supportedCultures)
-            //    .SetDefaultCulture(supportedCultures[0]));
+            var supportedCultures = new[] { "en", "nl" };
+            app.UseRequestLocalization(options => options
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures)
+                .SetDefaultCulture(supportedCultures[0]));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    OnPrepareResponse = ctx =>
-            //    {
-            //        // Cache static files for 30 days
-            //        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=2592000");
-            //        ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddDays(30).ToString("R", CultureInfo.InvariantCulture));
-            //    }
-            //});
 
             app.UseRouting();
 
