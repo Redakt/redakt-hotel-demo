@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
+using Redakt;
 using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
 using Redakt.EventSourcing;
+using Redakt.Extensions;
 
 namespace RedaktHotel.BackOfficeExtensions.Components
 {
@@ -20,6 +22,9 @@ namespace RedaktHotel.BackOfficeExtensions.Components
 
         [Inject]
         private ICommandBus CommandBus { get; set; }
+
+        [Inject]
+        private IRedaktSystem System { get; set; }
         #endregion
 
         #region [ Properties ]
@@ -49,6 +54,8 @@ namespace RedaktHotel.BackOfficeExtensions.Components
                     }));
                 }
             }
+
+            this.System.ContentManagement().IsProvisioned = true;
         }
         #endregion
     }
