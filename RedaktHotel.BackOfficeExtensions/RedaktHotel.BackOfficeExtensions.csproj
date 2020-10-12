@@ -8,11 +8,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.5" />
-    <PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.0-beta.8" />
-    <PackageReference Include="Redakt.ContentManagement.Web" Version="1.0.0-beta.8" />
-    <PackageReference Include="Redakt.ContentManagement.BackOffice" Version="1.0.0-beta.8" />
-    <PackageReference Include="Redakt.IdentityStore.BackOffice" Version="1.0.0-beta.8" />
-    <PackageReference Include="Redakt.IdentityServer" Version="1.0.0-beta.8" />
+    <PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.0-beta.9" />
+    <PackageReference Include="Redakt.ContentManagement.Web" Version="1.0.0-beta.9" />
+    <PackageReference Include="Redakt.ContentManagement.BackOffice" Version="1.0.0-beta.9" />
+    <PackageReference Include="Redakt.IdentityStore.BackOffice" Version="1.0.0-beta.9" />
+    <PackageReference Include="Redakt.IdentityServer" Version="1.0.0-beta.9" />
   </ItemGroup>
 
 </Project>

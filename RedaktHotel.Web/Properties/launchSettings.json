@@ -3,11 +3,18 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:53735/",
-      "sslPort": 44346
+      "applicationUrl": "http://localhost:53751/",
+      "sslPort": 44364
     }
   },
   "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
     "RedaktHotel.Web": {
       "commandName": "Project",
       "launchBrowser": true,
