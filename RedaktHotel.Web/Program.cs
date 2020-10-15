@@ -20,6 +20,7 @@ namespace RedaktHotel.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseStaticWebAssets();  // Required when not running in development mode.
                     webBuilder.UseStartup<Startup>();
                 });
     }
