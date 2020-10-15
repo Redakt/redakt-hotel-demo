@@ -31,6 +31,7 @@ using Redakt.ContentManagement.Nodes.Aggregates;
 using Redakt.Dictionary.Aggregates;
 using Redakt.EventSourcing;
 using Redakt.Files.Aggregates;
+using Redakt.Extensions;
 
 namespace RedaktHotel.Web
 {
@@ -278,7 +279,7 @@ namespace RedaktHotel.Web
             var sliderContentType = ContentTypeDefinition.Lookup<SliderItem>();
 
             var sliderContent1 = new LocalizedContent(sliderContentType);
-            var sliderImageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\hotel\slider-item-1.jpg"), "Slider Image 1");
+            var sliderImageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), "../seed-assets/hotel/slider-item-1.jpg".ToSafeFilePath()), "Slider Image 1");
             this.SetProperty(sliderContent1, nameof(SliderItem.BackgroundImage), new NodeReference(sliderImageId));
             this.SetProperty(sliderContent1, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.SetProperty(sliderContent1, nameof(SliderItem.Title), "Experience the Luxury", "Ervaar de Luxe");
@@ -304,7 +305,7 @@ namespace RedaktHotel.Web
 
             // Text content
             var textContent = new LocalizedContent(ContentTypeDefinition.Lookup<TextWithImage>());
-            var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"..\seed-assets\home\home-text-image.jpg"), "Homepage Image");
+            var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), "../seed-assets/home/home-text-image.jpg".ToSafeFilePath()), "Homepage Image");
             textContent.SetValue(nameof(TextWithImage.Image), CultureInfo.InvariantCulture, new NodeReference(imageId));
             textContent.SetValue(nameof(TextWithImage.HeadingCaption), _englishCulture, "Welcome to The Redakt");
             textContent.SetValue(nameof(TextWithImage.Heading), _englishCulture, "Demonstration website");
@@ -376,7 +377,7 @@ namespace RedaktHotel.Web
         private async Task CreateFacilityPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId facilitiesParentId, string imageFolder, string englishName, string dutchName, int sortOrder)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<FacilityPage>());
-            var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\facilities\{imageFolder}"));
+            var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/facilities/{imageFolder}".ToSafeFilePath()));
 
             var imageAssets = new List<string>();
             for (var i = 0; i < images.Length; i++)
@@ -402,7 +403,7 @@ namespace RedaktHotel.Web
             context.BlogParentId = await this.CreatePageAsync(serviceProvider, context, parentId, blogContent, "Blog", "Blog", 4, "BlogOverview");
 
             var articleDate = DateTime.Today.AddDays(-_rnd.Next(0, 7));
-            var imageFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\blog"));
+            var imageFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/blog".ToSafeFilePath()));
             var sortIndex = 0;
             foreach (var imageFile in imageFiles)
             {
@@ -446,7 +447,7 @@ namespace RedaktHotel.Web
         private async Task CreateRoomPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId roomsPageId, string imageFolder, string englishName, string dutchName, int nightlyRate, int sortIndex)
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<RoomDetail>());
-            var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\rooms\{imageFolder}"));
+            var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/rooms/{imageFolder}".ToSafeFilePath()));
 
             var mainImageId = await CreateImageAsync(serviceProvider, context, images.First(), $"{englishName} Image 1");
             this.SetProperty(content, nameof(RoomDetail.MainImage), new NodeReference(mainImageId));
@@ -524,7 +525,7 @@ namespace RedaktHotel.Web
         {
             var content = new LocalizedContent(ContentTypeDefinition.Lookup<OffersMosaic>());
 
-            foreach (var imageFile in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\offers")))
+            foreach (var imageFile in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/offers".ToSafeFilePath())))
             {
                 var imageId = await CreateImageAsync(serviceProvider, context, imageFile, "Offer");
                 var offer = new LocalizedContent(ContentTypeDefinition.Lookup<OfferItem>());
@@ -595,7 +596,7 @@ namespace RedaktHotel.Web
             var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
 
             var fileId = FileDescriptorId.New;
-            await using (var fileStream = File.OpenRead(Path.Combine(Directory.GetCurrentDirectory(), @$"..\seed-assets\staff\staff-{imageNumber}.jpg")))
+            await using (var fileStream = File.OpenRead(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/staff/staff-{imageNumber}.jpg".ToSafeFilePath())))
             {
                 await commandBus.PublishAsync(new CreateFile(fileId, fileStream, $"staff-{imageNumber}.jpg", "image/jpeg"));
             }
