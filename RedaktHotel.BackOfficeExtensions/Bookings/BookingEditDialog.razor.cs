@@ -5,7 +5,7 @@ using Redakt.BackOffice.Components.Dialog;
 
 namespace RedaktHotel.BackOfficeExtensions.Bookings
 {
-    public partial class BookingEditDialog
+    public partial class BookingEditDialog: ModalBase
     {
         #region [ Parameters ]
         [Parameter]

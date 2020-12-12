@@ -18,17 +18,17 @@
             </AlertBox>
 
             <div class="rx-form" @key="@Status">
-                <GridView Items="@Bookings" TItem="BookingEntity" ItemClicked="@OnBookingClicked">
-                    <GridViewColumn TItem="BookingEntity" Header="Room">
+                <GridView DataSource="@DataSource" TItem="BookingEntity" ItemClicked="@OnBookingClicked" @ref="_grid">
+                    <GridViewColumn TItem="BookingEntity" HeaderText="Room">
                         <span>@context.Room</span>
                     </GridViewColumn>
-                    <GridViewColumn TItem="BookingEntity" Header="Check In">
+                    <GridViewColumn TItem="BookingEntity" HeaderText="Check In">
                         <span>@context.CheckInDate.ToShortDateString()</span>
                     </GridViewColumn>
-                    <GridViewColumn TItem="BookingEntity" Header="Check Out">
+                    <GridViewColumn TItem="BookingEntity" HeaderText="Check Out">
                         <span>@context.CheckOutDate.ToShortDateString()</span>
                     </GridViewColumn>
-                    <GridViewColumn TItem="BookingEntity" Header="Guest">
+                    <GridViewColumn TItem="BookingEntity" HeaderText="Guest">
                         <span>@context.GuestFirstName @context.GuestLastName</span>
                     </GridViewColumn>
                 </GridView>

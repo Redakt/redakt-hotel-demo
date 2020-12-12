@@ -14,7 +14,8 @@ namespace RedaktHotel.Web.Models.Pages
     {
         [Section("Room")]
         [Required]
-        [Inline("room-images", FieldWidth = "auto")]
+        [Inline("room-images")]
+        [Width("min-content")]
         public Image MainImage { get; set; }
 
         [Section("Room")]
@@ -41,13 +42,15 @@ namespace RedaktHotel.Web.Models.Pages
         public IReadOnlyList<string> Features { get; set; }
 
         [Section("Room")]
-        [Inline("room-rate", FieldWidth = "240px")]
+        [Inline("room-rate")]
+        [Width(200)]
         [Range(20, 2000)]
         [NumberEditor(Decimals = 2, Prefix = "€")]
         public decimal NightlyRate { get; set; }
 
         [Section("Room")]
-        [Inline("room-rate", FieldWidth = "240px")]
+        [Inline("room-rate")]
+        [Width(200)]
         [Range(20, 2000)]
         [NumberEditor(Decimals = 2, Prefix = "€")]
         public decimal? DiscountedFrom { get; set; }

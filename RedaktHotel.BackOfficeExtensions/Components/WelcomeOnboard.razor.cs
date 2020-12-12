@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Redakt;
+using Redakt.ContentManagement;
 using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
@@ -39,12 +40,11 @@ namespace RedaktHotel.BackOfficeExtensions.Components
             // By default, the demo site hostname is set to "localhost:5001" (the default application url for ASP.NET Core). If the current request hostname is different, update the hostname for the demo site accordingly.
             if (this.Hostname != "localhost:5001")
             {
-                var sites = await this.CollectionService.GetCollectionsOfTypeAsync(NodeCollectionTypes.Site);
-                var site = sites.First();
+                var site = await this.CollectionService.GetCollectionsOfTypeAsync(NodeCollectionTypes.Site).FirstAsync();
 
                 foreach (var host in site.Hosts)
                 {
-                    await this.CommandBus.PublishAsync(new SetNodeCollectionHost(NodeCollectionId.With(site.Id), new NodeCollectionHost
+                    await this.CommandBus.PublishAsync(new SetNodeCollectionHost(NodeCollectionId.With(site.Id), new NodeCollectionHostAggregate
                     {
                         Id = NodeCollectionHostId.With(host.Id),
                         Scheme = host.Scheme,
@@ -55,7 +55,7 @@ namespace RedaktHotel.BackOfficeExtensions.Components
                 }
             }
 
-            this.System.ContentManagement().IsProvisioned = true;
+            this.System.Module<ContentManagementModule>().IsProvisioned = true;
         }
         #endregion
     }

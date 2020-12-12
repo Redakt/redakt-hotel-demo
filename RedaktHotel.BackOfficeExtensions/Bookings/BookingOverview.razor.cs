@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Redakt.BackOffice;
+using Redakt.BackOffice.Components;
 using Redakt.BackOffice.Components.Dialog;
+using Redakt.BackOffice.Components.GridView;
 using Redakt.BackOffice.Components.Navigation;
+using Redakt.BackOffice.Icons;
 using Redakt.Data.DocumentStore;
 using Redakt.Extensions;
 
 namespace RedaktHotel.BackOfficeExtensions.Bookings
 {
     [Authorize]
-    [NavigationItem("bookings", "Bookings", NavigationOrder = 10, Icon = "calendar|Application")]
+    [NavigationItem("bookings", "Bookings", NavigationOrder = 10, Icon = ApplicationIcons.Calendar)]
     public partial class BookingOverview
     {
         #region [ Fields ]
-        private string _currentStatus;
+        private string _currentStatusFilter;
+        private GridView<BookingEntity> _grid;
         #endregion
 
         #region [ Dependency Injection
@@ -36,6 +41,8 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
         private bool IsInitialized { get; set; }
 
         private IList<BookingEntity> Bookings { get; set; }
+
+        private StaticListDataSource<BookingEntity> DataSource { get; set; }
         #endregion
 
         #region [ Initialization ]
@@ -46,13 +53,13 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
 
         protected override async Task OnParametersSetAsync()
         {
-            if (!string.IsNullOrWhiteSpace(this.Status) && _currentStatus != this.Status)
-            {
-                _currentStatus = this.Status;
-                this.Bookings = await this.BookingRepository.FindManyAsync(x => x.Status == _currentStatus).ToListAsync();
-                
-                this.IsInitialized = true;
-            }
+            if (string.IsNullOrWhiteSpace(this.Status) || _currentStatusFilter == this.Status) return;
+
+            _currentStatusFilter = this.Status;
+            this.Bookings = await this.BookingRepository.FindManyAsync(x => x.Status == _currentStatusFilter).ToListAsync();
+            this.DataSource = new StaticListDataSource<BookingEntity>(this.Bookings);
+
+            this.IsInitialized = true;
         }
         #endregion
 
@@ -70,6 +77,8 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
             model.PopulateEntity(entity);
 
             await SaveBooking(entity);
+
+            await this.Context.Notifications.ShowSuccessAsync(null, "The new booking has been created.");
         }
 
         private async Task OnBookingClicked(BookingEntity booking)
@@ -95,6 +104,8 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
                 }
                 
                 this.Bookings.Remove(booking);
+
+                await _grid.ReloadAsync();
             }
             else
             {
@@ -102,6 +113,8 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
                 model.PopulateEntity(booking);
 
                 await SaveBooking(booking);
+
+                await this.Context.Notifications.ShowSuccessAsync(null, "The booking has been updated.");
             }
         }
 
@@ -112,15 +125,16 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
                 // Save the new booking to the data store.
                 await this.BookingRepository.UpsertAsync(entity);
 
-                // Add the booking to the current collection if it is the same status.
-                if (entity.Status == this.Status) this.Bookings.Add(entity);
-
-                await this.Context.Notifications.ShowSuccessAsync(null, "The new booking has been created.");
+                // Update the current booking list if required.
+                if (entity.Status == this.Status && !this.Bookings.Contains(entity)) this.Bookings.Add(entity);
+                else if (entity.Status != this.Status && this.Bookings.Contains(entity)) this.Bookings.Remove(entity);
             }
             catch (Exception ex)
             {
                 await this.Context.Notifications.ShowErrorAsync("Error", ex.Message);
             }
+
+            await _grid.ReloadAsync();
         }
         #endregion
     }

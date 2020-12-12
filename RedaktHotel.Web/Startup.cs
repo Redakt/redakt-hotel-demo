@@ -26,11 +26,11 @@ namespace RedaktHotel.Web
             // Startup filters are executed in reverse order of adding; add HotelSiteSeeder first so it gets executed after RedaktStartupFilter.
             services.AddTransient<IStartupFilter, HotelSiteSeeder>();
 
-            services.AddRedakt(Configuration)
-                .AddLiteDbDataStore()
-                .AddIdentityServer()
-                .AddContentManagement()
-                .AddBackOffice();
+            var redaktBuilder = services.AddRedakt(Configuration);
+            redaktBuilder.AddLiteDbDataStore();
+            redaktBuilder.AddIdentityServer();
+            redaktBuilder.AddContentManagement();
+            redaktBuilder.AddBackOffice();
 
             // Startup filters are executed in reverse order of adding; add HotelSiteSeeder first so it gets executed after RedaktStartupFilter.
             services.AddTransient<IBackOfficeOnboardingStep, CustomOnboardingStep>();
@@ -60,7 +60,7 @@ namespace RedaktHotel.Web
             // Add Redakt middleware components to the pipeline
             app.UseRedaktIdentityServer();
             app.UseRedaktBackOffice();
-            app.UseRedaktContentManagement();
+            app.UseRedaktPageRendering();
 
             // Default MVC endpoint registration
             app.UseEndpoints(endpoints =>
