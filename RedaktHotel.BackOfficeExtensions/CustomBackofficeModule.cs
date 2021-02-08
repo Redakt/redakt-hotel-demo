@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using Redakt.BackOffice;
 
 namespace RedaktHotel.BackOfficeExtensions
@@ -22,5 +23,10 @@ namespace RedaktHotel.BackOfficeExtensions
         {
             "https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css"
         };
+
+        public void ConfigureServices(BackOfficeBuilder backOfficeBuilder)
+        {
+            backOfficeBuilder.RedaktBuilder.Services.AddTransient<IBackOfficeEventHandler, CustomBackOfficeEventHandler>();
+        }
     }
 }

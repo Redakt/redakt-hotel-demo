@@ -1,0 +1,21 @@
+﻿@inherits ModalBase
+<Dialog Width="640" Height="400" IsDraggable="true">
+    <DialogHeader>The Redakt Hotel & Resort Live Demo</DialogHeader>
+    <DialogContent>
+        <p>
+            Welcome to this live demonstration of the Redakt Content Management System.
+            The back office application allows you to modify and publish content on the fictional Redakt Hotel &amp; Resort website at <a href="https://demo.redaktcms.com" class="rx-link" target="_blank">demo.redaktcms.com</a>.
+        </p>
+        <p>
+            Please note that this is a publicly accessible system, and any modifications you do will be publicly visible.
+            Site and user management has been disabled for this demo to prevent accidental changes that would cause the environment to become unaccessible.
+        </p>
+        <p style="font-weight: bold;">
+            This system will be completely reset and reverted to its initial state every day at 6:00 and 18:00 GMT.
+            If you are accessing the system at those exact times, you may experience a short interruption of service.
+        </p>
+    </DialogContent>
+    <DialogActions>
+        <Button Label="Let's Go!" ButtonStyle="@ElementStyle.Primary" Clicked="@Cancel"></Button>
+    </DialogActions>
+</Dialog>
