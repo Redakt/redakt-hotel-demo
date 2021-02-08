@@ -1,11 +1,11 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Configuration;
+using Redakt.ContentManagement.Content;
 using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.AlignLandscape)]
+    [Icon(ContentIcons.Web.Picture)]
     [TitleFormat("[Slider] {{Title}} - {{Subtitle}}")]
     public class SliderItem: IContentType
     {

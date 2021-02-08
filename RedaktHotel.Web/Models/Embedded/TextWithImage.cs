@@ -1,11 +1,11 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Models;
+using Redakt.ContentManagement.Content;
 using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.ParagraphImageRight)]
+    [Icon(ContentIcons.Text.FirstLine)]
     [TitleFormat("[Text] {{Heading}}")]
     public class TextWithImage: ModuleBase
     {

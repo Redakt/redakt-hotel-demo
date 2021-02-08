@@ -1,12 +1,12 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Models;
+using Redakt.ContentManagement.Content;
 using System.Collections.Generic;
 using RedaktHotel.Web.Models.Pages;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.LayoutModule)]
+    [Icon(ContentIcons.Shopping.Coupon)]
     [TitleFormat("[Facilities] {{Heading}}")]
     public class FacilitiesGrid : ModuleWithIntroBase
     {

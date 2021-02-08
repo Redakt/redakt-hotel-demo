@@ -5,7 +5,7 @@ using RedaktHotel.Web.Models.Assets;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.FileText)]
+    [Icon(ContentIcons.Files.Text)]
     [AllowChildren(typeof(ContentPage), typeof(FacilityPage), typeof(RoomDetail), typeof(BlogArticle))]
     [AllowView("RoomList", "FacilitiesList", "BlogOverview")]
     public class SimplePage : PageBase

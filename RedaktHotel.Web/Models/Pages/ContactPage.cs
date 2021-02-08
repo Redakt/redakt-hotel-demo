@@ -6,7 +6,7 @@ using RedaktHotel.BackOfficeExtensions.Models;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.SeoSearchPage)]
+    [Icon(ContentIcons.Interface.Phone)]
     [AllowView("ContactPage")]
     public class ContactPage : SimplePage
     {

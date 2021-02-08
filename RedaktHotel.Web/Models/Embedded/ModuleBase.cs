@@ -1,4 +1,4 @@
-﻿using Redakt.ContentManagement.Configuration;
+﻿using Redakt.ContentManagement.Content;
 
 namespace RedaktHotel.Web.Models.Embedded
 {

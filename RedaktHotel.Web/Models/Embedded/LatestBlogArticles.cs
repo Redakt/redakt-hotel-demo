@@ -1,11 +1,11 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Models;
+using Redakt.ContentManagement.Content;
 using System.ComponentModel.DataAnnotations;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.ListBullets1)]
+    [Icon(ContentIcons.Interface.Calendar)]
     [TitleFormat("[Blog] {{Heading}}")]
     public class LatestBlogArticles: ModuleWithIntroBase
     {

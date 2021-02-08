@@ -1,10 +1,11 @@
 ﻿using Redakt.BackOffice.Components.Dialog;
 using System.Threading.Tasks;
 using RedaktHotel.BackOfficeExtensions.Models;
+using Redakt.ContentManagement.BackOffice.Content.Editors;
 
 namespace RedaktHotel.BackOfficeExtensions.Components
 {
-    public partial class GeoLocationEditor
+    public partial class GeoLocationEditor: EditorComponentBase<GeoLocation>
     {
         private string Label { get; set; }
 

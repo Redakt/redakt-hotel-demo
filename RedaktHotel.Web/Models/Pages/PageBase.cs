@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Configuration;
+using Redakt.ContentManagement.Content;
 
 namespace RedaktHotel.Web.Models.Pages
 {

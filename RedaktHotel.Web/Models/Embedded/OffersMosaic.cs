@@ -4,7 +4,7 @@ using Redakt.ContentManagement.Annotations;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.LayoutDashboard1)]
+    [Icon(ContentIcons.Marketing.Like)]
     [TitleFormat("[Offers] {{Heading}}")]
     public class OffersMosaic: ModuleWithIntroBase
     {

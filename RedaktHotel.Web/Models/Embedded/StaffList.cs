@@ -5,7 +5,7 @@ using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.UserFullBodyCircle)]
+    [Icon(ContentIcons.Users.Three)]
     public class StaffList: ModuleWithIntroBase
     {
         public IReadOnlyList<StaffMember> Members { get; set; }

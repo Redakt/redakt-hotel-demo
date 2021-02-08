@@ -1,13 +1,12 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Configuration;
-using Redakt.ContentManagement.Models;
+using Redakt.ContentManagement.Content;
 
 namespace RedaktHotel.Web.Models.Assets
 {
     [Asset]
     [Key("Video")]
-    [Icon(ContentIcons.FileVideoPlay)]
+    [Icon(ContentIcons.Media.Video)]
     public class Video: IContentType
     {
         public Media File { get; set; }

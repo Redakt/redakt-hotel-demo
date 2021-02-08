@@ -1,13 +1,12 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Configuration;
-using Redakt.ContentManagement.Models;
+using Redakt.ContentManagement.Content;
 
 namespace RedaktHotel.Web.Models.Assets
 {
     [Asset]
     [Key("Document")]
-    [Icon(ContentIcons.FileText)]
+    [Icon(ContentIcons.Files.Text)]
     [MediaUpload]
     public class Document: IContentType
     {

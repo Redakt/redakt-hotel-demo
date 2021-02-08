@@ -1,12 +1,12 @@
 ﻿using Redakt.BackOffice.Icons;
 using Redakt.ContentManagement.Annotations;
-using Redakt.ContentManagement.Models;
+using Redakt.ContentManagement.Content;
 using System.Collections.Generic;
 using RedaktHotel.Web.Models.Pages;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.HotelDoubleBed)]
+    [Icon(ContentIcons.Business.Suitcase)]
     [TitleFormat("[Rooms]")]
     public class RoomCarousel: ModuleWithIntroBase
     {

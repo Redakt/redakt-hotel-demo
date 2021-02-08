@@ -3,10 +3,11 @@ using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 using RedaktHotel.BackOfficeExtensions.Models;
+using Redakt.BackOffice.Components.Dialog;
 
 namespace RedaktHotel.BackOfficeExtensions.Components
 {
-    public partial class GeoLocationDialog
+    public partial class GeoLocationDialog: ModalBase
     {
         private string MapId { get; } = "_" + Guid.NewGuid().ToString("N");
 

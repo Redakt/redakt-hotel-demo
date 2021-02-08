@@ -6,7 +6,7 @@ using RedaktHotel.Web.Models.Embedded;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.FileText)]
+    [Icon(ContentIcons.Files.Text)]
     [AllowChildren(typeof(ContentPage))]
     [AllowView("ContentPage", "RoomList", "FacilitiesList")]
     public class ContentPage : SimplePage

@@ -6,7 +6,7 @@ using RedaktHotel.Web.Models.Embedded;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.Hotel)]
+    [Icon(ContentIcons.Business.OfficeBuilding)]
     [AllowAtRoot]
     [AllowChildren(typeof(ContentPage), typeof(SimplePage), typeof(BookingPage))]
     [AllowView("Homepage")]

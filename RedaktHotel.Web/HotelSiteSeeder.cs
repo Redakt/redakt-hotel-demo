@@ -17,15 +17,11 @@ using Microsoft.AspNetCore.Http;
 using RedaktHotel.Web.Models.Pages;
 using RedaktHotel.Web.Models.Embedded;
 using LoremNET;
-using Redakt.ContentManagement.Content.Aggregates;
 using Redakt.ContentManagement.Files;
-using Redakt.ContentManagement.Models;
-using Redakt.Data;
 using Redakt.ContentManagement.NodeCollections;
 using Redakt.ContentManagement.NodeCollections.Aggregates;
 using Redakt.ContentManagement.NodeCollections.Commands;
 using Redakt.ContentManagement.Nodes.Aggregates;
-using Redakt.ContentManagement.Nodes.Commands;
 using Redakt.Dictionary.Aggregates;
 using Redakt.Dictionary.Commands;
 using Redakt.EventSourcing;
@@ -33,6 +29,7 @@ using Redakt.Files.Aggregates;
 using Redakt.Files.Commands;
 using Redakt.Extensions;
 using Redakt.Files;
+using Microsoft.Extensions.Logging;
 
 namespace RedaktHotel.Web
 {
@@ -42,13 +39,15 @@ namespace RedaktHotel.Web
     public class HotelSiteSeeder : IStartupFilter
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger _logger;
         private readonly CultureInfo _englishCulture = CultureInfo.GetCultureInfo("en");
         private readonly CultureInfo _dutchCulture = CultureInfo.GetCultureInfo("nl");
         private readonly Random _rnd = new Random();
 
-        public HotelSiteSeeder(IServiceProvider serviceProvider)
+        public HotelSiteSeeder(IServiceProvider serviceProvider, ILogger<HotelSiteSeeder> logger)
         {
             _serviceProvider = serviceProvider;
+            _logger = logger;
         }
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
@@ -81,6 +80,8 @@ namespace RedaktHotel.Web
 
         private async Task ProvisionSiteAsync()
         {
+            _logger.LogInformation("First-time startup initialization is seeding the demo site. Please wait a few moments...");
+
             using var scope = _serviceProvider.CreateScope();
 
             var languageService = scope.ServiceProvider.GetRequiredService<ILanguageService>();
@@ -231,7 +232,7 @@ namespace RedaktHotel.Web
             await this.CreateRoomsPagesAsync(serviceProvider, context, homepageId);
 
             // The Hotel
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<ContentPage>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<ContentPage>());
             this.AddContentValue(content, nameof(ContentPage.NavigationTitle), "The Hotel", "Het Hotel");
             await this.CreatePageAsync(serviceProvider, context, homepageId, content, "The Hotel", "Het Hotel", 1);
 
@@ -239,7 +240,7 @@ namespace RedaktHotel.Web
             await this.CreateFacilitiesPagesAsync(serviceProvider, context, homepageId);
 
             // Booking
-            content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<BookingPage>());
+            content = EmbeddedContent.New(ContentTypeDefinition.Lookup<BookingPage>());
             this.AddContentValue(content, nameof(ContentPage.NavigationTitle), "Bookings", "Reserveringen");
             this.AddContentValue(content, nameof(ContentPage.HideInNavigation), true);
             await this.CreatePageAsync(serviceProvider, context, homepageId, content, "Bookings", "Reserveringen", 3);
@@ -248,7 +249,7 @@ namespace RedaktHotel.Web
             await this.CreateBlogPagesAsync(serviceProvider, context, homepageId);
 
             // Contact
-            content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<ContactPage>());
+            content = EmbeddedContent.New(ContentTypeDefinition.Lookup<ContactPage>());
             await this.CreatePageAsync(serviceProvider, context, homepageId, content, "Contact", "Contact", 5);
 
             // Homepage content
@@ -273,68 +274,68 @@ namespace RedaktHotel.Web
             var contentService = serviceProvider.GetRequiredService<IContentService>();
 
             var contentType = ContentTypeDefinition.Lookup<Homepage>();
-            var content = new MutableLocalizableContent(contentType);
+            var content = EmbeddedContent.New(contentType);
             this.AddContentValue(content, nameof(Homepage.PageTitle), "Welcome", "Welkom");
             this.AddContentValue(content, nameof(Homepage.NavigationTitle), "Home", "Home");
 
             // Header slider items
             var sliderContentType = ContentTypeDefinition.Lookup<SliderItem>();
 
-            var sliderContent1 = new MutableLocalizableContent(sliderContentType);
+            var sliderContent1 = EmbeddedContent.New(sliderContentType);
             var sliderImageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"../seed-assets/hotel/slider-item-1.jpg".ToSafeFilePath()), "Slider Image 1");
             this.AddContentValue(sliderContent1, nameof(SliderItem.BackgroundImage), NodeReference.New(sliderImageId));
             this.AddContentValue(sliderContent1, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.AddContentValue(sliderContent1, nameof(SliderItem.Title), "Experience the Luxury", "Ervaar de Luxe");
             this.AddContentValue(sliderContent1, nameof(SliderItem.Subtitle), "in our Hotel", "in ons Hotel");
-            this.AddContentValue(content, nameof(Homepage.SliderItems), ContentReference.New(sliderContent1));
+            this.AddContentValue(content, nameof(Homepage.SliderItems), sliderContent1);
 
-            var sliderContent2 = new MutableLocalizableContent(sliderContentType);
+            var sliderContent2 = EmbeddedContent.New(sliderContentType);
             this.AddContentValue(sliderContent2, nameof(SliderItem.BackgroundImage), NodeReference.New(sliderImageId));
             this.AddContentValue(sliderContent2, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.AddContentValue(sliderContent2, nameof(SliderItem.Title), "Experience Exceptional Dining", "Ervaar Uitzonderlijk Dineren");
             this.AddContentValue(sliderContent2, nameof(SliderItem.Subtitle), "in our Restaurants", "in onze Restaurants");
-            this.AddContentValue(content, nameof(Homepage.SliderItems), ContentReference.New(sliderContent2));
+            this.AddContentValue(content, nameof(Homepage.SliderItems), sliderContent2);
 
-            var sliderContent3 = new MutableLocalizableContent(sliderContentType);
+            var sliderContent3 = EmbeddedContent.New(sliderContentType);
             this.AddContentValue(sliderContent3, nameof(SliderItem.BackgroundImage), NodeReference.New(sliderImageId));
             this.AddContentValue(sliderContent3, nameof(SliderItem.Caption), "Welcome to The Redakt Hotel and Resort", "Welkom bij het Redakt Hotel en Resort");
             this.AddContentValue(sliderContent3, nameof(SliderItem.Title), "Experience Ultimate Relaxation", "Ervaar Ultieme Ontspanning");
             this.AddContentValue(sliderContent3, nameof(SliderItem.Subtitle), "in our Spa & Wellness", "in onze Spa & Wellness");
-            this.AddContentValue(content, nameof(Homepage.SliderItems), ContentReference.New(sliderContent3));
+            this.AddContentValue(content, nameof(Homepage.SliderItems), sliderContent3);
 
             // Room carousel
-            this.AddContentValue(content, nameof(Homepage.Modules), ContentReference.New(this.CreateRoomCarouselModule(serviceProvider, context)));
+            this.AddContentValue(content, nameof(Homepage.Modules), this.CreateRoomCarouselModule(serviceProvider, context));
 
             // Text content
-            var textContent = new MutableLocalizableContent(ContentTypeDefinition.Lookup<TextWithImage>());
+            var textContent = EmbeddedContent.New(ContentTypeDefinition.Lookup<TextWithImage>());
             var imageId = await CreateImageAsync(serviceProvider, context, Path.Combine(Directory.GetCurrentDirectory(), @"../seed-assets/home/home-text-image.jpg".ToSafeFilePath()), "Homepage Image");
             this.AddContentValue(textContent, nameof(TextWithImage.Image), NodeReference.New(imageId));
             this.AddContentValue(textContent, nameof(TextWithImage.HeadingCaption), "Welcome to The Redakt", "Welkom bij The Redakt");
             this.AddContentValue(textContent, nameof(TextWithImage.Heading), "Demonstration website", "Demonstratie website");
             this.AddContentValue(textContent, nameof(TextWithImage.BodyText), "The Redakt Hotel & Resort is a demo website for the <a href=\"https://www.redaktcms.com\" target=\"_blank\">Redakt Content Management System</a>. Therefore most content is fictional and automatically generated. You can visit the back office application at <a href=\"/redakt\">/redakt</a>. In the back office and application code you can play with many of the features that are part of the Redakt system. Please note, as this website is meant as a showcase for Redakt CMS only, and it does not necessarily reflect best web software development practices. Parts of the website may be functionally incomplete or missing.", "The Redakt Hotel & Resort is een demo website voor het <a href=\"https://www.redaktcms.com\" target=\"_blank\">Redakt Content Management System</a>. Om deze reden is de meeste content fictioneel en automatisch gegenereerd. Je kan de back office applicatie bezoeken op <a href=\"/redakt\">/redakt</a>. In the back office en applicatie code kan je veel van de functionaliteiten uitproberen die onderdeel maken van het Redakt systeem. Let wel, aangezien deze website alleen bedoeld is als showcase voor Redakt CMS, is het niet per se een goed voorbeeld van web software ontwikkeling. Sommige onderdelen van de website kunnen functioneel incompleet zijn.");
-            this.AddContentValue(content, nameof(Homepage.Modules), ContentReference.New(textContent));
+            this.AddContentValue(content, nameof(Homepage.Modules), textContent);
 
             // Facilities grid
             var facilitiesContent = this.CreateFacilitiesModule(serviceProvider, context);
             this.AddContentValue(facilitiesContent, nameof(FacilitiesGrid.HeadingCaption), "Our Facilities", "Onze Faciliteiten");
             this.AddContentValue(facilitiesContent, nameof(FacilitiesGrid.Heading), "Explore The Redakt", "Ontdek The Redakt");
             this.AddContentValue(facilitiesContent, nameof(FacilitiesGrid.IntroText), Lorem.Paragraph(5, 10, 4, 8), Lorem.Paragraph(5, 10, 4, 8));
-            this.AddContentValue(content, nameof(Homepage.Modules), ContentReference.New(facilitiesContent));
+            this.AddContentValue(content, nameof(Homepage.Modules), facilitiesContent);
 
             // Offers mosaic
             var offersContent = await this.CreateOffersModuleAsync(serviceProvider, context);
             this.AddContentValue(offersContent, nameof(OffersMosaic.HeadingCaption), "Our Offers", "Onze Aanbiedingen");
             this.AddContentValue(offersContent, nameof(OffersMosaic.Heading), "The Redakt Special Offers", "The Redakt Speciale Aanbiedingen");
             this.AddContentValue(offersContent, nameof(OffersMosaic.IntroText), Lorem.Paragraph(5, 10, 4, 8), Lorem.Paragraph(5, 10, 4, 8));
-            this.AddContentValue(content, nameof(Homepage.Modules), ContentReference.New(offersContent));
+            this.AddContentValue(content, nameof(Homepage.Modules), offersContent);
 
             // Latest Blog Articles
-            var blogContent = new MutableLocalizableContent(ContentTypeDefinition.Lookup<LatestBlogArticles>());
+            var blogContent = EmbeddedContent.New(ContentTypeDefinition.Lookup<LatestBlogArticles>());
             this.AddContentValue(blogContent, nameof(LatestBlogArticles.Parent), new Link { PageId = context.BlogParentId });
             this.AddContentValue(blogContent, nameof(LatestBlogArticles.HeadingCaption), "The Redakt Blog", "Het Blog");
             this.AddContentValue(blogContent, nameof(LatestBlogArticles.Heading), "Latest News", "Laatste Nieuw");
             this.AddContentValue(blogContent, nameof(LatestBlogArticles.IntroText), Lorem.Paragraph(5, 10, 4, 8), Lorem.Paragraph(5, 10, 4, 8));
-            this.AddContentValue(content, nameof(Homepage.Modules), ContentReference.New(blogContent));
+            this.AddContentValue(content, nameof(Homepage.Modules), blogContent);
 
             var versionId = NodeVersionId.New;
             var contentId = await contentService.CreateContentAsync(contentType, content).NoSync();
@@ -346,7 +347,7 @@ namespace RedaktHotel.Web
         private async Task CreateFacilitiesPagesAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId)
         {
             // Create Facilities list
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<SimplePage>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<SimplePage>());
             this.AddContentValue(content, nameof(ContentPage.NavigationTitle), "Facilities", "Faciliteiten");
 
             var facilitiesPage = await this.CreatePageAsync(serviceProvider, context, parentId, content, "Facilities", "Faciliteiten", 2, "FacilitiesList");
@@ -364,7 +365,7 @@ namespace RedaktHotel.Web
 
         private async Task CreateFacilityPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId facilitiesParentId, string imageFolder, string englishName, string dutchName, int sortOrder)
         {
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<FacilityPage>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<FacilityPage>());
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/facilities/{imageFolder}".ToSafeFilePath()));
 
             var imageAssets = new List<string>();
@@ -385,7 +386,7 @@ namespace RedaktHotel.Web
         private async Task CreateBlogPagesAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId)
         {
             // Create Blog overview
-            var blogContent = new MutableLocalizableContent(ContentTypeDefinition.Lookup<SimplePage>());
+            var blogContent = EmbeddedContent.New(ContentTypeDefinition.Lookup<SimplePage>());
             this.AddContentValue(blogContent, nameof(ContentPage.NavigationTitle), "Blog", "Blog");
 
             context.BlogParentId = await this.CreatePageAsync(serviceProvider, context, parentId, blogContent, "Blog", "Blog", 4, "BlogOverview");
@@ -398,7 +399,7 @@ namespace RedaktHotel.Web
                 var imageId = await CreateImageAsync(serviceProvider, context, imageFile, $"Blog Article Image {articleDate.ToShortDateString()}");
                 var categories = Path.GetFileNameWithoutExtension(imageFile).Split('-').Skip(1);
 
-                var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<BlogArticle>());
+                var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<BlogArticle>());
                 this.AddContentValue(content, nameof(BlogArticle.Image), NodeReference.New(imageId));
                 this.AddContentValues(content, nameof(BlogArticle.Categories), categories);
                 this.AddContentValue(content, nameof(BlogArticle.PublicationDate), articleDate);
@@ -415,7 +416,7 @@ namespace RedaktHotel.Web
         private async Task CreateRoomsPagesAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId)
         {
             // Create Rooms list
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<SimplePage>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<SimplePage>());
             this.AddContentValue(content, nameof(ContentPage.NavigationTitle), "Rooms", "Kamers");
 
             var roomsPageId = await this.CreatePageAsync(serviceProvider, context, parentId, content, "Rooms", "Kamers", 0, "RoomList");
@@ -434,7 +435,7 @@ namespace RedaktHotel.Web
 
         private async Task CreateRoomPageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId roomsPageId, string imageFolder, string englishName, string dutchName, int nightlyRate, int sortIndex)
         {
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<RoomDetail>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<RoomDetail>());
             var images = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/rooms/{imageFolder}".ToSafeFilePath()));
 
             var mainImageId = await CreateImageAsync(serviceProvider, context, images.First(), $"{englishName} Image 1");
@@ -456,7 +457,7 @@ namespace RedaktHotel.Web
             context.Rooms.Add(roomPage);
         }
 
-        private async Task<NodeId> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId, MutableLocalizableContent content, string englishName, string dutchName, int sortOrder, string viewName = null)
+        private async Task<NodeId> CreatePageAsync(IServiceProvider serviceProvider, SeederContext context, NodeId parentId, ILocalizableContentModel content, string englishName, string dutchName, int sortOrder, string viewName = null)
         {
             var commandBus = serviceProvider.GetRequiredService<ICommandBus>();
             var contentService = serviceProvider.GetRequiredService<IContentService>();
@@ -482,9 +483,9 @@ namespace RedaktHotel.Web
         }
 
         // Modules
-        private MutableLocalizableContent CreateRoomCarouselModule(IServiceProvider serviceProvider, SeederContext context)
+        private EmbeddedContent CreateRoomCarouselModule(IServiceProvider serviceProvider, SeederContext context)
         {
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<RoomCarousel>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<RoomCarousel>());
 
             foreach (var roomPageId in context.Rooms.Take(6))
             {
@@ -495,9 +496,9 @@ namespace RedaktHotel.Web
         }
 
         // Modules
-        private MutableLocalizableContent CreateFacilitiesModule(IServiceProvider serviceProvider, SeederContext context)
+        private EmbeddedContent CreateFacilitiesModule(IServiceProvider serviceProvider, SeederContext context)
         {
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<FacilitiesGrid>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<FacilitiesGrid>());
 
             foreach (var facilitiesPageId in context.Facilities.Take(9))
             {
@@ -507,37 +508,37 @@ namespace RedaktHotel.Web
             return content;
         }
 
-        private async Task<MutableLocalizableContent> CreateOffersModuleAsync(IServiceProvider serviceProvider, SeederContext context)
+        private async Task<EmbeddedContent> CreateOffersModuleAsync(IServiceProvider serviceProvider, SeederContext context)
         {
-            var content = new MutableLocalizableContent(ContentTypeDefinition.Lookup<OffersMosaic>());
+            var content = EmbeddedContent.New(ContentTypeDefinition.Lookup<OffersMosaic>());
 
             foreach (var imageFile in Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), $"../seed-assets/offers".ToSafeFilePath())))
             {
                 var imageId = await CreateImageAsync(serviceProvider, context, imageFile, "Offer");
-                var offer = new MutableLocalizableContent(ContentTypeDefinition.Lookup<OfferItem>());
+                var offer = EmbeddedContent.New(ContentTypeDefinition.Lookup<OfferItem>());
 
                 this.AddContentValue(offer, nameof(OfferItem.Image), NodeReference.New(imageId));
                 this.AddContentValue(offer, nameof(OfferItem.Title), Lorem.Words(3, 6), Lorem.Words(3, 6));
                 this.AddContentValue(offer, nameof(OfferItem.Text), Lorem.Paragraph(5, 8, 2, 4), Lorem.Paragraph(5, 8, 2, 4));
 
-                this.AddContentValue(content, nameof(OffersMosaic.Offers), ContentReference.New(offer));
+                this.AddContentValue(content, nameof(OffersMosaic.Offers), offer);
             }
 
             return content;
         }
 
-        private void AddContentValue(MutableLocalizableContent content, string propertyKey, object englishValue, object dutchValue)
+        private void AddContentValue(ILocalizableContentModel content, string propertyKey, object englishValue, object dutchValue)
         {
             content.ViewFor(_englishCulture).AddValue(propertyKey, englishValue);
             content.ViewFor(_dutchCulture).AddValue(propertyKey, dutchValue);
         }
 
-        private void AddContentValue(MutableLocalizableContent content, string propertyKey, object invariantValue)
+        private void AddContentValue(ILocalizableContentModel content, string propertyKey, object invariantValue)
         {
             content.ViewFor(CultureInfo.InvariantCulture).AddValue(propertyKey, invariantValue);
         }
 
-        private void AddContentValues(MutableLocalizableContent content, string propertyKey, IEnumerable<object> invariantValues)
+        private void AddContentValues(ILocalizableContentModel content, string propertyKey, IEnumerable<object> invariantValues)
         {
             var view = content.ViewFor(CultureInfo.InvariantCulture);
             foreach (var value in invariantValues) view.AddValue(propertyKey, value);
@@ -568,7 +569,7 @@ namespace RedaktHotel.Web
             }
 
             var contentType = ContentTypeDefinition.Lookup<StaffMember>();
-            var content = new MutableLocalizableContent(contentType);
+            var content = EmbeddedContent.New(contentType);
 
             this.AddContentValue(content, nameof(StaffMember.Picture), new MediaFile(fileId));
             this.AddContentValue(content, nameof(StaffMember.Name), name);
@@ -598,7 +599,7 @@ namespace RedaktHotel.Web
             }
 
             var contentType = ContentTypeDefinition.Lookup<Image>();
-            var content = new MutableLocalizableContent(contentType);
+            var content = EmbeddedContent.New(contentType);
 
             this.AddContentValue(content, nameof(Image.File), new MediaFile(fileId));
 

@@ -17,7 +17,7 @@ namespace RedaktHotel.BackOfficeExtensions.Bookings
 {
     [Authorize]
     [NavigationItem("bookings", "Bookings", NavigationOrder = 10, Icon = ApplicationIcons.Calendar)]
-    public partial class BookingOverview
+    public partial class BookingOverview: ComponentBase
     {
         #region [ Fields ]
         private string _currentStatusFilter;

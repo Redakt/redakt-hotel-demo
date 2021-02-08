@@ -9,7 +9,7 @@ using RedaktHotel.Web.Models.Assets;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.BookOpenBookmark)]
+    [Icon(ContentIcons.Text.Quote)]
     [AllowView("BlogArticle")]
     public class BlogArticle : SimplePage
     {
