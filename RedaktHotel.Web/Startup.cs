@@ -27,7 +27,9 @@ namespace RedaktHotel.Web
             services.AddTransient<IStartupFilter, HotelSiteSeeder>();
 
             var redaktBuilder = services.AddRedakt(Configuration);
-            redaktBuilder.AddLiteDbDataStore();
+            //redaktBuilder.AddLiteDbDataStore();
+            redaktBuilder.AddCosmosDbDataStore();
+            redaktBuilder.AddAzureBlobStorage();
             redaktBuilder.AddIdentityServer();
             redaktBuilder.AddContentManagement();
             redaktBuilder.AddBackOffice();

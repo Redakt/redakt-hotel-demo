@@ -7,6 +7,7 @@
 	<ItemGroup>
 		<PackageReference Include="Lorem.Universal.Net" Version="3.0.64" />
 		<PackageReference Include="Redakt.All" Version="1.0.1" />
+		<PackageReference Include="Redakt.Providers.Azure" Version="1.0.1" />
 		<PackageReference Include="Redakt.Providers.LiteDb" Version="1.0.1" />
 	</ItemGroup>
 
