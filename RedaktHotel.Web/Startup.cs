@@ -46,11 +46,11 @@ namespace RedaktHotel.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            var supportedCultures = new[] { "en", "nl" };
-            app.UseRequestLocalization(options => options
-                .AddSupportedCultures(supportedCultures)
-                .AddSupportedUICultures(supportedCultures)
-                .SetDefaultCulture(supportedCultures[0]));
+            //var supportedCultures = new[] { "en", "nl" };
+            //app.UseRequestLocalization(options => options
+            //    .AddSupportedCultures(supportedCultures)
+            //    .AddSupportedUICultures(supportedCultures)
+            //    .SetDefaultCulture(supportedCultures[0]));
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
