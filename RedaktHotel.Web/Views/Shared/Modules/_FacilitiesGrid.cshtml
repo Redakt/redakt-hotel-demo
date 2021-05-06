@@ -2,7 +2,7 @@
 @model INodeViewModel
 @{
     var module = ViewData["module"] as FacilitiesGrid;
-    var facilities = await redaktContext.ModelAsync<FacilityPage>(module.Facilities.Select(x => x.PageId)).ConfigureAwait(false);
+    var facilities = await redaktContext.ModelsAsync<FacilityPage>(module.Facilities.Select(x => x.PageId)).ConfigureAwait(false);
 }
 <div class="section">
     <div class="widget-features-grid">

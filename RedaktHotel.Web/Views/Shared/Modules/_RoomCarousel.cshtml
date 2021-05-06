@@ -2,7 +2,7 @@
 @model INodeViewModel
 @{
     var module = ViewData["module"] as RoomCarousel;
-    var rooms = await redaktContext.ModelAsync<RoomDetail>(module.Rooms.Select(x => x.PageId)).ConfigureAwait(false);
+    var rooms = await redaktContext.ModelsAsync<RoomDetail>(module.Rooms.Select(x => x.PageId)).ConfigureAwait(false);
 }
 <div class="section">
     <div class="widget-rooms-carousel @(Model.ContentTypeKey == "Homepage" ? "top-over" : string.Empty)">
