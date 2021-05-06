@@ -14,20 +14,20 @@
                         <div class="room-slider">
                             <div class="room-price">&euro; @Model.Content.NightlyRate <small>PER NIGHT</small></div>
                             <div class="owl-carousel owl-theme owl-type1">
-                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl()" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
                                 @foreach (var image in Model.Content.AdditionalImages)
                                 {
-                                    <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl()" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                    <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
                                 }
                             </div>
                         </div>
 
                         <div class="room-thumbnails">
                             <div class="owl-carousel">
-                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl()" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
                                 @foreach (var image in Model.Content.AdditionalImages)
                                 {
-                                    <a href="#" data-background="@image.File.AbsoluteUrl()" title="@Model.Content.PageTitle"></a>
+                                    <a href="#" data-background="@image.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle"></a>
                                 }
                             </div>
                         </div>
