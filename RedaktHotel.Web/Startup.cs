@@ -30,7 +30,7 @@ namespace RedaktHotel.Web
             services.AddRedakt()
                 .AddLiteDbDataStore();
 
-            // Startup filters are executed in reverse order of adding; add HotelSiteSeeder first so it gets executed after RedaktStartupFilter.
+            // Adds a custom onboarding step for first-time installation.
             services.AddTransient<IBackOfficeOnboardingStep, CustomOnboardingStep>();
         }
 
