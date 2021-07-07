@@ -59,6 +59,9 @@ namespace RedaktHotel.Web
             app.UseRedaktIdentityServer();
             app.UseRedaktBackOffice();
             app.UseRedaktPageRendering();
+            app.UseRedaktContentApi();
+            app.UseRedaktUrlManagement();
+            app.UseRedaktSitemapXml();
 
             // Default MVC endpoint registration
             app.UseEndpoints(endpoints =>
