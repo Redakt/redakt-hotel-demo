@@ -6,7 +6,6 @@ using RedaktHotel.Web.Models.Pages;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Shopping.Coupon)]
     [TitleFormat("[Facilities] {{Heading}}")]
     public class FacilitiesGrid : ModuleWithIntroBase
     {

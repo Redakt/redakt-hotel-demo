@@ -6,7 +6,7 @@ namespace RedaktHotel.Web.Models.Assets
 {
     [Asset]
     [Key("StaffMember")]
-    [Icon(ContentIcons.Users.Coin)]
+    [Icon(ContentIcons.PersonCircle)]
     public class StaffMember: IContentType
     {
         public Media Picture { get; set; }

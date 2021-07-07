@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Interface.Calendar)]
     [TitleFormat("[Blog] {{Heading}}")]
     public class LatestBlogArticles: ModuleWithIntroBase
     {

@@ -55,7 +55,7 @@
                 <Button Icon="@ApplicationIcons.Block" Label="@Context.Localize["Cancel"]" Clicked="@Cancel"></Button>
                 @if (!Model.IsNew)
                 {
-                    <Button Icon="@ApplicationIcons.ContentDelete" ButtonStyle="@ElementStyle.Danger" Label="@Context.Localize["Delete"]" Clicked="@Delete"></Button>
+                    <Button Icon="@ApplicationIcons.Delete" ButtonStyle="@ElementStyle.Danger" Label="@Context.Localize["Delete"]" Clicked="@Delete"></Button>
                 }
                 <Button ButtonType="@ButtonType.Submit" Icon="@ApplicationIcons.Save" Label="@(Model.IsNew ? "Create Booking": "Save Changes")" ButtonStyle="@ElementStyle.Primary"></Button>
             </DialogActions>

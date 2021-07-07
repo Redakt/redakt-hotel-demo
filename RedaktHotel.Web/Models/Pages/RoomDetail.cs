@@ -8,7 +8,7 @@ using RedaktHotel.Web.Models.Assets;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.Business.Suitcase)]
+    [Icon(ContentIcons.BreakoutRoom)]
     [AllowView("RoomDetail")]
     public class RoomDetail: SimplePage
     {

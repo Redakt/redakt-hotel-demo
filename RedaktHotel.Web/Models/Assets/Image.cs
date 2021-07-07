@@ -6,7 +6,7 @@ namespace RedaktHotel.Web.Models.Assets
 {
     [Asset]
     [Key("Image")]
-    [Icon(ContentIcons.Media.Picture)]
+    [Icon(ContentIcons.Image)]
     [MediaUpload]
     public class Image: IContentType
     {

@@ -7,7 +7,7 @@ namespace RedaktHotel.Web.Models.Assets
     [Folder]
     [AllowAtRoot]
     [AllowChildren(typeof(MediaFolder), typeof(Image), typeof(Video), typeof(Document))]
-    [Icon(ContentIcons.Folders.Picture)]
+    [Icon(ContentIcons.Folder)]
     public class MediaFolder: IContentType
     {
     }

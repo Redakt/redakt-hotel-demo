@@ -5,7 +5,6 @@ using RedaktHotel.BackOfficeExtensions.Models;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Interface.MapPointer)]
     public class MapsLocation: ModuleBase
     {
         [Editor(typeof(GeoLocationEditor))]

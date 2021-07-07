@@ -16,7 +16,7 @@ using Redakt.Extensions;
 namespace RedaktHotel.BackOfficeExtensions.Bookings
 {
     [Authorize]
-    [NavigationItem("bookings", "Bookings", NavigationOrder = 10, Icon = ApplicationIcons.Calendar)]
+    [NavigationItem("bookings", "Bookings", NavigationOrder = 10, Icon = ApplicationIcons.BookNumber)]
     public partial class BookingOverview: ComponentBase
     {
         #region [ Fields ]

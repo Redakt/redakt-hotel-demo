@@ -6,7 +6,6 @@ using RedaktHotel.Web.Models.Pages;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Business.Suitcase)]
     [TitleFormat("[Rooms]")]
     public class RoomCarousel: ModuleWithIntroBase
     {

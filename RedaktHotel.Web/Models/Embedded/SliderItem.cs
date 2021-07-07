@@ -5,7 +5,6 @@ using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Web.Picture)]
     [TitleFormat("[Slider] {{Title}} - {{Subtitle}}")]
     public class SliderItem: IContentType
     {
