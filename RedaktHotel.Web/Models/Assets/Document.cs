@@ -7,7 +7,7 @@ namespace RedaktHotel.Web.Models.Assets
     [Asset]
     [Key("Document")]
     [Icon(ContentIcons.Document)]
-    [MediaUpload]
+    [FileUpload]
     public class Document: IContentType
     {
         public Media File { get; set; }
