@@ -5,7 +5,6 @@ using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Media.Picture)]
     [TitleFormat("[Images] {{Heading}}")]
     public class ImageGallery: ModuleWithIntroBase
     {

@@ -7,7 +7,7 @@ using RedaktHotel.Web.Models.Assets;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.Shopping.Coupon)]
+    [Icon(ContentIcons.DocumentOnePage)]
     [AllowView("FacilityPage")]
     public class FacilityPage: ContentPage
     {

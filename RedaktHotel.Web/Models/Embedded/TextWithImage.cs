@@ -5,7 +5,6 @@ using RedaktHotel.Web.Models.Assets;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Text.FirstLine)]
     [TitleFormat("[Text] {{Heading}}")]
     public class TextWithImage: ModuleBase
     {

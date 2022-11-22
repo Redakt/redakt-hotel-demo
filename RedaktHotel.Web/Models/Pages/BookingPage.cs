@@ -4,7 +4,7 @@ using Redakt.ContentManagement.Annotations;
 namespace RedaktHotel.Web.Models.Pages
 {
     [Page]
-    [Icon(ContentIcons.Ecommerce.BuyButton)]
+    [Icon(ContentIcons.FormNew)]
     [AllowView("BookingForm")]
     public class BookingPage : SimplePage
     {

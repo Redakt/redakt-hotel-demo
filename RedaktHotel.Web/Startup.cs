@@ -34,7 +34,7 @@ namespace RedaktHotel.Web
             redaktBuilder.AddContentManagement();
             redaktBuilder.AddBackOffice();
 
-            // Startup filters are executed in reverse order of adding; add HotelSiteSeeder first so it gets executed after RedaktStartupFilter.
+            // Adds a custom onboarding step for first-time installation.
             services.AddTransient<IBackOfficeOnboardingStep, CustomOnboardingStep>();
         }
 
@@ -63,6 +63,9 @@ namespace RedaktHotel.Web
             app.UseRedaktIdentityServer();
             app.UseRedaktBackOffice();
             app.UseRedaktPageRendering();
+            app.UseRedaktContentApi();
+            app.UseRedaktUrlManagement();
+            app.UseRedaktSitemapXml();
 
             // Default MVC endpoint registration
             app.UseEndpoints(endpoints =>

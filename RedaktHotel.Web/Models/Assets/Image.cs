@@ -6,8 +6,8 @@ namespace RedaktHotel.Web.Models.Assets
 {
     [Asset]
     [Key("Image")]
-    [Icon(ContentIcons.Media.Picture)]
-    [MediaUpload]
+    [Icon(ContentIcons.Image)]
+    [FileUpload]
     public class Image: IContentType
     {
         [AcceptMediaType("image/jpeg", "image/gif", "image/png", "image/bmp", "image/tiff", "image/svg+xml")]

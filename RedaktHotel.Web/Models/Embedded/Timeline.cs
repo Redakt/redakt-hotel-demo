@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace RedaktHotel.Web.Models.Embedded
 {
-    [Icon(ContentIcons.Arrows.Curve)]
     public class Timeline: ModuleWithIntroBase
     {
         [DisplayOrder(3)]

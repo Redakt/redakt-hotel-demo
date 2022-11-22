@@ -6,7 +6,7 @@ namespace RedaktHotel.Web.Models.Assets
 {
     [Asset]
     [Key("Video")]
-    [Icon(ContentIcons.Media.Video)]
+    [Icon(ContentIcons.Video)]
     public class Video: IContentType
     {
         public Media File { get; set; }

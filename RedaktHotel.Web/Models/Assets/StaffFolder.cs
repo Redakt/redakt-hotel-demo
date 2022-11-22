@@ -7,7 +7,7 @@ namespace RedaktHotel.Web.Models.Assets
     [Folder]
     [AllowAtRoot]
     [AllowChildren(typeof(StaffMember))]
-    [Icon(ContentIcons.Users.Folder)]
+    [Icon(ContentIcons.Folder)]
     public class StaffFolder: IContentType
     {
     }
