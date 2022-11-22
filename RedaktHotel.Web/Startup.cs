@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Redakt.BackOffice;
 using Redakt.BackOffice.Onboarding;
 using RedaktHotel.BackOfficeExtensions;
 
@@ -36,6 +37,7 @@ namespace RedaktHotel.Web
 
             // Adds a custom onboarding step for first-time installation.
             services.AddTransient<IBackOfficeOnboardingStep, CustomOnboardingStep>();
+            services.AddTransient<IBackOfficeEventHandler, CustomBackOfficeEventHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
