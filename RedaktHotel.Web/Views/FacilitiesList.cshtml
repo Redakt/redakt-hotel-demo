@@ -10,8 +10,8 @@
                 var smallImage = facility.Content.Images?.ElementAtOrDefault(1);
                 <div class="services-item">
                     <div class="item-photo">
-                        <div class="photo-big" data-background="@bigImage?.File.AbsoluteUrl(900, 900)"></div>
-                        <div class="photo-small" data-background="@smallImage?.File.AbsoluteUrl(450, 450)"></div>
+                        <div class="photo-big" data-background="@bigImage?.File.Url(900, 900)"></div>
+                        <div class="photo-small" data-background="@smallImage?.File.Url(450, 450)"></div>
                         <a rx-href="@facility" rx-dictionary-key="LearnMore" class="btn btn-default"></a>
                     </div>
                     <div class="item-desc">

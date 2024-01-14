@@ -1,4 +1,5 @@
-﻿@model IRedaktContext
+﻿@using Redakt
+@model IRedaktContext
 @{
     var home = await Model.RootAsync<Homepage>();
     var mainPages = (await home.ChildrenAsync<PageBase>()).Where(x => !x.Content.HideInNavigation).ToList();

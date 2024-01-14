@@ -40,7 +40,7 @@
                                         <input type="hidden" name="CheckOutDate" value="@checkOutDate">
                                         <input type="hidden" name="NumberOfAdults" value="@queryParams["adults"]">
                                         <input type="hidden" name="NumberOfChildren" value="@queryParams["children"]">
-                                        <input type="hidden" name="RedirectToUrl" value="@Model.Url()?completed=true">
+                                        <input type="hidden" name="RedirectToUrl" value="@Model.UrlAsync()?completed=true">
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -94,10 +94,10 @@
                                 <h2>Selected Room</h2>
                                 <div class="detail-room">
                                     <div class="room-photo">
-                                        <a href="@room.Url()" data-background="@room.Content.MainImage.File.AbsoluteUrl()"></a>
+                                        <a href="@room.UrlAsync()" data-background="@room.Content.MainImage.File.Url()"></a>
                                     </div>
                                     <div class="room-desc">
-                                        <h3><a href="@room.Url()">@room.Content.PageTitle</a></h3>
+                                        <h3><a href="@room.UrlAsync()">@room.Content.PageTitle</a></h3>
                                         <h4>&euro; @room.Content.NightlyRate <small>PER NIGHT</small></h4>
                                     </div>
                                 </div>

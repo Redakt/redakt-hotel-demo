@@ -2,7 +2,7 @@
     var module = ViewData["module"] as TextWithImage;
 }
 <div class="section">
-    <div class="widget-about-promo" data-background="@module.Image?.File.AbsoluteUrl(400)">
+    <div class="widget-about-promo" data-background="@module.Image?.File.Url(400)">
         <div class="wrapper-inner">
             <div class="widget-inner">
                 <div class="row">

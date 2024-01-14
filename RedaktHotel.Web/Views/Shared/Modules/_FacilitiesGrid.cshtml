@@ -14,7 +14,7 @@
                     @foreach (var facility in facilities)
                     {
                         <div class="col-lg-4 col-sm-6">
-                            <div class="features-item" data-background="@facility.Content.Images.FirstOrDefault()?.File.AbsoluteUrl(680, 680)">
+                            <div class="features-item" data-background="@facility.Content.Images.FirstOrDefault()?.File.Url(680, 680)">
                                 <a rx-href="@facility">
                                     <h3 rx-content="@facility.Content.PageTitle"></h3>
                                     <p rx-content="@facility.Content.ListDescription" rx-if-empty="RemoveTag"></p>
