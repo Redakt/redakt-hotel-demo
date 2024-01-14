@@ -18,7 +18,7 @@
                         <div class="item-media">
                             <div class="item-date"><b>@article.Content.PublicationDate.Day</b>@article.Content.PublicationDate.ToString("MMM")</div>
                             <div class="media-photo">
-                                <a rx-href="@article" data-background="@article.Content.Image.File.AbsoluteUrl()"></a>
+                                <a rx-href="@article" data-background="@article.Content.Image.File.Url()"></a>
                             </div>
                         </div>
                         <div class="item-desc">

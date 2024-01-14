@@ -14,20 +14,20 @@
                         <div class="room-slider">
                             <div class="room-price">&euro; @Model.Content.NightlyRate <small>PER NIGHT</small></div>
                             <div class="owl-carousel owl-theme owl-type1">
-                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                <a href="@Model.Content.MainImage.File.Url()" data-background="@Model.Content.MainImage.File.Url(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
                                 @foreach (var image in Model.Content.AdditionalImages)
                                 {
-                                    <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                    <a href="@image.File.Url()" data-background="@image.File.Url(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
                                 }
                             </div>
                         </div>
 
                         <div class="room-thumbnails">
                             <div class="owl-carousel">
-                                <a href="@Model.Content.MainImage.File.AbsoluteUrl()" data-background="@Model.Content.MainImage.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
+                                <a href="@Model.Content.MainImage.File.Url()" data-background="@Model.Content.MainImage.File.Url(960)" title="@Model.Content.PageTitle" class="popup-gallery"></a>
                                 @foreach (var image in Model.Content.AdditionalImages)
                                 {
-                                    <a href="#" data-background="@image.File.AbsoluteUrl(960)" title="@Model.Content.PageTitle"></a>
+                                    <a href="#" data-background="@image.File.Url(960)" title="@Model.Content.PageTitle"></a>
                                 }
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                             <h5 rx-dictionary-key="Booking"></h5>
                             <h2 rx-dictionary-key="BookThisRoom"></h2>
                             <div class="data-form">
-                                <form action="@bookingPage.Url()">
+                                <form action="@bookingPage.UrlAsync()">
                                     <input type="hidden" name="roomId" value="@Model.Id" />
                                     <div class="row">
                                         <div class="col-md-12">

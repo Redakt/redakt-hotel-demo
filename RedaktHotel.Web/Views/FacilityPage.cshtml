@@ -8,7 +8,7 @@
                 @foreach (var image in Model.Content.Images)
                 {
                     <div class="gallery-item">
-                        <a href="@image.File.AbsoluteUrl()" data-background="@image.File.AbsoluteUrl(1200, 1200)" title="@image.AlternateText" class="popup-gallery">
+                        <a href="@image.File.Url()" data-background="@image.File.Url(1200, 1200)" title="@image.AlternateText" class="popup-gallery">
                             <span class="item-text">@image.AlternateText</span>
                         </a>
                     </div>

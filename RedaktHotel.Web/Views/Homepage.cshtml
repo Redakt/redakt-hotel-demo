@@ -9,7 +9,7 @@
             <div class="widget-carousel owl-carousel owl-theme">
                 @foreach (var item in Model.Content.SliderItems)
                 {
-                    <div class="slider-item" data-background="@(item.BackgroundImage?.File?.AbsoluteUrl(2560, 1440))">
+                    <div class="slider-item" data-background="@(item.BackgroundImage?.File?.Url(2560, 1440))">
                         <div class="wrapper">
                             <div class="item-inner">
                                 <h5 rx-content="@item.Caption" rx-if-empty="RemoveTag"></h5>
@@ -24,7 +24,7 @@
             <div class="slider-booking">
                 <div class="wrapper">
                     <h5 rx-dictionary-key="BookYourStay"></h5>
-                    <form action="@roomsPage.Url()">
+                    <form action="@roomsPage.UrlAsync()">
                         <ul>
                             <li>
                                 <i class="fa fa-calendar-plus-o"></i>

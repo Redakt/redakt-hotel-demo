@@ -6,7 +6,7 @@
     <div class="widget-page-title">
         @if (Model.Content.HeadingBackgroundImage != null)
         {
-            <div class="widget-background" data-background="@Model.Content.HeadingBackgroundImage.File.AbsoluteUrl()"></div>
+            <div class="widget-background" data-background="@Model.Content.HeadingBackgroundImage.File.Url()"></div>
         }
         <div class="wrapper-inner">
             <h5 rx-content="@Model.Content.HeadingCaption" rx-if-empty="RemoveTag"></h5>

@@ -14,7 +14,7 @@
                         <div class="blog-item">
                             <div class="item-media">
                                 <div class="media-photo">
-                                    <a rx-href="@article" data-background="@article.Content.Image.File.AbsoluteUrl()"></a>
+                                    <a rx-href="@article" data-background="@article.Content.Image.File.Url()"></a>
                                 </div>
                             </div>
                             <div class="item-desc">
@@ -81,7 +81,7 @@
                         <ul>
                             @foreach (var articlePage in allArticles.OrderByDescending(x => x.Content.PublicationDate).Take(3))
                             {
-                                <li><a href="@articlePage.Url()">@articlePage.Content.PageTitle<span><i class="fa fa-calendar"></i>@articlePage.Content.PublicationDate.ToString("dd MMM yyyy")</span></a></li>
+                                <li><a href="@articlePage.UrlAsync()">@articlePage.Content.PageTitle<span><i class="fa fa-calendar"></i>@articlePage.Content.PublicationDate.ToString("dd MMM yyyy")</span></a></li>
                             }
                         </ul>
                     </div>
