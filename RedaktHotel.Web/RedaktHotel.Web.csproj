@@ -6,7 +6,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Lorem.Universal.Net" Version="4.0.80" />
-		<PackageReference Include="Redakt.All" Version="1.5.0" />
+		<PackageReference Include="Redakt.All" Version="1.5.1" />
 	</ItemGroup>
 
 	<ItemGroup>
